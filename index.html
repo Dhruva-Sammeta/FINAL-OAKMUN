@@ -322,16 +322,6 @@
         radial-gradient(circle, rgba(48,205,215,.055) 1px, transparent 1px);
       background-size: 36px 36px;
     }
-    /* vignette + depth gradients — renders BEHIND orb children via z-index */
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(ellipse 60% 55% at 50% 50%, rgba(30,150,165,.18) 0%, rgba(0,12,30,.55) 48%, rgba(2,8,16,.92) 74%),
-        radial-gradient(ellipse 120% 35% at 50% 105%, rgba(0,48,87,.5) 0%, transparent 55%);
-    }
     /* animated aurora orbs — sit above ::after via z-index */
     .hero-orb {
       position: absolute;
@@ -451,6 +441,7 @@
       letter-spacing: -.04em;
       color: var(--white);
       text-transform: uppercase;
+      text-shadow: 0 2px 32px rgba(0,0,0,.8), 0 0 60px rgba(0,0,0,.5);
       opacity: 0;
       transform: translateY(24px);
       transition: opacity .15s 0s, transform .2s 0s;
@@ -513,11 +504,57 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      gap: 18px;
+      gap: 16px;
+      padding: 72px 24px 0;
       opacity: 0;
       transform: translateY(20px);
       pointer-events: none;
       transition: opacity .5s, transform .5s;
+    }
+
+    /* ── theme text shown in circle center ── */
+    .circle-theme {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      max-width: 480px;
+      width: 100%;
+      padding: 4px 0;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .6s .2s, transform .6s .2s;
+    }
+    .circle-theme.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .circle-theme-label {
+      font-size: .52rem;
+      font-weight: 700;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--teal);
+      opacity: .9;
+      text-shadow: 0 2px 12px rgba(0,0,0,.8);
+    }
+    .circle-theme-heading {
+      font-size: clamp(.95rem, 2.2vw, 1.4rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -.02em;
+      color: var(--white);
+      text-shadow: 0 2px 20px rgba(0,0,0,.9), 0 0 40px rgba(0,0,0,.6);
+    }
+    .circle-theme-heading .teal { color: var(--teal); }
+    .circle-theme-caption {
+      font-size: clamp(.55rem, 1.2vw, .65rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.7;
+      color: rgba(250,245,237,.75);
+      max-width: 400px;
+      text-shadow: 0 2px 12px rgba(0,0,0,.8);
     }
     #heroArcContent.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
@@ -634,9 +671,12 @@
       .morph-scroll-hint { font-size: .42rem; margin-top: 14px; }
 
       /* arc content */
-      #heroArcContent { gap: 12px; }
+      #heroArcContent { gap: 12px; padding: 64px 20px 0; }
       .arc-eyebrow  { font-size: .42rem; }
       .arc-title    { font-size: clamp(2rem, 11vw, 3.2rem); }
+      .circle-theme { max-width: 88vw; padding: 10px 0 2px; gap: 4px; }
+      .circle-theme-heading { font-size: clamp(.82rem, 4.5vw, 1rem); }
+      .circle-theme-caption { font-size: .54rem; max-width: 100%; }
 
       /* dates */
       .hero-dates { font-size: .52rem; gap: 8px; }
@@ -689,26 +729,66 @@
     }
 
     /* ═══════════════════════════════════════
-       THEME
+       THEME — scroll-driven cinematic
     ═══════════════════════════════════════ */
     .theme-section {
       position: relative;
-      padding: 140px 64px;
-      overflow: clip;
+      min-height: 340vh;
       background: #020c1a;
+      overflow: clip;
     }
-    .theme-section::after {
+    /* seamless top fade from hero */
+    .theme-section::before {
       content: '';
       position: absolute;
-      top: 50%;
-      left: -8%;
-      transform: translateY(-50%);
-      width: 700px;
-      height: 700px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(48,205,215,.06) 0%, transparent 65%);
+      top: 0; left: 0; right: 0;
+      height: 160px;
+      background: linear-gradient(to bottom, #03080f, transparent);
       pointer-events: none;
+      z-index: 2;
     }
+    .theme-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* intro overlay */
+    .theme-intro {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0;
+    }
+    .theme-intro-sub {
+      font-size: clamp(.7rem, 1.4vw, 1rem);
+      font-weight: 600;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.5);
+      margin-bottom: 14px;
+    }
+    .theme-intro-main {
+      font-size: clamp(2.2rem, 5vw, 4.8rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    /* big bg word */
     .theme-bg-word {
       position: absolute;
       right: -0.05em;
@@ -718,74 +798,129 @@
       font-weight: 900;
       letter-spacing: -.04em;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(48,205,215,.08);
+      -webkit-text-stroke: 1px rgba(48,205,215,.055);
       pointer-events: none;
       user-select: none;
       line-height: 1;
       white-space: nowrap;
+      will-change: transform;
+    }
+    /* centre ambient glow */
+    .theme-bg-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(48,205,215,.07) 0%, transparent 65%);
+      filter: blur(60px);
+      pointer-events: none;
     }
     .theme-inner {
       position: relative;
       z-index: 1;
-      max-width: 1100px;
+      max-width: 1080px;
+      width: 100%;
+      padding: 0 56px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 0;
+      align-items: center;
+      text-align: center;
     }
-    .theme-label {
-      font-size: .65rem;
+    /* eyebrow — centered with lines on both sides */
+    .theme-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 28px;
+      will-change: transform, opacity;
+    }
+    .theme-eyebrow-line {
+      width: 40px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--teal));
+      border-radius: 2px;
+      opacity: .65;
+      flex-shrink: 0;
+    }
+    .theme-eyebrow-line:last-child {
+      background: linear-gradient(to left, transparent, var(--teal));
+    }
+    .theme-eyebrow-text {
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--teal);
+      opacity: .85;
+      white-space: nowrap;
+    }
+    /* title — 2 clean lines, not overwhelming */
+    .theme-title {
+      font-size: clamp(2.2rem, 4.4vw, 4.8rem);
+      font-weight: 900;
+      letter-spacing: -.035em;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 0;
+      text-align: center;
+    }
+    .theme-word {
+      display: inline-block;
+      margin-right: .16em;
+      will-change: transform, opacity;
+    }
+    .theme-word-teal {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 60%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    /* divider — short centered accent bar */
+    .theme-divider {
+      width: 56px;
+      height: 2px;
+      background: var(--teal);
+      margin: 28px auto;
+      border-radius: 2px;
+      opacity: .45;
+      transform-origin: center center;
+      will-change: transform, opacity;
+    }
+    /* bottom — stacked centered */
+    .theme-bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .theme-bottom-label {
+      font-size: .55rem;
       font-weight: 700;
       letter-spacing: .28em;
       text-transform: uppercase;
-      color: var(--teal);
-      opacity: .7;
-      margin-bottom: 32px;
-    }
-    .theme-title {
-      font-size: clamp(3.2rem, 6vw, 5.8rem);
-      font-weight: 900;
-      letter-spacing: -.035em;
-      line-height: 1;
-      color: var(--white);
-      margin-bottom: 0;
-    }
-    .theme-title .teal { color: var(--teal); }
-    .theme-divider {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(to right, rgba(48,205,215,.3) 0%, rgba(48,205,215,.06) 60%, transparent 100%);
-      margin: 36px 0;
-    }
-    .theme-bottom {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 48px;
-    }
-    .theme-bottom-label {
-      font-size: .58rem;
-      font-weight: 700;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(250,245,237,.3);
+      color: rgba(250,245,237,.35);
       white-space: nowrap;
-      padding-top: 4px;
-      flex-shrink: 0;
+      will-change: transform, opacity;
     }
     .theme-caption {
-      font-size: 1.05rem;
+      font-size: clamp(.92rem, 1.3vw, 1.1rem);
       font-weight: 400;
       font-style: italic;
       line-height: 1.8;
-      color: rgba(250,245,237,.55);
-      max-width: 680px;
+      color: rgba(250,245,237,.7);
+      max-width: 620px;
+      will-change: transform, opacity;
     }
 
     @media (max-width: 768px) {
-      .theme-section { padding: 72px 20px; }
-      .theme-bottom { flex-direction: column; gap: 16px; }
+      .theme-section { min-height: 280vh; }
+      .theme-inner { padding: 0 24px; }
       .theme-bg-word { display: none; }
+      .theme-title { font-size: clamp(2rem, 8vw, 3rem); }
+      .theme-caption { font-size: .86rem; max-width: 100%; }
+      .theme-eyebrow-line { width: 24px; }
     }
 
     /* ═══════════════════════════════════════
@@ -1062,6 +1197,14 @@
       line-height: 1.05;
       letter-spacing: -.03em;
     }
+    .schedule-title::after {
+      content: '';
+      display: block;
+      width: 44px; height: 3px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      border-radius: 2px;
+      margin-top: 14px;
+    }
 
     /* Color legend */
     .schedule-legend {
@@ -1218,12 +1361,71 @@
       box-shadow: 0 0 0 1px var(--dot-color, rgba(48,205,215,.4)), 0 0 8px var(--dot-color, transparent);
     }
 
-    .tl-event.type-committee { background: rgba(48,205,215,.08);  border-color: rgba(48,205,215,.1); --dot-color: var(--teal); }
-    .tl-event.type-ceremony  { background: rgba(188,154,110,.1);  border-color: rgba(188,154,110,.12); --dot-color: var(--gold); }
-    .tl-event.type-break     { background: rgba(180,235,245,.08); border-color: rgba(180,235,245,.15); --dot-color: var(--teal-light); }
-    .tl-event.type-social    { background: rgba(30,150,165,.12);  border-color: rgba(30,150,165,.15); --dot-color: var(--teal-dark); }
-    .tl-event.type-meal      { background: rgba(188,154,110,.07); border-color: rgba(188,154,110,.1); --dot-color: rgba(188,154,110,.6); }
-    .tl-event.type-dispersal { background: rgba(188,154,110,.07);  border-color: rgba(188,154,110,.18); --dot-color: #BC9A6E; }
+    .tl-event.type-committee { background: rgba(48,205,215,.09);  border-color: rgba(48,205,215,.14); --dot-color: var(--teal); }
+    .tl-event.type-ceremony  { background: rgba(188,154,110,.11); border-color: rgba(188,154,110,.16); --dot-color: var(--gold); }
+    .tl-event.type-break     { background: rgba(180,235,245,.07); border-color: rgba(180,235,245,.13); --dot-color: var(--teal-light); }
+    .tl-event.type-social    { background: rgba(30,150,165,.13);  border-color: rgba(30,150,165,.18); --dot-color: var(--teal-dark); }
+    .tl-event.type-meal      { background: rgba(188,154,110,.08); border-color: rgba(188,154,110,.13); --dot-color: rgba(188,154,110,.6); }
+    .tl-event.type-dispersal { background: rgba(188,154,110,.07); border-color: rgba(188,154,110,.18); --dot-color: #BC9A6E; }
+
+    /* stronger hover for committee events */
+    .tl-event.type-committee:hover {
+      background: rgba(48,205,215,.14);
+      border-color: rgba(48,205,215,.28);
+      box-shadow: 0 4px 22px rgba(48,205,215,.1);
+      transform: translateX(7px);
+    }
+
+    /* ── day watermark ── */
+    .timeline-panel { position: relative; overflow: hidden; }
+    .timeline       { position: relative; z-index: 1; }
+    #day-1::before { content: '01'; }
+    #day-2::before { content: '02'; }
+    #day-3::before { content: '03'; }
+    .timeline-panel::before {
+      position: absolute;
+      right: -8px; bottom: -24px;
+      font-size: clamp(140px, 20vw, 260px);
+      font-weight: 900;
+      letter-spacing: -.06em;
+      color: rgba(48,205,215,.045);
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* ── day header ── */
+    .tl-day-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(48,205,215,.1);
+    }
+    .tl-day-num {
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -.06em;
+      line-height: 1;
+      color: var(--teal);
+      opacity: .6;
+    }
+    .tl-day-info { display: flex; flex-direction: column; gap: 3px; }
+    .tl-day-label {
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.3);
+    }
+    .tl-day-date {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--white);
+    }
 
     .tl-event::after {
       content: '';
@@ -2389,12 +2591,15 @@
 
     <!-- arc content (fades in once morph completes) -->
     <div id="heroArcContent">
-      <p class="arc-eyebrow">Chapter XVI &nbsp;·&nbsp; Hyderabad &nbsp;·&nbsp; 2026</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:2px;">
+        <img src="logo.png" alt="Oakridge MUN" style="width:32px;height:32px;object-fit:contain;opacity:.92;filter:drop-shadow(0 0 8px rgba(48,205,215,.35));" />
+        <p class="arc-eyebrow" style="margin:0;">Chapter XVI &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; Hyderabad</p>
+      </div>
       <h2 class="arc-title">OAKRIDGE<br><span class="teal">MUN</span></h2>
       <div class="hero-dates">
-        <span>24th July</span><span class="dot"></span>
-        <span>25th July</span><span class="dot"></span>
-        <span>26th July 2026</span>
+        <span>24 July,</span>
+        <span>25 July,</span>
+        <span>and 26 July 2026</span>
       </div>
       <div class="hero-ctas">
         <button class="hero-btn-primary" onclick="window.location.href='register.html'">Register Now &nbsp;→</button>
@@ -2421,9 +2626,44 @@
           <div class="cd-label">Secs</div>
         </div>
       </div>
+
     </div>
 
   </section>
+
+  <!-- ═══ THEME ═══ -->
+  <div class="theme-section" id="themeSection">
+    <div class="theme-bg-glow"></div>
+    <div class="theme-bg-word">RESOLVE</div>
+    <div class="theme-sticky">
+
+      <!-- intro overlay: "Presenting the conference theme" -->
+      <div class="theme-intro" id="themeIntro">
+        <p class="theme-intro-sub">Presenting the</p>
+        <p class="theme-intro-main">Conference Theme</p>
+      </div>
+
+      <div class="theme-inner">
+        <div class="theme-eyebrow" id="themeEyebrow">
+          <span class="theme-eyebrow-line"></span>
+          <span class="theme-eyebrow-text">Conference Theme &nbsp;·&nbsp; Chapter XVI</span>
+          <span class="theme-eyebrow-line"></span>
+        </div>
+        <h2 class="theme-title">
+          <span class="theme-word" id="tw0">Reclaiming</span>
+          <span class="theme-word" id="tw1">Dialogue,</span>
+          <br>
+          <span class="theme-word theme-word-teal" id="tw2">Resurrecting</span>
+          <span class="theme-word" id="tw3">Resolve.</span>
+        </h2>
+        <div class="theme-divider" id="themeDivider"></div>
+        <div class="theme-bottom">
+          <div class="theme-bottom-label" id="themeBottomLabel">Oakridge MUN XVI &nbsp;·&nbsp; July 2026</div>
+          <p class="theme-caption" id="themeCaption">In a world fractured by greed, power, and indifference — the right questions, the right choices, and the courage to stand by what is truly just, can still restore the world.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ MARQUEE ═══ -->
   <div class="marquee-section" aria-hidden="true">
@@ -2611,6 +2851,13 @@
     <div class="timeline-panels">
 
       <div class="timeline-panel active" id="day-1">
+        <div class="tl-day-header">
+          <span class="tl-day-num">01</span>
+          <div class="tl-day-info">
+            <span class="tl-day-label">Day One</span>
+            <span class="tl-day-date">24 July 2026</span>
+          </div>
+        </div>
         <div class="timeline">
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:00 – 9:00</span><span class="tl-dur">1 hr</span></div><div class="tl-event type-ceremony"><div class="tl-event-body"><span class="tl-name">Registration</span><span class="tl-tag">Arrival</span></div></div></div>
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">9:00 – 10:30</span><span class="tl-dur">1.5 hrs</span></div><div class="tl-event type-ceremony"><div class="tl-event-body"><span class="tl-name">Opening Ceremony</span><span class="tl-tag">Ceremony</span></div></div></div>
@@ -2624,6 +2871,13 @@
       </div>
 
       <div class="timeline-panel" id="day-2">
+        <div class="tl-day-header">
+          <span class="tl-day-num">02</span>
+          <div class="tl-day-info">
+            <span class="tl-day-label">Day Two</span>
+            <span class="tl-day-date">25 July 2026</span>
+          </div>
+        </div>
         <div class="timeline">
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:30 – 10:30</span><span class="tl-dur">2 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 3</span><span class="tl-tag">Committee</span></div></div></div>
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:30 – 10:45</span><span class="tl-dur">15 min</span></div><div class="tl-event type-break"><div class="tl-event-body"><span class="tl-name">Break</span><span class="tl-tag">Rest</span></div></div></div>
@@ -2637,6 +2891,13 @@
       </div>
 
       <div class="timeline-panel" id="day-3">
+        <div class="tl-day-header">
+          <span class="tl-day-num">03</span>
+          <div class="tl-day-info">
+            <span class="tl-day-label">Day Three</span>
+            <span class="tl-day-date">26 July 2026</span>
+          </div>
+        </div>
         <div class="timeline">
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:30 – 10:30</span><span class="tl-dur">2 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 6</span><span class="tl-tag">Committee</span></div></div></div>
           <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:30 – 1:30</span><span class="tl-dur">3 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 7</span><span class="tl-tag">Committee</span></div></div></div>
@@ -2685,28 +2946,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ═══ THEME ═══ -->
-  <div class="theme-section">
-    <div class="s-orb theme-orb-a"></div>
-    <div class="s-orb theme-orb-b"></div>
-    <div class="s-orb theme-orb-c"></div>
-    <div class="s-orb theme-orb-d"></div>
-    <div class="s-orb theme-orb-e"></div>
-    <div class="theme-bg-word">RESOLVE</div>
-    <div class="theme-inner">
-      <div class="theme-label">Conference Theme &nbsp;·&nbsp; Chapter XVI</div>
-      <h2 class="theme-title">
-        Reclaiming Dialogue,<br>
-        <span class="teal">Resurrecting</span> Resolve.
-      </h2>
-      <div class="theme-divider"></div>
-      <div class="theme-bottom">
-        <div class="theme-bottom-label">Oakridge MUN XVI<br>July 2026</div>
-        <p class="theme-caption">In a world fractured by greed, power, and indifference — the right questions, the right choices, and the courage to stand by what is truly just, can still restore the world.</p>
-      </div>
-    </div>
-  </div>
 
   <!-- ═══ BEYOND THE DAIS ═══ -->
   <div class="btd-wrapper">
@@ -2903,7 +3142,7 @@
       const canvas     = document.getElementById('morphCanvas');
       const introText  = document.getElementById('heroIntroText');
       const arcContent = document.getElementById('heroArcContent');
-      const bigTitle    = introText.querySelector('.morph-big-title');
+      const bigTitle    = introText.querySelector('.morph-big-title'); // may be null
       const scrollHint  = introText.querySelector('.morph-scroll-hint');
       const xviBg       = document.getElementById('heroXviBg');
 
@@ -3011,6 +3250,22 @@
       }
       window.addEventListener('scroll', () => { if (!morphComplete) window.scrollTo(0, 0); });
 
+      // Intercept in-page hash nav clicks while morph is still running
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', e => {
+          const targetId = link.getAttribute('href');
+          const target   = document.querySelector(targetId);
+          if (!target) return;
+          e.preventDefault();
+          if (!morphComplete) {
+            // fast-forward the animation then scroll
+            virtualScroll = MAX_SCROLL;
+            unlockScroll();
+          }
+          setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 60);
+        });
+      });
+
       function unlockScroll() {
         if (morphComplete) return;
         morphComplete = true;
@@ -3083,8 +3338,9 @@
       setTimeout(() => { phase = 'line'; wakeLoop(); }, 500);
       setTimeout(() => {
         phase = 'circle';
-        bigTitle.classList.add('visible');
+        if (bigTitle) bigTitle.classList.add('visible');
         xviBg.classList.add('visible');
+        document.querySelector('.circle-theme')?.classList.add('visible');
         wakeLoop();
         setTimeout(() => {
           scrollHint.classList.add('visible');
@@ -3505,6 +3761,106 @@
     }
   </script>
 
+  <!-- ── THEME scroll-driven animation ── -->
+  <script>
+  ;(function() {
+    const section  = document.getElementById('themeSection');
+    if (!section) return;
+
+    const intro    = document.getElementById('themeIntro');
+    const eyebrow  = document.getElementById('themeEyebrow');
+    const words    = [0,1,2,3].map(i => document.getElementById('tw' + i));
+    const divider  = document.getElementById('themeDivider');
+    const botLabel = document.getElementById('themeBottomLabel');
+    const caption  = document.getElementById('themeCaption');
+    const bgWord   = section.querySelector('.theme-bg-word');
+
+    // initial hidden state
+    const hide = (el, dy, blur) => {
+      el.style.opacity = '0';
+      el.style.transform = `translateY(${dy}px)`;
+      el.style.filter = `blur(${blur}px)`;
+    };
+    hide(eyebrow, 32, 10);
+    words.forEach(w => hide(w, 48, 14));
+    hide(botLabel, 24, 8);
+    hide(caption, 36, 10);
+    divider.style.opacity = '0';
+    divider.style.transform = 'scaleX(0)';
+    divider.style.transformOrigin = 'center center';
+
+    // smooth cubic ease-out
+    const ease = t => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3);
+    const map  = (v, a, b) => Math.max(0, Math.min(1, (v - a) / (b - a)));
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    function update() {
+      const rect  = section.getBoundingClientRect();
+      const total = section.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      const p = Math.max(0, Math.min(1, -rect.top / total));
+
+      // ── INTRO: "Presenting the / Conference Theme" ──
+      // fade in  [0 → 0.10], hold, fade out  [0.30 → 0.42]
+      const iIn  = ease(map(p, 0, 0.10));
+      const iOut = ease(map(p, 0.30, 0.42));
+      const iOp  = iIn * (1 - iOut);
+      const iBlur = lerp(12, 0, iIn) + lerp(0, 10, iOut);
+      intro.style.opacity   = iOp;
+      intro.style.transform = `translateY(${lerp(40, 0, iIn) + lerp(0, -30, iOut)}px)`;
+      intro.style.filter    = `blur(${iBlur}px)`;
+
+      // ── THEME CONTENT: starts after intro fades ──
+
+      // eyebrow  [0.40 → 0.48]
+      const ep = ease(map(p, 0.40, 0.48));
+      eyebrow.style.opacity   = ep;
+      eyebrow.style.transform = `translateY(${lerp(32, 0, ep)}px)`;
+      eyebrow.style.filter    = `blur(${lerp(10, 0, ep)}px)`;
+
+      // title words — stagger  [0.44 → 0.68]
+      words.forEach((w, i) => {
+        const s  = 0.44 + i * 0.055;
+        const wp = ease(map(p, s, s + 0.11));
+        w.style.opacity   = wp;
+        w.style.transform = `translateY(${lerp(48, 0, wp)}px)`;
+        w.style.filter    = `blur(${lerp(14, 0, wp)}px)`;
+      });
+
+      // divider  [0.64 → 0.73]
+      const dp = ease(map(p, 0.64, 0.73));
+      divider.style.opacity   = dp;
+      divider.style.transform = `scaleX(${dp})`;
+
+      // bottom label  [0.70 → 0.79]
+      const lp = ease(map(p, 0.70, 0.79));
+      botLabel.style.opacity   = lp;
+      botLabel.style.transform = `translateY(${lerp(24, 0, lp)}px)`;
+      botLabel.style.filter    = `blur(${lerp(8, 0, lp)}px)`;
+
+      // caption  [0.75 → 0.90]
+      const cp = ease(map(p, 0.75, 0.90));
+      caption.style.opacity   = cp;
+      caption.style.transform = `translateY(${lerp(36, 0, cp)}px)`;
+      caption.style.filter    = `blur(${lerp(10, 0, cp)}px)`;
+
+      // bg word parallax
+      if (bgWord) {
+        bgWord.style.transform = `translateY(calc(-50% + ${lerp(-40, 40, p)}px))`;
+      }
+    }
+
+    let rafPending = false;
+    window.addEventListener('scroll', () => {
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(() => { update(); rafPending = false; });
+      }
+    }, { passive: true });
+
+    update();
+  })();
+  </script>
 
 </body>
 </html>

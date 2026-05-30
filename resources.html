@@ -492,8 +492,8 @@
     }
 
     .doc-card {
-      background: linear-gradient(135deg, rgba(30,150,165,.1) 0%, rgba(0,20,50,.3) 100%);
-      border: 1px solid rgba(48,205,215,.14);
+      background: linear-gradient(135deg, rgba(188,154,110,.1) 0%, rgba(0,20,50,.3) 100%);
+      border: 1px solid rgba(188,154,110,.18);
       border-radius: 20px;
       padding: 32px 28px;
       display: flex;
@@ -515,29 +515,29 @@
       bottom: -30px; right: -30px;
       width: 120px; height: 120px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(48,205,215,.1) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(188,154,110,.12) 0%, transparent 70%);
       pointer-events: none;
     }
     .doc-card.revealed { opacity: 1; transform: translateY(0); }
     .doc-card:hover {
-      border-color: rgba(48,205,215,.3);
-      background: linear-gradient(135deg, rgba(30,150,165,.18) 0%, rgba(0,20,50,.35) 100%);
+      border-color: rgba(188,154,110,.38);
+      background: linear-gradient(135deg, rgba(188,154,110,.18) 0%, rgba(0,20,50,.35) 100%);
       transform: translateY(-5px);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 14px 40px rgba(0,0,0,.3), 0 0 40px rgba(48,205,215,.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 14px 40px rgba(0,0,0,.3), 0 0 40px rgba(188,154,110,.1);
     }
 
     .doc-icon {
       width: 56px; height: 56px;
       border-radius: 14px;
-      background: linear-gradient(135deg, rgba(48,205,215,.22), rgba(30,150,165,.12));
-      border: 1px solid rgba(48,205,215,.22);
-      box-shadow: 0 0 20px rgba(48,205,215,.12);
+      background: linear-gradient(135deg, rgba(188,154,110,.24), rgba(188,154,110,.1));
+      border: 1px solid rgba(188,154,110,.24);
+      box-shadow: 0 0 20px rgba(188,154,110,.12);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      color: var(--teal);
+      color: var(--gold);
       transition: box-shadow .3s;
     }
-    .doc-card:hover .doc-icon { box-shadow: 0 0 32px rgba(48,205,215,.25); }
+    .doc-card:hover .doc-icon { box-shadow: 0 0 32px rgba(188,154,110,.28); }
 
     .doc-body { flex: 1; display: flex; flex-direction: column; gap: 6px; }
     .doc-name {
@@ -554,9 +554,9 @@
       font-size: .52rem; font-weight: 800;
       letter-spacing: .16em; text-transform: uppercase;
       padding: 4px 10px; border-radius: 100px;
-      background: rgba(48,205,215,.12);
-      border: 1px solid rgba(48,205,215,.18);
-      color: var(--teal);
+      background: rgba(188,154,110,.14);
+      border: 1px solid rgba(188,154,110,.22);
+      color: var(--gold);
       width: fit-content;
     }
     .doc-tag.soon {
@@ -1309,12 +1309,12 @@
         <span class="section-num sr">02</span>
         <div class="section-header-text">
           <div class="section-title sr sr-d1">Essential Documents</div>
-          <div class="section-count">Procedure · Handbook</div>
+          <div class="section-count">Procedure · Presentation · Handbook</div>
         </div>
       </div>
       <div class="docs-grid">
 
-        <a class="doc-card" href="#">
+        <a class="doc-card" href="Oakridge%20MUN%20Rules.pdf" target="_blank" rel="noopener">
           <div class="doc-icon">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <rect x="4" y="2" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
@@ -1322,9 +1322,27 @@
             </svg>
           </div>
           <div class="doc-body">
-            <div class="doc-tag soon">Coming soon</div>
+            <div class="doc-tag">PDF</div>
             <div class="doc-name">Rules of Procedure</div>
             <div class="doc-desc">Full RoP governing debate, motions, voting, and conduct across all committees at Oakridge MUN XVI.</div>
+          </div>
+          <div class="doc-arrow">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </a>
+
+        <a class="doc-card" href="ROP%20Presentation.pdf" target="_blank" rel="noopener">
+          <div class="doc-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <rect x="3" y="4" width="16" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M8 15l-1 3M14 15l1 3M7 18h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M8 8.5h6M8 11h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="doc-body">
+            <div class="doc-tag">PDF</div>
+            <div class="doc-name">ROP Presentation</div>
+            <div class="doc-desc">Slide deck walkthrough of the Rules of Procedure — ideal for first-time delegates preparing for committee sessions.</div>
           </div>
           <div class="doc-arrow">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M10 5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1390,31 +1408,31 @@
           <div class="link-desc">Full-text access to UN resolutions, voting records, and official committee documents.</div>
         </a>
 
-        <a class="link-card" href="https://www.bbc.com/news/world" target="_blank" rel="noopener">
+        <a class="link-card" href="https://www.un.org/en/global-issues/international-law-and-justice" target="_blank" rel="noopener">
           <div class="link-card-top">
-            <span class="link-domain">bbc.com</span>
+            <span class="link-domain">un.org</span>
             <svg class="link-ext-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M10 4H6M10 4v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="link-title">BBC World News</div>
-          <div class="link-desc">Up-to-date global reporting — useful for understanding the current state of your committee's agenda.</div>
+          <div class="link-title">International Law & Justice</div>
+          <div class="link-desc">UN's official portal on international law, justice frameworks, and global legal standards.</div>
         </a>
 
-        <a class="link-card" href="https://www.cfr.org" target="_blank" rel="noopener">
+        <a class="link-card" href="https://news.un.org/en/news" target="_blank" rel="noopener">
           <div class="link-card-top">
-            <span class="link-domain">cfr.org</span>
+            <span class="link-domain">news.un.org</span>
             <svg class="link-ext-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M10 4H6M10 4v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="link-title">Council on Foreign Relations</div>
-          <div class="link-desc">In-depth policy briefs, country profiles, and expert analysis on international affairs and diplomacy.</div>
+          <div class="link-title">UN News</div>
+          <div class="link-desc">Official UN news service covering global affairs, Security Council updates, and humanitarian developments.</div>
         </a>
 
-        <a class="link-card" href="https://www.hrw.org" target="_blank" rel="noopener">
+        <a class="link-card" href="https://treaties.un.org/pages/showdetails.aspx?objid=0800000280158b1a" target="_blank" rel="noopener">
           <div class="link-card-top">
-            <span class="link-domain">hrw.org</span>
+            <span class="link-domain">treaties.un.org</span>
             <svg class="link-ext-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 10L10 4M10 4H6M10 4v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="link-title">Human Rights Watch</div>
-          <div class="link-desc">Detailed country and issue reports — essential for UNHRC delegates and human rights research.</div>
+          <div class="link-title">UN Treaty Collection</div>
+          <div class="link-desc">Comprehensive database of international treaties, conventions, and agreements deposited with the UN.</div>
         </a>
 
       </div>
@@ -1606,5 +1624,97 @@
 
     requestAnimationFrame(raf);
   </script>
+
+  <!-- ── PDF VIEWER MODAL ── -->
+  <div id="pdfModal" style="
+    display:none; position:fixed; inset:0; z-index:9000;
+    background:rgba(0,8,20,.92); backdrop-filter:blur(18px);
+    flex-direction:column; align-items:stretch;
+  ">
+    <!-- top bar -->
+    <div style="
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 20px; flex-shrink:0;
+      border-bottom:1px solid rgba(48,205,215,.12);
+      background:rgba(0,16,40,.7);
+    ">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="logo.png" style="width:28px;height:28px;object-fit:contain;opacity:.85;" />
+        <span id="pdfTitle" style="
+          font-family:'Montserrat';font-size:.78rem;font-weight:700;
+          letter-spacing:.06em;color:#FAF5ED;
+        "></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <a id="pdfDownload" href="#" download style="
+          font-family:'Montserrat';font-size:.65rem;font-weight:700;
+          letter-spacing:.1em;text-transform:uppercase;
+          color:rgba(250,245,237,.45);text-decoration:none;
+          padding:7px 14px;border:1px solid rgba(250,245,237,.12);
+          border-radius:8px;transition:color .2s,border-color .2s;
+        " onmouseover="this.style.color='#30CDD7';this.style.borderColor='rgba(48,205,215,.35)'"
+           onmouseout="this.style.color='rgba(250,245,237,.45)';this.style.borderColor='rgba(250,245,237,.12)'">
+          Download
+        </a>
+        <button onclick="closePdfModal()" style="
+          font-family:'Montserrat';background:none;
+          border:1px solid rgba(250,245,237,.12);border-radius:8px;
+          color:rgba(250,245,237,.55);cursor:pointer;
+          width:34px;height:34px;font-size:1.1rem;line-height:1;
+          transition:color .2s,border-color .2s;
+        " onmouseover="this.style.color='#FAF5ED';this.style.borderColor='rgba(250,245,237,.35)'"
+           onmouseout="this.style.color='rgba(250,245,237,.55)';this.style.borderColor='rgba(250,245,237,.12)'"
+        >✕</button>
+      </div>
+    </div>
+    <!-- iframe -->
+    <iframe id="pdfFrame" src="" style="
+      flex:1; border:none; width:100%; background:#1a1a2e;
+    "></iframe>
+  </div>
+
+  <script>
+    // Intercept doc-card clicks for PDF viewing
+    document.querySelectorAll('.doc-card[href$=".pdf"]').forEach(card => {
+      card.addEventListener('click', e => {
+        e.preventDefault();
+        const src   = card.getAttribute('href');
+        const title = card.querySelector('.doc-name').textContent;
+        openPdfModal(src, title);
+      });
+    });
+
+    function openPdfModal(src, title) {
+      const modal    = document.getElementById('pdfModal');
+      const frame    = document.getElementById('pdfFrame');
+      const titleEl  = document.getElementById('pdfTitle');
+      const dlBtn    = document.getElementById('pdfDownload');
+      titleEl.textContent = title;
+      frame.src           = src;
+      dlBtn.href          = src;
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePdfModal() {
+      const modal = document.getElementById('pdfModal');
+      const frame = document.getElementById('pdfFrame');
+      modal.style.display = 'hidden';
+      document.body.style.overflow = '';
+      // slight delay before clearing src so iframe doesn't flash
+      setTimeout(() => { frame.src = ''; modal.style.display = 'none'; }, 80);
+    }
+
+    // Close on backdrop click
+    document.getElementById('pdfModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('pdfModal')) closePdfModal();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closePdfModal();
+    });
+  </script>
+
 </body>
 </html>
