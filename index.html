@@ -1113,7 +1113,7 @@
     }
     .sg-body {
       display: block;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
     .sg-body p + p {
       margin-top: 16px;
@@ -1128,7 +1128,22 @@
       font-size: 1.12rem;
       color: rgba(250,245,237,.82);
     }
-    .sg-signature { margin-bottom: 32px; }
+    .sg-signature { margin-bottom: 28px; }
+    .sg-sincerely {
+      font-size: .92rem;
+      font-weight: 400;
+      color: rgba(250,245,237,.68);
+      margin-bottom: 8px;
+    }
+    .sg-sig-img {
+      display: block;
+      width: 160px;
+      height: auto;
+      margin-top: -40px;
+      margin-bottom: -40px;
+      opacity: .88;
+      filter: brightness(0) invert(1);
+    }
     .sg-sig-line {
       width: 80px;
       height: 2px;
@@ -2826,7 +2841,8 @@
         </div>
 
         <div class="sg-signature">
-          <div class="sg-sig-line"></div>
+          <p class="sg-sincerely">Sincerely,</p>
+          <img class="sg-sig-img" src="/sg_signature.svg" alt="Shrey Vajpayee — signature" loading="lazy" decoding="async" />
           <p class="sg-sig-name">Shrey Vajpayee</p>
           <p class="sg-sig-title">Secretary-General, Oakridge MUN XVI</p>
         </div>
