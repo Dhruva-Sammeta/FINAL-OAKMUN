@@ -1544,7 +1544,6 @@
         chip.classList.add('active');
         const filter = chip.dataset.filter;
         const allGuideCards = document.querySelectorAll('.guide-card');
-        const FADE_OUT = 190;
         const toShow = [], toHide = [];
 
         allGuideCards.forEach(card => {
@@ -1553,39 +1552,51 @@
           (show ? toShow : toHide).push(card);
         });
 
-        // Fade + shrink out
+        // EXIT: fast decisive shrink-out
         toHide.forEach(card => {
-          card.style.transition = 'opacity .17s ease, transform .19s cubic-bezier(.4,0,1,1)';
+          card.style.transition = 'opacity .12s ease, transform .14s cubic-bezier(.55,0,1,.45)';
           card.style.opacity = '0';
-          card.style.transform = 'scale(0.88) translateY(-6px)';
+          card.style.transform = 'scale(0.82) translateY(8px)';
           card.style.pointerEvents = 'none';
+        });
+
+        // STAYING: quick dip to acknowledge filter
+        toShow.forEach(card => {
+          if (card.style.display !== 'none') {
+            card.style.transition = 'opacity .1s ease, transform .1s ease';
+            card.style.opacity = '0.55';
+            card.style.transform = 'scale(0.96)';
+          }
         });
 
         setTimeout(() => {
           toHide.forEach(card => {
             card.style.display = 'none';
             card.style.transform = '';
+            card.style.transition = '';
             card.style.pointerEvents = '';
           });
 
           let delay = 0;
           toShow.forEach(card => {
             const wasHidden = card.style.display === 'none';
-            if (wasHidden) {
-              card.style.opacity = '0';
-              card.style.transform = 'translateY(14px) scale(0.94)';
-              card.style.display = '';
-            }
+            card.style.display = '';
+            card.style.opacity = '0';
+            card.style.transform = wasHidden ? 'translateY(22px) scale(0.88)' : 'scale(0.96)';
+
             const d = delay;
             setTimeout(() => {
-              card.style.transition = 'opacity .26s ease, transform .3s cubic-bezier(.2,.9,.3,1)';
+              // spring overshoot easing
+              card.style.transition = 'opacity .3s ease, transform .38s cubic-bezier(.34,1.56,.64,1)';
               card.style.opacity = '1';
               card.style.transform = 'translateY(0) scale(1)';
               card.style.pointerEvents = '';
+              setTimeout(() => { card.style.transition = ''; }, 420);
             }, d);
-            if (wasHidden) delay += 30;
+
+            delay += 20; // tight stagger
           });
-        }, FADE_OUT);
+        }, 160);
       });
     });
 
