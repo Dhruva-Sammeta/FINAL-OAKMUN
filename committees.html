@@ -1231,58 +1231,60 @@
         (matchesFilter && matchesSearch ? toShow : toHide).push(card);
       });
 
-      // — EXIT: cards leaving spin down and shrink out fast
-      toHide.forEach((card, i) => {
-        card.style.transition = 'opacity .12s ease, transform .14s cubic-bezier(.55,0,1,.45)';
+      // EXIT: fade + blur out cards that don't match
+      toHide.forEach(card => {
+        card.style.transition = 'opacity .2s ease, filter .2s ease, transform .2s ease';
         card.style.opacity = '0';
-        card.style.transform = 'scale(0.82) translateY(8px)';
+        card.style.filter = 'blur(6px)';
+        card.style.transform = 'scale(0.97)';
         card.style.pointerEvents = 'none';
       });
 
-      // — STAYING cards: quick subtle dip so the filter feels "acknowledged"
+      // ALL staying cards also fade + blur out — every card re-enters fresh with blur
       toShow.forEach(card => {
-        if (card.style.display !== 'none') {
-          card.style.transition = 'opacity .1s ease, transform .1s ease';
-          card.style.opacity = '0.55';
-          card.style.transform = 'scale(0.96)';
-        }
+        card.style.transition = 'opacity .18s ease, filter .18s ease';
+        card.style.opacity = '0';
+        card.style.filter = 'blur(8px)';
+        card.style.pointerEvents = 'none';
       });
 
       setTimeout(() => {
         // Collapse hidden cards
         toHide.forEach(card => {
           card.style.display = 'none';
+          card.style.filter = '';
           card.style.transform = '';
           card.style.transition = '';
           card.style.pointerEvents = '';
         });
 
-        // — ENTER: stagger in every card that should be visible
+        // ENTER: every visible card drifts up + sharpens in slowly
         let delay = 0;
         toShow.forEach(card => {
-          const wasHidden = card.style.display === 'none';
           card.style.display = '';
           card.style.opacity = '0';
-          card.style.transform = wasHidden
-            ? 'translateY(22px) scale(0.88)'
-            : 'scale(0.96)';
+          card.style.transform = 'translateY(20px)';
+          card.style.filter = 'blur(10px)';
 
           const d = delay;
           setTimeout(() => {
-            // spring overshoot easing — feels alive
-            card.style.transition = 'opacity .3s ease, transform .38s cubic-bezier(.34,1.56,.64,1)';
+            card.style.transition = 'opacity .65s cubic-bezier(0.4,0,0.2,1), transform .65s cubic-bezier(0.4,0,0.2,1), filter .65s cubic-bezier(0.4,0,0.2,1)';
             card.style.opacity = '1';
-            card.style.transform = 'translateY(0) scale(1)';
+            card.style.transform = 'translateY(0)';
+            card.style.filter = 'blur(0px)';
             card.style.pointerEvents = '';
-            // clean up so hover transitions aren't clobbered
-            setTimeout(() => { card.style.transition = ''; }, 420);
+            setTimeout(() => {
+              card.style.transition = '';
+              card.style.filter = '';
+              card.style.transform = '';
+            }, 700);
           }, d);
 
-          delay += 20; // tight stagger — snappy cascade
+          delay += 45; // slow cascade stagger
         });
 
         emptyState.style.display = toShow.length === 0 ? 'block' : 'none';
-      }, 160);
+      }, 220);
     }
 
     document.querySelectorAll('.filter-tag').forEach(tag => {
