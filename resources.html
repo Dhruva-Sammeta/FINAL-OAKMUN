@@ -1543,11 +1543,49 @@
         document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         const filter = chip.dataset.filter;
-        document.querySelectorAll('.guide-card').forEach(card => {
+        const allGuideCards = document.querySelectorAll('.guide-card');
+        const FADE_OUT = 190;
+        const toShow = [], toHide = [];
+
+        allGuideCards.forEach(card => {
           const cats = (card.dataset.category || '').split(' ');
           const show = filter === 'all' || cats.includes(filter);
-          card.style.display = show ? '' : 'none';
+          (show ? toShow : toHide).push(card);
         });
+
+        // Fade + shrink out
+        toHide.forEach(card => {
+          card.style.transition = 'opacity .17s ease, transform .19s cubic-bezier(.4,0,1,1)';
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.88) translateY(-6px)';
+          card.style.pointerEvents = 'none';
+        });
+
+        setTimeout(() => {
+          toHide.forEach(card => {
+            card.style.display = 'none';
+            card.style.transform = '';
+            card.style.pointerEvents = '';
+          });
+
+          let delay = 0;
+          toShow.forEach(card => {
+            const wasHidden = card.style.display === 'none';
+            if (wasHidden) {
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(14px) scale(0.94)';
+              card.style.display = '';
+            }
+            const d = delay;
+            setTimeout(() => {
+              card.style.transition = 'opacity .26s ease, transform .3s cubic-bezier(.2,.9,.3,1)';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0) scale(1)';
+              card.style.pointerEvents = '';
+            }, d);
+            if (wasHidden) delay += 30;
+          });
+        }, FADE_OUT);
       });
     });
 
