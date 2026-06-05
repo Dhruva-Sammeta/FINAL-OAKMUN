@@ -709,7 +709,7 @@
        MARQUEE TICKER
     ═══════════════════════════════════════ */
     .marquee-section {
-      background: var(--teal-light);
+      background: #27b0bd;
       overflow: hidden;
       padding: 14px 0;
     }
@@ -1278,22 +1278,43 @@
     .day-tab {
       font-family: 'Montserrat';
       font-size: .72rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: .08em;
       text-transform: uppercase;
-      color: rgba(250,245,237,.45);
+      color: rgba(250,245,237,.55);
       background: transparent;
-      border: none;
-      border-radius: 10px;
+      border: 1px solid transparent;
+      border-radius: 12px;
       padding: 12px 28px;
       cursor: pointer;
-      transition: background .25s, color .25s, box-shadow .25s;
       white-space: nowrap;
+      transition: transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .18s,
+                  background .25s, color .25s, border-color .25s;
+    }
+    .day-tab:hover {
+      transform: translateY(-3px);
+      color: #faf5ed;
+      background: rgba(250,245,237,.06);
+      border-color: rgba(250,245,237,.1);
+      box-shadow: 0 6px 15px rgba(250,245,237,.04);
     }
     .day-tab.active {
-      background: var(--teal);
+      background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%);
       color: var(--navy);
-      box-shadow: 0 0 16px rgba(48,205,215,.4);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 6px 18px rgba(48,205,215,.25);
+    }
+    .day-tab.active:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(48,205,215,.35);
+      background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%);
+      color: var(--navy);
+    }
+    .day-tab:active {
+      transform: translateY(0) scale(.98);
+    }
+    .day-tab.active:active {
+      box-shadow: 0 4px 12px rgba(48,205,215,.15);
     }
 
     .timeline-panels {
@@ -2072,7 +2093,6 @@
       width: 900px; height: 900px;
       background: radial-gradient(circle, rgba(48,205,215,.14) 0%, transparent 60%);
       pointer-events: none;
-      animation: pulse-ring 4s ease-out infinite;
     }
     .cta-banner::after {
       content: '';
@@ -2525,6 +2545,15 @@
     .sr-d1 { transition-delay: .1s; }
     .sr-d2 { transition-delay: .2s; }
     .sr-d3 { transition-delay: .3s; }
+
+    /* ── SECTION ORB SCROLL REVEAL OVERRIDES ── */
+    .s-orb.sr {
+      transform: none;
+      transition: opacity 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .s-orb.sr.sr-visible {
+      transform: none;
+    }
   </style>
 </head>
 <body>
@@ -2789,8 +2818,8 @@
   <!-- ═══ STATS ═══ -->
   <section class="stats-section">
     <img style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.05;z-index:0;pointer-events:none;" src="/conference_photos/11.webp" alt="" loading="lazy">
-    <div class="s-orb stats-orb-a"></div>
-    <div class="s-orb stats-orb-b"></div>
+    <div class="s-orb stats-orb-a sr"></div>
+    <div class="s-orb stats-orb-b sr"></div>
     <div class="stats-strip">
       <div class="stats-strip-item">
         <span class="ss-num">700<span class="ss-plus">+</span></span>
@@ -2816,8 +2845,8 @@
 
   <!-- ═══ SG LETTER ═══ -->
   <section class="sg-section">
-    <div class="s-orb sg-orb-a"></div>
-    <div class="s-orb sg-orb-b"></div>
+    <div class="s-orb sg-orb-a sr"></div>
+    <div class="s-orb sg-orb-b sr"></div>
     <div class="sg-inner">
 
       <div class="sg-photo-col">
@@ -2854,14 +2883,14 @@
 
   <!-- ═══ SCHEDULE ═══ -->
   <section class="schedule-section" id="schedule">
-    <div class="s-orb sch-orb-a"></div>
-    <div class="s-orb sch-orb-b"></div>
+    <div class="s-orb sch-orb-a sr"></div>
+    <div class="s-orb sch-orb-b sr"></div>
     <div class="schedule-header">
       <div>
         <p class="schedule-kicker sr">Oakridge MUN · Chapter XVI</p>
         <h2 class="schedule-title sr sr-d1">Conference<br>Schedule</h2>
       </div>
-      <div class="day-tabs">
+      <div class="day-tabs sr sr-d2">
         <button class="day-tab active" data-day="1">24 July · Day 1</button>
         <button class="day-tab" data-day="2">25 July · Day 2</button>
         <button class="day-tab" data-day="3">26 July · Day 3</button>
@@ -2869,7 +2898,7 @@
     </div>
 
     <!-- Color legend -->
-    <div class="schedule-legend">
+    <div class="schedule-legend sr sr-d3">
       <span class="legend-item"><span class="legend-dot d-committee"></span>Committee</span>
       <span class="legend-item"><span class="legend-dot d-ceremony"></span>Ceremony</span>
       <span class="legend-item"><span class="legend-dot d-social"></span>Social / Networking</span>
@@ -2880,7 +2909,7 @@
     <div class="timeline-panels">
 
       <div class="timeline-panel active" id="day-1">
-        <div class="tl-day-header">
+        <div class="tl-day-header sr">
           <span class="tl-day-num">01</span>
           <div class="tl-day-info">
             <span class="tl-day-label">Day One</span>
@@ -2900,7 +2929,7 @@
       </div>
 
       <div class="timeline-panel" id="day-2">
-        <div class="tl-day-header">
+        <div class="tl-day-header sr">
           <span class="tl-day-num">02</span>
           <div class="tl-day-info">
             <span class="tl-day-label">Day Two</span>
@@ -2920,7 +2949,7 @@
       </div>
 
       <div class="timeline-panel" id="day-3">
-        <div class="tl-day-header">
+        <div class="tl-day-header sr">
           <span class="tl-day-num">03</span>
           <div class="tl-day-info">
             <span class="tl-day-label">Day Three</span>
@@ -2941,8 +2970,8 @@
 
   <!-- ═══ COMMITTEES ═══ -->
   <section class="ctrl-chains-section" aria-label="Committees at a glance">
-    <div class="s-orb ctrl-orb-a"></div>
-    <div class="s-orb ctrl-orb-b"></div>
+    <div class="s-orb ctrl-orb-a sr"></div>
+    <div class="s-orb ctrl-orb-b sr"></div>
     <div class="ctrl-chains-sticky">
       <div class="ctrl-copy">
         <p class="ctrl-kicker">Oakridge MUN · Chapter XVI</p>
@@ -2978,8 +3007,8 @@
 
   <!-- ═══ BEYOND THE DAIS ═══ -->
   <div class="btd-wrapper">
-    <div class="s-orb btd-orb-a"></div>
-    <div class="s-orb btd-orb-b"></div>
+    <div class="s-orb btd-orb-a sr"></div>
+    <div class="s-orb btd-orb-b sr"></div>
   <section class="btd-section">
     <div class="btd-eyebrow">Chapter XVI · Beyond the Committees</div>
     <h2 class="btd-heading">More than <em>debate.</em></h2>
@@ -3015,8 +3044,8 @@
 
   <!-- ═══ FAQ ═══ -->
   <section class="faq-section" id="faq">
-    <div class="s-orb faq-orb-a"></div>
-    <div class="s-orb faq-orb-b"></div>
+    <div class="s-orb faq-orb-a sr"></div>
+    <div class="s-orb faq-orb-b sr"></div>
     <div class="faq-inner">
       <h2 class="faq-heading sr sr-d1" id="faqHeading">FAQ</h2>
       <p class="faq-sub sr" id="faqSub">Everything you need to know about Chapter XVI</p>
@@ -3154,7 +3183,7 @@
 
     <div class="footer-bottom">
       <p>© 2026 Oakridge International School. All rights reserved.</p>
-      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+      <p>Website designed and developed by <a href="#">Srijai Kodali</a> and <a href="https://www.linkedin.com/in/dhruva-sammeta-19198a291/" target="_blank" rel="noopener">Dhruva Sammeta</a></p>
     </div>
   </footer>
 
@@ -3645,10 +3674,16 @@
     });
 
     const firstPanel = document.getElementById('day-1');
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      firstPanel.classList.add('visible');
-      revealItems(firstPanel);
-    }));
+    const scheduleObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          firstPanel.classList.add('visible');
+          revealItems(firstPanel);
+          scheduleObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    scheduleObs.observe(firstPanel);
 
     // ── MOBILE MENU ──
     const menuBtn = document.getElementById('menuBtn');

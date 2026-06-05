@@ -121,30 +121,25 @@
       color: rgba(250,245,237,.38); text-decoration: none;
       margin-bottom: 32px;
       transition: color .2s;
-      animation: fadeUp .5s .05s cubic-bezier(0.4,0,0.2,1) both;
     }
     .hero-back:hover { color: var(--teal); }
     .hero-kicker {
       font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
       color: var(--teal); margin-bottom: 20px;
-      animation: fadeUp .5s .1s cubic-bezier(0.4,0,0.2,1) both;
     }
     .hero-title {
       font-size: clamp(3.5rem, 7vw, 6rem);
       font-weight: 900; letter-spacing: -.03em; line-height: .95;
       color: var(--white); margin-bottom: 28px;
-      animation: fadeUp .5s .15s cubic-bezier(0.4,0,0.2,1) both;
     }
     .hero-desc {
       font-size: clamp(.88rem, 1.4vw, 1.05rem);
       font-weight: 400; line-height: 1.7;
       color: rgba(250,245,237,.55);
       max-width: 520px; margin-bottom: 36px;
-      animation: fadeUp .5s .2s cubic-bezier(0.4,0,0.2,1) both;
     }
     .hero-badges {
       display: flex; flex-wrap: wrap; gap: 10px;
-      animation: fadeUp .5s .25s cubic-bezier(0.4,0,0.2,1) both;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -156,7 +151,6 @@
     .hero-badge-dot {
       width: 5px; height: 5px; border-radius: 50%;
       background: var(--teal);
-      animation: pulse-dot 2s ease-in-out infinite;
     }
     .hero-deco {
       font-size: clamp(4rem, 8vw, 7.5rem);
@@ -164,7 +158,6 @@
       color: transparent;
       -webkit-text-stroke: 1px rgba(48,205,215,.1);
       user-select: none; pointer-events: none;
-      animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both;
       text-align: right;
     }
 
@@ -340,17 +333,17 @@
   <section class="hero">
     <div class="hero-inner">
       <div>
-        <a href="/" class="hero-back">← Back to Home</a>
-        <div class="hero-kicker">Oakridge MUN XVI &nbsp;·&nbsp; Community Initiative</div>
-        <h1 class="hero-title">Orphanage<br>Initiative.</h1>
-        <p class="hero-desc">Every year, Oakridge MUN opens its doors to children from a local orphanage, giving them a seat at the table. This year, they join us as delegates of the United Nations General Assembly — debating, deliberating, and making their voices heard.</p>
-        <div class="hero-badges">
-          <div class="hero-badge"><span class="hero-badge-dot"></span>Chapter XVI</div>
-          <div class="hero-badge"><span class="hero-badge-dot"></span>UNGA</div>
-          <div class="hero-badge"><span class="hero-badge-dot"></span>Community Outreach</div>
+        <a href="/" class="hero-back sr">← Back to Home</a>
+        <div class="hero-kicker sr">Oakridge MUN XVI &nbsp;·&nbsp; Community Initiative</div>
+        <h1 class="hero-title sr">Orphanage<br>Initiative.</h1>
+        <p class="hero-desc sr">Every year, Oakridge MUN opens its doors to children from a local orphanage, giving them a seat at the table. This year, they join us as delegates of the United Nations General Assembly — debating, deliberating, and making their voices heard.</p>
+        <div class="hero-badges sr">
+          <div class="hero-badge">Chapter XVI</div>
+          <div class="hero-badge">UNGA</div>
+          <div class="hero-badge">Community Outreach</div>
         </div>
       </div>
-      <div class="hero-deco">XVI<br>Cares.</div>
+      <div class="hero-deco sr">XVI<br>Cares.</div>
     </div>
   </section>
 
@@ -456,7 +449,7 @@
 
     <div class="footer-bottom">
       <p>© 2026 Oakridge International School. All rights reserved.</p>
-      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+      <p>Website designed and developed by <a href="#">Srijai Kodali</a> and <a href="https://www.linkedin.com/in/dhruva-sammeta-19198a291/" target="_blank" rel="noopener">Dhruva Sammeta</a></p>
     </div>
   </footer>
 

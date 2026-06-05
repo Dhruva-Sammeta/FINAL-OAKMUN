@@ -21,19 +21,9 @@
       from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: .4; transform: scale(.65); }
-    }
-    @keyframes orb-a { from{transform:translate(0,0) scale(1)} to{transform:translate(7%,11%) scale(1.14)} }
-    @keyframes orb-b { from{transform:translate(0,0) scale(1)} to{transform:translate(-9%,-7%) scale(0.87)} }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-10px); }
+    @keyframes orbDrift {
+      from { transform: translate(0, 0); }
+      to   { transform: translate(60px, 80px); }
     }
 
     :root {
@@ -53,6 +43,40 @@
       overflow-x: clip;
       min-height: 100%;
     }
+
+    /* ── AMBIENT BACKGROUND ── */
+    .page-ambient {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none; overflow: hidden;
+    }
+    .page-ambient::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(48,205,215,.09) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+    .page-ambient::after {
+      content: '';
+      position: absolute;
+      top: -160px; left: -120px;
+      width: 800px; height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(48,205,215,.32) 0%, rgba(48,205,215,.12) 40%, transparent 70%);
+      filter: blur(40px);
+      animation: orbDrift 18s ease-in-out infinite alternate;
+    }
+    .page-orb-br {
+      position: fixed;
+      bottom: -140px; right: -100px;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30,150,165,.28) 0%, rgba(30,150,165,.10) 45%, transparent 70%);
+      filter: blur(45px);
+      pointer-events: none; z-index: 0;
+      animation: orbDrift 22s ease-in-out infinite alternate-reverse;
+    }
+
+    nav, main { position: relative; z-index: 1; }
 
     /* ── NAV ── */
     nav {
@@ -75,9 +99,7 @@
     }
     .nav-logo span { color: var(--teal); }
     .nav-center { display: flex; align-items: center; flex-shrink: 0; margin-left: 20px; }
-    .nav-links-group {
-      display: flex; gap: 22px; list-style: none;
-    }
+    .nav-links-group { display: flex; gap: 22px; list-style: none; }
     .nav-links-group.left  { padding: 0 18px 0 28px; }
     .nav-links-group.right { padding: 0 28px 0 18px; }
     .nav-links-group a {
@@ -85,16 +107,12 @@
       color: rgba(250,245,237,.48); text-decoration: none; transition: color .2s;
     }
     .nav-links-group a:hover, .nav-links-group a.active { color: var(--white); }
-    .nav-mark {
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; padding: 0 6px;
-    }
+    .nav-mark { display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0 6px; }
     .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); }
     .nav-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: 10px; }
     .nav-cta {
       background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%);
-      color: var(--navy);
-      font-family: 'Montserrat';
+      color: var(--navy); font-family: 'Montserrat';
       font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
       border: none; border-radius: 12px; padding: 10px 18px;
       cursor: pointer; white-space: nowrap;
@@ -155,107 +173,107 @@
     .mobile-nav a:last-child { border-bottom: none; }
     .mobile-nav a:hover { color: var(--teal); }
 
-    /* ── BG ORBS ── */
-    .pg-orb {
-      position: fixed; border-radius: 50%;
-      pointer-events: none; z-index: 0;
+    /* ── PAGE HERO ── */
+    .page-hero {
+      position: relative; width: 100%; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; padding: 120px 28px 80px; text-align: center;
     }
-    .pg-orb-a {
-      width: 60vw; height: 60vh; top: -10vh; left: -8vw;
-      background: rgba(30,150,165,.2); filter: blur(100px);
-      animation: orb-a 20s ease-in-out infinite alternate;
+    .page-hero-orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(72px); }
+    .page-hero-orb-a {
+      width: 520px; height: 520px; top: -120px; left: -80px;
+      background: radial-gradient(circle, rgba(48,205,215,.13) 0%, transparent 65%);
     }
-    .pg-orb-b {
-      width: 55vw; height: 55vh; bottom: 0; right: -8vw;
-      background: rgba(0,60,110,.35); filter: blur(90px);
-      animation: orb-b 26s ease-in-out infinite alternate;
+    .page-hero-orb-b {
+      width: 420px; height: 420px; bottom: -100px; right: -60px;
+      background: radial-gradient(circle, rgba(30,150,165,.1) 0%, transparent 65%);
     }
-
-    /* ── MAIN ── */
-    .page-wrap {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 100px 24px 80px;
-      position: relative;
-      z-index: 1;
-      text-align: center;
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(48,205,215,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(48,205,215,.04) 1px, transparent 1px);
+      background-size: 36px 36px; pointer-events: none;
     }
-
+    .page-hero-center {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 18px; max-width: 600px;
+    }
     .cs-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(188,154,110,.1);
-      border: 1px solid rgba(188,154,110,.28);
+      background: rgba(48,205,215,.08);
+      border: 1px solid rgba(48,205,215,.22);
       border-radius: 100px;
-      padding: 7px 18px;
-      font-size: .58rem;
+      padding: 8px 20px;
+      font-size: .62rem;
       font-weight: 800;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 40px;
-      animation: fadeUp .5s .1s cubic-bezier(0.4,0,0.2,1) both;
+      color: var(--teal);
+      margin-bottom: 24px;
     }
     .cs-dot {
       width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold);
-      animation: pulse-dot 1.8s ease-in-out infinite;
+      background: var(--teal);
     }
-
     .cs-icon {
       width: 88px; height: 88px;
       border-radius: 24px;
       background: rgba(48,205,215,.08);
       border: 1px solid rgba(48,205,215,.18);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 36px;
-      animation: fadeUp .5s .05s cubic-bezier(0.4,0,0.2,1) both, float 4s ease-in-out infinite 1s;
+      margin-bottom: 24px;
     }
     .cs-icon svg { width: 40px; height: 40px; color: var(--teal); }
-
-    .cs-title {
-      font-size: clamp(2.6rem, 5.5vw, 5rem);
-      font-weight: 900;
-      letter-spacing: -.04em;
-      line-height: 1;
-      color: var(--white);
-      margin-bottom: 20px;
-      animation: fadeUp .5s .15s cubic-bezier(0.4,0,0.2,1) both;
+    .page-hero-title {
+      font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 900;
+      letter-spacing: -.045em; line-height: .88; color: var(--white);
     }
-    .cs-title span { color: var(--teal); }
-
-    .cs-sub {
-      font-size: clamp(.88rem, 1.4vw, 1.05rem);
-      font-weight: 400;
-      line-height: 1.75;
-      color: rgba(250,245,237,.5);
-      max-width: 480px;
-      margin: 0 auto 48px;
-      animation: fadeUp .5s .22s cubic-bezier(0.4,0,0.2,1) both;
+    .page-hero-title span { color: var(--teal); }
+    .page-hero-sub {
+      font-size: clamp(.84rem, 1.4vw, .98rem); font-weight: 400;
+      color: rgba(250,245,237,.45); max-width: 460px; line-height: 1.75;
     }
-
-    .cs-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: rgba(250,245,237,.4);
-      text-decoration: none;
-      border: 1px solid rgba(250,245,237,.1);
-      border-radius: 100px;
-      padding: 10px 22px;
+    .alloc-divider {
+      width: 48px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--teal), transparent);
+      border: none; opacity: .4; margin: 8px 0;
+    }
+    .alloc-detail {
+      font-size: .76rem; font-weight: 500;
+      color: rgba(250,245,237,.35); line-height: 1.8; max-width: 400px;
+    }
+    .alloc-actions { display: flex; gap: 14px; margin-top: 12px; }
+    .alloc-btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Montserrat'; font-size: .68rem; font-weight: 800;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--navy);
+      background: linear-gradient(180deg, var(--teal) 0%, var(--teal-dark) 100%);
+      border: none; border-radius: 100px; padding: 12px 26px;
+      text-decoration: none; cursor: pointer;
+      transition: transform .18s, box-shadow .18s;
+      box-shadow: 0 6px 18px rgba(48,205,215,.25);
+    }
+    .alloc-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(48,205,215,.35); }
+    .alloc-btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Montserrat'; font-size: .68rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(250,245,237,.45); background: none;
+      border: 1px solid rgba(250,245,237,.12); border-radius: 100px; padding: 12px 26px;
+      text-decoration: none; cursor: pointer;
       transition: color .2s, border-color .2s;
-      animation: fadeUp .5s .3s cubic-bezier(0.4,0,0.2,1) both;
     }
-    .cs-back:hover { color: var(--white); border-color: rgba(250,245,237,.3); }
-    .cs-back svg { flex-shrink: 0; }
+    .alloc-btn-secondary:hover { color: var(--white); border-color: rgba(250,245,237,.3); }
+    .alloc-btn-secondary svg { flex-shrink: 0; }
+
+    /* ── Scroll reveal ── */
+    .sr { opacity: 0; transform: translateY(22px); transition: opacity .6s cubic-bezier(0.4,0,0.2,1), transform .6s cubic-bezier(0.4,0,0.2,1); }
+    .sr.sr-visible { opacity: 1; transform: translateY(0); }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
@@ -263,14 +281,32 @@
       .nav-center { display: none; }
       .nav-right .nav-cta { display: none; }
       .menu-btn { display: flex; }
+      .page-hero { min-height: 100vh; padding: 100px 24px 60px; }
       .cs-icon { width: 68px; height: 68px; border-radius: 18px; }
       .cs-icon svg { width: 30px; height: 30px; }
+      .alloc-actions { flex-direction: column; align-items: center; }
+    }
+    :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
+
+    /* ── AMBIENT FADE IN ── */
+    .ambient-wrapper {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      animation: fadeIn 1.2s ease-out both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <div class="pg-orb pg-orb-a"></div>
-  <div class="pg-orb pg-orb-b"></div>
+  <div class="ambient-wrapper">
+    <div class="page-ambient"></div>
+    <div class="page-orb-br"></div>
+  </div>
 
   <!-- Mobile nav -->
   <div class="mobile-nav" id="mobileNav">
@@ -292,7 +328,7 @@
         <ul class="nav-links-group left">
           <li><a href="/committees.html">Committees</a></li>
           <li><a href="/secretariat.html">Secretariat</a></li>
-          <li><a href="/allocations.html">Allocations</a></li>
+          <li><a href="/allocations.html" class="active">Allocations</a></li>
         </ul>
         <div class="nav-mark"><img src="logo.png" alt="Oakridge MUN" /></div>
         <ul class="nav-links-group right">
@@ -317,31 +353,40 @@
     </div>
   </nav>
 
-  <main class="page-wrap">
-    <div class="cs-eyebrow">
-      <span class="cs-dot"></span>
-      Coming Soon
+  <main>
+    <div class="page-hero">
+      <div class="page-hero-orb page-hero-orb-a"></div>
+      <div class="page-hero-orb page-hero-orb-b"></div>
+      <div class="page-hero-center">
+        <div class="cs-eyebrow sr">
+          <span class="cs-dot"></span>
+          Coming Soon
+        </div>
+        <div class="cs-icon sr">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="6" y="8" width="28" height="26" rx="3"/>
+            <path d="M13 8V5M27 8V5"/>
+            <path d="M6 16h28"/>
+            <path d="M13 23h4M23 23h4M13 29h4M23 29h4"/>
+          </svg>
+        </div>
+        <h1 class="page-hero-title sr">Committee<br><span>Allocations</span></h1>
+        <p class="page-hero-sub sr">Country and portfolio allocations for all eighteen committees will be published here once registration closes.</p>
+        <hr class="alloc-divider sr" />
+        <p class="alloc-detail sr">Registered delegates will be notified by email once allocations are finalised. In the meantime, explore our committees or review the delegation guidelines.</p>
+        <div class="alloc-actions sr">
+          <a href="/committees.html" class="alloc-btn-primary">Explore Committees</a>
+          <a href="/" class="alloc-btn-secondary">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back to Home
+          </a>
+        </div>
+      </div>
     </div>
-
-    <div class="cs-icon">
-      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="6" y="8" width="28" height="26" rx="3"/>
-        <path d="M13 8V5M27 8V5"/>
-        <path d="M6 16h28"/>
-        <path d="M13 23h4M23 23h4M13 29h4M23 29h4"/>
-      </svg>
-    </div>
-
-    <h1 class="cs-title">Committee<br><span>Allocations</span></h1>
-    <p class="cs-sub">Country and portfolio allocations will be published here once registration closes. Check back closer to the conference.</p>
-
-    <a href="/" class="cs-back">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Back to Home
-    </a>
   </main>
 
   <script>
+    /* Mobile nav */
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
     menuBtn.addEventListener('click', e => {
@@ -354,6 +399,12 @@
         mobileNav.classList.remove('open');
       }
     });
+
+    /* Scroll reveal */
+    const srObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('sr-visible'); srObserver.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.sr').forEach(el => srObserver.observe(el));
   </script>
 </body>
 </html>
