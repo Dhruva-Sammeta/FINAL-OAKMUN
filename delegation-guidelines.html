@@ -94,15 +94,15 @@
       pointer-events: none;
     }
     .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 60px; position: relative; z-index: 1; }
-    .hero-back { display: inline-flex; align-items: center; gap: 8px; font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(250,245,237,.38); text-decoration: none; margin-bottom: 32px; transition: color .2s; animation: fadeUp .5s .05s cubic-bezier(0.4,0,0.2,1) both; }
+    .hero-back { display: inline-flex; align-items: center; gap: 8px; font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(250,245,237,.38); text-decoration: none; margin-bottom: 32px; transition: color .2s; }
     .hero-back:hover { color: var(--teal); }
-    .hero-kicker { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; animation: fadeUp .5s .1s cubic-bezier(0.4,0,0.2,1) both; }
-    .hero-title { font-size: clamp(3rem, 6.5vw, 5.5rem); font-weight: 900; letter-spacing: -.03em; line-height: .95; color: var(--white); margin-bottom: 28px; animation: fadeUp .5s .15s cubic-bezier(0.4,0,0.2,1) both; }
-    .hero-desc { font-size: clamp(.88rem, 1.4vw, 1.05rem); font-weight: 400; line-height: 1.7; color: rgba(250,245,237,.5); max-width: 520px; margin-bottom: 36px; animation: fadeUp .5s .2s cubic-bezier(0.4,0,0.2,1) both; }
-    .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; animation: fadeUp .5s .25s cubic-bezier(0.4,0,0.2,1) both; }
+    .hero-kicker { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; }
+    .hero-title { font-size: clamp(3rem, 6.5vw, 5.5rem); font-weight: 900; letter-spacing: -.03em; line-height: .95; color: var(--white); margin-bottom: 28px; }
+    .hero-desc { font-size: clamp(.88rem, 1.4vw, 1.05rem); font-weight: 400; line-height: 1.7; color: rgba(250,245,237,.5); max-width: 520px; margin-bottom: 36px; }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; }
     .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 100px; background: rgba(48,205,215,.06); border: 1px solid rgba(48,205,215,.2); font-size: .56rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); }
-    .hero-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); animation: pulse-dot 2s ease-in-out infinite; }
-    .hero-deco { font-size: clamp(5rem, 10vw, 8.5rem); font-weight: 900; letter-spacing: -.04em; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(48,205,215,.1); user-select: none; pointer-events: none; animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both; }
+    .hero-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); }
+    .hero-deco { font-size: clamp(5rem, 10vw, 8.5rem); font-weight: 900; letter-spacing: -.04em; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(48,205,215,.1); user-select: none; pointer-events: none; }
 
     /* ── COMING SOON ── */
     .coming-section {
@@ -134,7 +134,7 @@
       font-size: .6rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
       color: var(--teal);
     }
-    .coming-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse-dot 1.8s ease-in-out infinite; }
+    .coming-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
 
     /* ── FOOTER ── */
     footer { background: #001223; padding: 72px 56px 0; position: relative; overflow: hidden; }
@@ -237,17 +237,17 @@
   <section class="hero">
     <div class="hero-inner">
       <div>
-        <a href="/" class="hero-back">← Back to Home</a>
-        <div class="hero-kicker">Oakridge MUN XVI &nbsp;·&nbsp; Delegate Resources</div>
-        <h1 class="hero-title">Delegation<br>Guidelines.</h1>
-        <p class="hero-desc">Everything your delegation needs to know — conduct expectations, preparation requirements, and conference protocols for Oakridge MUN XVI.</p>
-        <div class="hero-badges">
-          <div class="hero-badge"><span class="hero-badge-dot"></span>All Delegates</div>
-          <div class="hero-badge"><span class="hero-badge-dot"></span>Chapter XVI</div>
-          <div class="hero-badge"><span class="hero-badge-dot"></span>Guidelines</div>
+        <a href="/" class="hero-back sr">← Back to Home</a>
+        <div class="hero-kicker sr">Oakridge MUN XVI &nbsp;·&nbsp; Delegate Resources</div>
+        <h1 class="hero-title sr">Delegation<br>Guidelines.</h1>
+        <p class="hero-desc sr">Everything your delegation needs to know — conduct expectations, preparation requirements, and conference protocols for Oakridge MUN XVI.</p>
+        <div class="hero-badges sr">
+          <div class="hero-badge">All Delegates</div>
+          <div class="hero-badge">Chapter XVI</div>
+          <div class="hero-badge">Guidelines</div>
         </div>
       </div>
-      <div class="hero-deco">DG</div>
+      <div class="hero-deco sr">DG</div>
     </div>
   </section>
 
@@ -263,7 +263,6 @@
       <h2 class="coming-title">Guidelines Coming Soon</h2>
       <p class="coming-desc">The official Delegation Guidelines for Oakridge MUN XVI are being finalised by the Secretariat. They will be published here ahead of the conference and cover everything from delegation conduct to preparation expectations.</p>
       <div class="coming-badge">
-        <span class="coming-badge-dot"></span>
         Publishing ahead of conference
       </div>
     </div>
@@ -306,7 +305,7 @@
     </div>
     <div class="footer-bottom">
       <p>© 2026 Oakridge International School. All rights reserved.</p>
-      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+      <p>Website designed and developed by <a href="#">Srijai Kodali</a> and <a href="https://www.linkedin.com/in/dhruva-sammeta-19198a291/" target="_blank" rel="noopener">Dhruva Sammeta</a></p>
     </div>
   </footer>
 

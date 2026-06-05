@@ -256,7 +256,6 @@
       justify-content: space-between;
       gap: 40px;
       border-bottom: 1px solid rgba(48,205,215,.12);
-      animation: fadeUp .6s .05s cubic-bezier(0.4,0,0.2,1) both;
       position: relative;
     }
     .hero::after {
@@ -310,7 +309,6 @@
     .coming-badge-dot {
       width: 6px; height: 6px; border-radius: 50%;
       background: var(--teal);
-      animation: pulse-dot 2s ease-in-out infinite;
     }
     .coming-badge-text {
       font-size: .6rem; font-weight: 800;
@@ -674,6 +672,7 @@
     .sr-d1 { transition-delay: .1s; }
     .sr-d2 { transition-delay: .2s; }
     .sr-d3 { transition-delay: .3s; }
+    .sr-d4 { transition-delay: .4s; }
 
     /* ── FOCUS VISIBLE ── */
     :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
@@ -871,16 +870,27 @@
       .stat-num { font-size: 2rem; }
       .section-num { font-size: 3rem; }
     }
+
+    /* ── AMBIENT FADE IN ── */
+    .ambient-wrapper {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      animation: fadeIn 1.2s ease-out both;
+    }
   </style>
 
 </head>
 <body>
 
   <!-- Page ambient orbs -->
-  <div class="pg-orb pg-orb-a"></div>
-  <div class="pg-orb pg-orb-b"></div>
-  <div class="pg-orb pg-orb-c"></div>
-  <div class="pg-orb pg-orb-d"></div>
+  <div class="ambient-wrapper">
+    <div class="pg-orb pg-orb-a"></div>
+    <div class="pg-orb pg-orb-b"></div>
+    <div class="pg-orb pg-orb-c"></div>
+    <div class="pg-orb pg-orb-d"></div>
+  </div>
 
   <!-- Mobile nav -->
     <!-- Mobile nav drawer -->
@@ -933,21 +943,20 @@
     <!-- HERO -->
     <div class="hero">
       <div class="hero-left">
-        <div class="hero-kicker">Oakridge MUN XVI · Chapter Resources</div>
-        <h1 class="hero-title">Resources.</h1>
-        <p class="hero-sub">Everything you need to prepare — background guides, procedure documents, delegate handbook, and research links. Updated as the conference approaches.</p>
+        <div class="hero-kicker sr">Oakridge MUN XVI · Chapter Resources</div>
+        <h1 class="hero-title sr sr-d1">Resources.</h1>
+        <p class="hero-sub sr sr-d2">Everything you need to prepare — background guides, procedure documents, delegate handbook, and research links. Updated as the conference approaches.</p>
       </div>
-      <div class="hero-right">
+      <div class="hero-right sr sr-d3">
         <div class="hero-count">XVI</div>
         <div class="coming-badge">
-          <span class="coming-badge-dot"></span>
           <span class="coming-badge-text">Guides uploading soon</span>
         </div>
       </div>
     </div>
 
     <!-- MARQUEE STRIP -->
-    <div class="marquee-strip">
+    <div class="marquee-strip sr sr-d4">
       <div class="marquee-track">
         <!-- first copy -->
         <span class="marquee-item">DISEC</span><span class="marquee-sep"></span>
@@ -994,31 +1003,31 @@
 
     <!-- STATS BAR -->
     <div class="stats-bar">
-      <div class="stat-item">
+      <div class="stat-item sr">
         <div class="stat-num">19</div>
         <div class="stat-label">Committees</div>
       </div>
-      <div class="stat-item">
+      <div class="stat-item sr sr-d1">
         <div class="stat-num">3</div>
         <div class="stat-label">Days</div>
       </div>
-      <div class="stat-item">
+      <div class="stat-item sr sr-d2">
         <div class="stat-num">July</div>
         <div class="stat-label">24 · 25 · 26</div>
       </div>
-      <div class="stat-item">
+      <div class="stat-item sr sr-d3">
         <div class="stat-num">XVI</div>
         <div class="stat-label">Chapter</div>
       </div>
     </div>
 
     <!-- BACKGROUND GUIDES -->
-    <div class="section" style="animation: fadeUp .6s .12s cubic-bezier(0.4,0,0.2,1) both;">
+    <div class="section">
       <div class="section-header">
         <span class="section-num sr">01</span>
         <div class="section-header-text">
           <div class="section-title sr sr-d1">Background Guides</div>
-          <div class="section-count">19 committees · uploading July 2026</div>
+          <div class="section-count sr sr-d2">19 committees · uploading July 2026</div>
         </div>
       </div>
 
@@ -1304,12 +1313,12 @@
     </div>
 
     <!-- DOCUMENTS -->
-    <div class="section" style="animation: fadeUp .6s .2s cubic-bezier(0.4,0,0.2,1) both;">
+    <div class="section">
       <div class="section-header">
         <span class="section-num sr">02</span>
         <div class="section-header-text">
           <div class="section-title sr sr-d1">Essential Documents</div>
-          <div class="section-count">Procedure · Presentation · Handbook</div>
+          <div class="section-count sr sr-d2">Procedure · Presentation · Handbook</div>
         </div>
       </div>
       <div class="docs-grid">
@@ -1371,12 +1380,12 @@
     </div>
 
     <!-- RESEARCH LINKS -->
-    <div class="section" style="animation: fadeUp .6s .28s cubic-bezier(0.4,0,0.2,1) both;">
+    <div class="section">
       <div class="section-header">
         <span class="section-num sr">03</span>
         <div class="section-header-text">
           <div class="section-title sr sr-d1">Research Links</div>
-          <div class="section-count">External sources · UN databases · News</div>
+          <div class="section-count sr sr-d2">External sources · UN databases · News</div>
         </div>
       </div>
       <div class="links-grid">
@@ -1492,7 +1501,7 @@
     </div>
     <div class="footer-bottom">
       <p>© 2026 Oakridge International School. All rights reserved.</p>
-      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+      <p>Website designed and developed by <a href="#">Srijai Kodali</a> and <a href="https://www.linkedin.com/in/dhruva-sammeta-19198a291/" target="_blank" rel="noopener">Dhruva Sammeta</a></p>
     </div>
   </footer>
 
