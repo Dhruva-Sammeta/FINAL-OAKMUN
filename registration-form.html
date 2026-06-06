@@ -34,7 +34,8 @@
       font-family: 'Montserrat';
       background: var(--navy);
       color: var(--white);
-      overflow-x: hidden;
+      overflow-x: clip;
+      -webkit-overflow-scrolling: touch;
       height: 100%;
     }
 
@@ -144,7 +145,7 @@
     .mobile-nav a:hover { color: var(--teal); }
 
     /* ── PAGE ── */
-    html, body { height: auto; overflow-x: hidden; }
+    html, body { height: auto; overflow-x: clip; -webkit-overflow-scrolling: touch; }
 
     /* ── BACK BUTTON ── */
     .back-btn {
