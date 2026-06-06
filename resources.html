@@ -137,7 +137,7 @@
       transition: opacity .4s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1), padding .6s cubic-bezier(0.4,0,0.2,1);
     }
     .nav-links-group.left  { padding: 0 18px 0 28px; max-width: 400px; }
-    .nav-links-group.right { padding: 0 28px 0 18px; max-width: 400px; }
+    .nav-links-group.right { padding: 0 8px 0 18px; max-width: 400px; }
     .nav-links-group a {
       font-size: .64rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
       color: rgba(250,245,237,.48); text-decoration: none; transition: color .2s;
@@ -164,7 +164,7 @@
                   opacity .45s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1), padding .6s cubic-bezier(0.4,0,0.2,1);
       box-shadow: 0 6px 18px rgba(2,20,26,0.06);
     }
-    .nav-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(2,20,26,0.08); }
+    .nav-cta:hover { box-shadow: 0 12px 30px rgba(2,20,26,0.08); }
     .nav-cta:active { transform: translateY(0) scale(.997); box-shadow: 0 6px 16px rgba(2,20,26,0.06); }
     nav.scrolled .nav-logo        { opacity: 0; max-width: 0; }
     nav.scrolled .nav-links-group { opacity: 0; max-width: 0; padding: 0; pointer-events: none; }
@@ -178,7 +178,7 @@
       nav.hover-expanded .nav-logo { opacity: 1 !important; max-width: 220px !important; }
       nav.hover-expanded .nav-links-group { opacity: 1 !important; max-width: 400px !important; pointer-events: auto !important; }
       nav.hover-expanded .nav-links-group.left { padding: 0 18px 0 28px !important; }
-      nav.hover-expanded .nav-links-group.right { padding: 0 28px 0 18px !important; }
+      nav.hover-expanded .nav-links-group.right { padding: 0 8px 0 18px !important; }
       nav.hover-expanded .nav-right { opacity: 1 !important; max-width: 280px !important; margin-left: 10px !important; }
       nav.hover-expanded .nav-center { margin-left: 20px !important; }
       nav.hover-expanded .nav-pill { padding: 10px 10px 10px 28px !important; border-radius: 100px !important; }
@@ -1543,11 +1543,66 @@
         document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         const filter = chip.dataset.filter;
-        document.querySelectorAll('.guide-card').forEach(card => {
+        const allGuideCards = document.querySelectorAll('.guide-card');
+        const toShow = [], toHide = [];
+
+        allGuideCards.forEach(card => {
           const cats = (card.dataset.category || '').split(' ');
           const show = filter === 'all' || cats.includes(filter);
-          card.style.display = show ? '' : 'none';
+          (show ? toShow : toHide).push(card);
         });
+
+        // EXIT: fade + blur out cards that don't match
+        toHide.forEach(card => {
+          card.style.transition = 'opacity .2s ease, filter .2s ease, transform .2s ease';
+          card.style.opacity = '0';
+          card.style.filter = 'blur(6px)';
+          card.style.transform = 'scale(0.97)';
+          card.style.pointerEvents = 'none';
+        });
+
+        // ALL staying cards also fade + blur out — every card re-enters fresh with blur
+        toShow.forEach(card => {
+          card.style.transition = 'opacity .18s ease, filter .18s ease';
+          card.style.opacity = '0';
+          card.style.filter = 'blur(8px)';
+          card.style.pointerEvents = 'none';
+        });
+
+        setTimeout(() => {
+          toHide.forEach(card => {
+            card.style.display = 'none';
+            card.style.filter = '';
+            card.style.transform = '';
+            card.style.transition = '';
+            card.style.pointerEvents = '';
+          });
+
+          // ENTER: every visible card drifts up + sharpens in slowly
+          let delay = 16;
+          toShow.forEach(card => {
+            card.style.display = '';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.filter = 'blur(10px)';
+
+            const d = delay;
+            setTimeout(() => {
+              card.style.transition = 'opacity .65s cubic-bezier(0.4,0,0.2,1), transform .65s cubic-bezier(0.4,0,0.2,1), filter .65s cubic-bezier(0.4,0,0.2,1)';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+              card.style.filter = 'blur(0px)';
+              card.style.pointerEvents = '';
+              setTimeout(() => {
+                card.style.transition = '';
+                card.style.filter = '';
+                card.style.transform = '';
+              }, 700);
+            }, d);
+
+            delay += 45; // slow cascade stagger
+          });
+        }, 220);
       });
     });
 
