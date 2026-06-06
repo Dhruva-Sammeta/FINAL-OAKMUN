@@ -1036,6 +1036,14 @@
     @media (prefers-reduced-motion: reduce) {
       .pg-orb { animation: none !important; }
     }
+
+    /* ── SCROLL REVEAL ── */
+    .sr { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(0.4,0,0.2,1), transform .7s cubic-bezier(0.4,0,0.2,1); }
+    .sr.sr-visible { opacity: 1; transform: translateY(0); }
+    .sr-d1 { transition-delay: .1s; }
+    .sr-d2 { transition-delay: .2s; }
+    .sr-d3 { transition-delay: .3s; }
+    .sr-d4 { transition-delay: .4s; }
   </style>
 
 </head>
@@ -1094,13 +1102,13 @@
     <div class="hero-bg-overlay"></div>
     <div class="hero-content">
       <div class="hero-top">
-        <a class="back-link" href="/committees.html">Back to Committees</a>
+        <a class="back-link sr" href="/committees.html">Back to Committees</a>
       </div>
       <div class="hero-bottom">
         <div class="hero-rule"></div>
-        <p class="committee-kicker" id="committeeType">Committee</p>
-        <h1 class="committee-title" id="committeeTitle">DISEC</h1>
-        <p class="committee-subtitle" id="committeeSubtitle"></p>
+        <p class="committee-kicker sr sr-d1" id="committeeType">Committee</p>
+        <h1 class="committee-title sr sr-d2" id="committeeTitle">DISEC</h1>
+        <p class="committee-subtitle sr sr-d3" id="committeeSubtitle"></p>
       </div>
     </div>
     <div class="hero-panel" id="heroPanel" style="display:none">
@@ -1451,6 +1459,16 @@
     navEl.addEventListener('mouseleave', () => {
       navEl.classList.remove('hover-expanded');
     });
+
+    // ── SCROLL REVEAL ──
+    (function() {
+      const srEls = document.querySelectorAll('.sr');
+      if (!srEls.length) return;
+      const srObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('sr-visible'); srObs.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      srEls.forEach(el => srObs.observe(el));
+    })();
   </script>
 
   <!-- Smooth Scrolling (Lenis) -->
