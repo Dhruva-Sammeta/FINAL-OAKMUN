@@ -20,7 +20,7 @@
       --navy: #003057; --teal: #30CDD7; --teal-dark: #1E96A5;
       --teal-light: #B4EBF5; --white: #FAF5ED; --gold: #BC9A6E;
     }
-    html, body { font-family: 'Montserrat'; background: var(--navy); color: var(--white); overflow-x: hidden; min-height: 100%; }
+    html, body { font-family: 'Montserrat'; background: var(--navy); color: var(--white); overflow-x: clip; -webkit-overflow-scrolling: touch; min-height: 100%; }
 
     /* ── NAV ── */
     nav { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 200; animation: navSlideDown .45s cubic-bezier(0.4,0,0.2,1) both; }
