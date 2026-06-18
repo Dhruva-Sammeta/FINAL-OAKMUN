@@ -475,23 +475,59 @@
     .alloc-matrix-search::placeholder { color: rgba(250,245,237,.2); }
     .alloc-matrix-search:focus { border-color: rgba(48,205,215,.35); }
 
-    .alloc-matrix-select {
-      background: rgba(48,205,215,.04); border: 1px solid rgba(48,205,215,.14);
-      border-radius: 12px; padding: 10px 38px 10px 14px;
-      font-family: 'Montserrat'; font-size: .7rem; font-weight: 600;
-      color: rgba(250,245,237,.5); outline: none; cursor: pointer;
-      appearance: none; -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='rgba(48,205,215,.45)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 12px center;
-      transition: border-color .2s; min-width: 180px;
-    }
-    .alloc-matrix-select:focus { border-color: rgba(48,205,215,.35); }
-    .alloc-matrix-select option { background: #020c16; color: var(--white); }
-
     .alloc-matrix-count {
       font-size: .6rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
       color: rgba(250,245,237,.2); margin-left: auto; white-space: nowrap;
       align-self: center;
+    }
+
+    /* ── COMMITTEE TABS ── */
+    .alloc-tabs-outer {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    /* fade hint edges */
+    .alloc-tabs-outer::before,
+    .alloc-tabs-outer::after {
+      content: '';
+      position: absolute; top: 0; bottom: 0; width: 40px; z-index: 2; pointer-events: none;
+    }
+    .alloc-tabs-outer::before { left: 0;  background: linear-gradient(to right, #020C16 30%, transparent); }
+    .alloc-tabs-outer::after  { right: 0; background: linear-gradient(to left,  #020C16 30%, transparent); }
+    .alloc-tabs {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 1px solid rgba(48,205,215,.1);
+    }
+    .alloc-tabs::-webkit-scrollbar { display: none; }
+    .alloc-tab {
+      flex-shrink: 0;
+      padding: 11px 20px;
+      font-family: 'Montserrat';
+      font-size: .54rem; font-weight: 800;
+      letter-spacing: .11em; text-transform: uppercase;
+      color: rgba(250,245,237,.28);
+      background: none; border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      margin-bottom: -1px;
+      transition: color .18s, border-color .18s, background .18s;
+      white-space: nowrap;
+    }
+    .alloc-tab:hover:not(.active) {
+      color: rgba(250,245,237,.6);
+      background: rgba(48,205,215,.03);
+    }
+    .alloc-tab.active {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+      background: rgba(48,205,215,.05);
+    }
+
+    @media (max-width: 768px) {
+      .alloc-tabs-outer::before,
+      .alloc-tabs-outer::after { width: 24px; }
     }
 
     /* table outer */
@@ -781,29 +817,33 @@
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M9.8 9.8l2.4 2.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           <input type="text" class="alloc-matrix-search" id="matrixSearch" placeholder="Search name, school or country…" autocomplete="off" />
         </div>
-        <select class="alloc-matrix-select" id="committeeFilter">
-          <option value="all">All Committees</option>
-          <option value="DISEC">DISEC</option>
-          <option value="UNSC">UNSC</option>
-          <option value="UNHRC">UNHRC</option>
-          <option value="JCC-1">JCC-1</option>
-          <option value="JCC-2">JCC-2</option>
-          <option value="HCC">HCC</option>
-          <option value="Lok Sabha">Lok Sabha</option>
-          <option value="Armageddon">Armageddon</option>
-          <option value="OIC">OIC</option>
-          <option value="UN Women">UN Women</option>
-          <option value="COPUOS">COPUOS</option>
-          <option value="US Senate">US Senate</option>
-          <option value="UNODC">UNODC</option>
-          <option value="ECOFIN">ECOFIN</option>
-          <option value="SC-UNC">SC-UNC</option>
-          <option value="FIFA">FIFA</option>
-          <option value="WHO">WHO</option>
-          <option value="SOCHUM">SOCHUM</option>
-          <option value="IP">International Press</option>
-        </select>
-        <div class="alloc-matrix-count" id="matrixCount">— delegates</div>
+        <div class="alloc-matrix-count" id="matrixCount">20 delegates</div>
+      </div>
+
+      <!-- COMMITTEE TABS -->
+      <div class="alloc-tabs-outer">
+        <div class="alloc-tabs" id="committeeTabs">
+          <button class="alloc-tab active" data-committee="all">All</button>
+          <button class="alloc-tab" data-committee="DISEC">DISEC</button>
+          <button class="alloc-tab" data-committee="UNSC">UNSC</button>
+          <button class="alloc-tab" data-committee="UNHRC">UNHRC</button>
+          <button class="alloc-tab" data-committee="JCC-1">JCC-1</button>
+          <button class="alloc-tab" data-committee="JCC-2">JCC-2</button>
+          <button class="alloc-tab" data-committee="HCC">HCC</button>
+          <button class="alloc-tab" data-committee="Lok Sabha">Lok Sabha</button>
+          <button class="alloc-tab" data-committee="Armageddon">Armageddon</button>
+          <button class="alloc-tab" data-committee="OIC">OIC</button>
+          <button class="alloc-tab" data-committee="UN Women">UN Women</button>
+          <button class="alloc-tab" data-committee="COPUOS">COPUOS</button>
+          <button class="alloc-tab" data-committee="US Senate">US Senate</button>
+          <button class="alloc-tab" data-committee="UNODC">UNODC</button>
+          <button class="alloc-tab" data-committee="ECOFIN">ECOFIN</button>
+          <button class="alloc-tab" data-committee="SC-UNC">SC-UNC</button>
+          <button class="alloc-tab" data-committee="FIFA">FIFA</button>
+          <button class="alloc-tab" data-committee="WHO">WHO</button>
+          <button class="alloc-tab" data-committee="SOCHUM">SOCHUM</button>
+          <button class="alloc-tab" data-committee="IP">Intl Press</button>
+        </div>
       </div>
 
       <div class="alloc-table-outer">
@@ -819,15 +859,26 @@
               </tr>
             </thead>
             <tbody id="matrixBody">
-              <!-- Skeleton rows — visible behind lock overlay -->
-              <tr class="alloc-skeleton"><td>001</td><td class="alloc-td-name">████████████</td><td class="alloc-td-school">████████████████</td><td class="alloc-td-committee"><span>████████</span></td><td class="alloc-td-country">███████████████</td></tr>
-              <tr class="alloc-skeleton"><td>002</td><td class="alloc-td-name">██████████████</td><td class="alloc-td-school">██████████████</td><td class="alloc-td-committee"><span>████████</span></td><td class="alloc-td-country">████████████</td></tr>
-              <tr class="alloc-skeleton"><td>003</td><td class="alloc-td-name">███████████</td><td class="alloc-td-school">████████████████████</td><td class="alloc-td-committee"><span>████████</span></td><td class="alloc-td-country">██████████████████</td></tr>
-              <tr class="alloc-skeleton"><td>004</td><td class="alloc-td-name">█████████████</td><td class="alloc-td-school">███████████████</td><td class="alloc-td-committee"><span>████████</span></td><td class="alloc-td-country">████████████████</td></tr>
-              <tr class="alloc-skeleton"><td>005</td><td class="alloc-td-name">████████████████</td><td class="alloc-td-school">█████████████</td><td class="alloc-td-committee"><span>████████</span></td><td class="alloc-td-country">█████████████</td></tr>
-              <tr class="alloc-skeleton"><td>006</td><td class="alloc-td-name">██████████</td><td class="alloc-td-school">██████████████████</td><td class="alloc-td-committee"><span>████████</span></td><td class="alloc-td-country">███████████████████</td></tr>
-              <tr class="alloc-skeleton"><td>007</td><td class="alloc-td-name">█████████████████</td><td class="alloc-td-school">████████████</td><td class="alloc-td-committee"><span>████████</span></td><td class="alloc-td-country">██████████████</td></tr>
-              <tr class="alloc-skeleton"><td>008</td><td class="alloc-td-name">████████████</td><td class="alloc-td-school">█████████████████</td><td class="alloc-td-committee"><span>████████</span></td><td class="alloc-td-country">██████████████████</td></tr>
+              <tr><td>001</td><td class="alloc-td-name">Aanya Sharma</td><td class="alloc-td-school">Oakridge International School</td><td class="alloc-td-committee"><span>DISEC</span></td><td class="alloc-td-country">United States</td></tr>
+              <tr><td>002</td><td class="alloc-td-name">Rohan Mehta</td><td class="alloc-td-school">Chirec Public School</td><td class="alloc-td-committee"><span>UNSC</span></td><td class="alloc-td-country">France</td></tr>
+              <tr><td>003</td><td class="alloc-td-name">Priya Nair</td><td class="alloc-td-school">DPS Hyderabad</td><td class="alloc-td-committee"><span>UNHRC</span></td><td class="alloc-td-country">Germany</td></tr>
+              <tr><td>004</td><td class="alloc-td-name">Arjun Reddy</td><td class="alloc-td-school">Oakridge International School</td><td class="alloc-td-committee"><span>JCC-1</span></td><td class="alloc-td-country">General Arjun Singh</td></tr>
+              <tr><td>005</td><td class="alloc-td-name">Kavya Iyer</td><td class="alloc-td-school">Gitanjali Devshala</td><td class="alloc-td-committee"><span>WHO</span></td><td class="alloc-td-country">Brazil</td></tr>
+              <tr><td>006</td><td class="alloc-td-name">Dhruv Kapoor</td><td class="alloc-td-school">The Hyderabad Public School</td><td class="alloc-td-committee"><span>ECOFIN</span></td><td class="alloc-td-country">Japan</td></tr>
+              <tr><td>007</td><td class="alloc-td-name">Sana Mirza</td><td class="alloc-td-school">Sreenidhi International School</td><td class="alloc-td-committee"><span>Lok Sabha</span></td><td class="alloc-td-country">MP — Karnataka</td></tr>
+              <tr><td>008</td><td class="alloc-td-name">Vivaan Oberoi</td><td class="alloc-td-school">Chirec Public School</td><td class="alloc-td-committee"><span>DISEC</span></td><td class="alloc-td-country">Russia</td></tr>
+              <tr><td>009</td><td class="alloc-td-name">Ananya Krishnan</td><td class="alloc-td-school">DPS Hyderabad</td><td class="alloc-td-committee"><span>OIC</span></td><td class="alloc-td-country">Turkey</td></tr>
+              <tr><td>010</td><td class="alloc-td-name">Nikhil Bose</td><td class="alloc-td-school">Oakridge International School</td><td class="alloc-td-committee"><span>UNSC</span></td><td class="alloc-td-country">China</td></tr>
+              <tr><td>011</td><td class="alloc-td-name">Ishaan Verma</td><td class="alloc-td-school">The Hyderabad Public School</td><td class="alloc-td-committee"><span>HCC</span></td><td class="alloc-td-country">Otto von Bismarck</td></tr>
+              <tr><td>012</td><td class="alloc-td-name">Meera Pillai</td><td class="alloc-td-school">Gitanjali Devshala</td><td class="alloc-td-committee"><span>UN Women</span></td><td class="alloc-td-country">Sweden</td></tr>
+              <tr><td>013</td><td class="alloc-td-name">Aditya Rao</td><td class="alloc-td-school">Sreenidhi International School</td><td class="alloc-td-committee"><span>COPUOS</span></td><td class="alloc-td-country">India</td></tr>
+              <tr><td>014</td><td class="alloc-td-name">Riya Malhotra</td><td class="alloc-td-school">Oakridge International School</td><td class="alloc-td-committee"><span>FIFA</span></td><td class="alloc-td-country">Argentina</td></tr>
+              <tr><td>015</td><td class="alloc-td-name">Karan Joshi</td><td class="alloc-td-school">DPS Hyderabad</td><td class="alloc-td-committee"><span>JCC-2</span></td><td class="alloc-td-country">Admiral Zhao Lei</td></tr>
+              <tr><td>016</td><td class="alloc-td-name">Tanvi Gupta</td><td class="alloc-td-school">Chirec Public School</td><td class="alloc-td-committee"><span>US Senate</span></td><td class="alloc-td-country">Senator — Texas</td></tr>
+              <tr><td>017</td><td class="alloc-td-name">Sid Patel</td><td class="alloc-td-school">The Hyderabad Public School</td><td class="alloc-td-committee"><span>UNODC</span></td><td class="alloc-td-country">Mexico</td></tr>
+              <tr><td>018</td><td class="alloc-td-name">Nandini Singh</td><td class="alloc-td-school">Gitanjali Devshala</td><td class="alloc-td-committee"><span>SC-UNC</span></td><td class="alloc-td-country">United Kingdom</td></tr>
+              <tr><td>019</td><td class="alloc-td-name">Aryan Khanna</td><td class="alloc-td-school">Sreenidhi International School</td><td class="alloc-td-committee"><span>Armageddon</span></td><td class="alloc-td-country">Director — CIA</td></tr>
+              <tr><td>020</td><td class="alloc-td-name">Zara Ahmed</td><td class="alloc-td-school">Oakridge International School</td><td class="alloc-td-committee"><span>IP</span></td><td class="alloc-td-country">Reuters</td></tr>
             </tbody>
           </table>
           <div class="alloc-table-empty" id="matrixEmpty">
@@ -836,7 +887,7 @@
           </div>
         </div>
         <!-- LOCK OVERLAY -->
-        <div class="alloc-table-lock" id="matrixLock">
+        <div class="alloc-table-lock" id="matrixLock" style="display:none;">
           <div class="alloc-lock-icon">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M9.5 13V9.5a5.5 5.5 0 0111 0V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="5" y="13" width="20" height="13" rx="3.5" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="19.5" r="2.2" fill="currentColor"/><line x1="15" y1="21.7" x2="15" y2="24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </div>
@@ -930,15 +981,15 @@
     }));
     // ── ALLOCATION MATRIX FILTER ──
     (function() {
-      const searchEl   = document.getElementById('matrixSearch');
-      const selectEl   = document.getElementById('committeeFilter');
-      const tbody      = document.getElementById('matrixBody');
-      const emptyEl    = document.getElementById('matrixEmpty');
-      const countEl    = document.getElementById('matrixCount');
+      const searchEl = document.getElementById('matrixSearch');
+      const tabsEl   = document.getElementById('committeeTabs');
+      const tbody    = document.getElementById('matrixBody');
+      const emptyEl  = document.getElementById('matrixEmpty');
+      const countEl  = document.getElementById('matrixCount');
+      let activeCom  = 'all';
 
       function filterMatrix() {
-        const q   = searchEl.value.toLowerCase().trim();
-        const com = selectEl.value;
+        const q    = searchEl.value.toLowerCase().trim();
         const rows = [...tbody.querySelectorAll('tr:not(.alloc-skeleton)')];
         let visible = 0;
 
@@ -950,7 +1001,7 @@
           const committee = cells[3].textContent;
           const country   = cells[4].textContent.toLowerCase();
           const matchSearch    = !q || name.includes(q) || school.includes(q) || country.includes(q);
-          const matchCommittee = com === 'all' || committee.includes(com);
+          const matchCommittee = activeCom === 'all' || committee.includes(activeCom);
           row.style.display = (matchSearch && matchCommittee) ? '' : 'none';
           if (matchSearch && matchCommittee) visible++;
         });
@@ -959,8 +1010,21 @@
         countEl.textContent = rows.length > 0 ? `${visible} delegate${visible !== 1 ? 's' : ''}` : '— delegates';
       }
 
+      // Tab clicks
+      if (tabsEl) {
+        tabsEl.addEventListener('click', e => {
+          const tab = e.target.closest('.alloc-tab');
+          if (!tab) return;
+          tabsEl.querySelectorAll('.alloc-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          activeCom = tab.dataset.committee;
+          // scroll active tab into view
+          tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          filterMatrix();
+        });
+      }
+
       if (searchEl) searchEl.addEventListener('input', filterMatrix);
-      if (selectEl) selectEl.addEventListener('change', filterMatrix);
     })();
 
     const navMark = navbar.querySelector('.nav-mark');
