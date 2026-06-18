@@ -482,52 +482,50 @@
     }
 
     /* ── COMMITTEE TABS ── */
-    .alloc-tabs-outer {
-      position: relative;
-      margin-bottom: 20px;
-    }
-    /* fade hint edges */
-    .alloc-tabs-outer::before,
-    .alloc-tabs-outer::after {
-      content: '';
-      position: absolute; top: 0; bottom: 0; width: 40px; z-index: 2; pointer-events: none;
-    }
-    .alloc-tabs-outer::before { left: 0;  background: linear-gradient(to right, #020C16 30%, transparent); }
-    .alloc-tabs-outer::after  { right: 0; background: linear-gradient(to left,  #020C16 30%, transparent); }
+    .alloc-tabs-outer { margin-bottom: 20px; }
     .alloc-tabs {
       display: flex;
-      overflow-x: auto;
-      scrollbar-width: none;
-      border-bottom: 1px solid rgba(48,205,215,.1);
+      gap: 8px;
+      flex-wrap: wrap;
     }
-    .alloc-tabs::-webkit-scrollbar { display: none; }
     .alloc-tab {
-      flex-shrink: 0;
-      padding: 11px 20px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 22px;
       font-family: 'Montserrat';
-      font-size: .54rem; font-weight: 800;
-      letter-spacing: .11em; text-transform: uppercase;
-      color: rgba(250,245,237,.28);
-      background: none; border: none;
-      border-bottom: 2px solid transparent;
+      font-size: .58rem; font-weight: 800;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(250,245,237,.38);
+      background: rgba(48,205,215,.04);
+      border: 1px solid rgba(48,205,215,.12);
+      border-radius: 10px;
       cursor: pointer;
-      margin-bottom: -1px;
-      transition: color .18s, border-color .18s, background .18s;
+      transition: color .18s, border-color .18s, background .18s, box-shadow .18s;
       white-space: nowrap;
     }
     .alloc-tab:hover:not(.active) {
-      color: rgba(250,245,237,.6);
-      background: rgba(48,205,215,.03);
+      color: rgba(250,245,237,.72);
+      border-color: rgba(48,205,215,.28);
+      background: rgba(48,205,215,.08);
     }
     .alloc-tab.active {
-      color: var(--teal);
-      border-bottom-color: var(--teal);
-      background: rgba(48,205,215,.05);
+      color: var(--navy);
+      background: var(--teal);
+      border-color: var(--teal);
+      box-shadow: 0 4px 18px rgba(48,205,215,.22);
     }
-
-    @media (max-width: 768px) {
-      .alloc-tabs-outer::before,
-      .alloc-tabs-outer::after { width: 24px; }
+    .alloc-tab-count {
+      font-size: .52rem; font-weight: 700;
+      background: rgba(0,0,0,.15);
+      border-radius: 100px;
+      padding: 2px 7px;
+      letter-spacing: 0;
+    }
+    .alloc-tab:not(.active) .alloc-tab-count {
+      background: rgba(48,205,215,.1);
+      color: var(--teal);
+    }
+    @media (max-width: 600px) {
+      .alloc-tab { padding: 8px 16px; font-size: .52rem; }
     }
 
     /* table outer */
@@ -823,26 +821,11 @@
       <!-- COMMITTEE TABS -->
       <div class="alloc-tabs-outer">
         <div class="alloc-tabs" id="committeeTabs">
-          <button class="alloc-tab active" data-committee="all">All</button>
-          <button class="alloc-tab" data-committee="DISEC">DISEC</button>
-          <button class="alloc-tab" data-committee="UNSC">UNSC</button>
-          <button class="alloc-tab" data-committee="UNHRC">UNHRC</button>
-          <button class="alloc-tab" data-committee="JCC-1">JCC-1</button>
-          <button class="alloc-tab" data-committee="JCC-2">JCC-2</button>
-          <button class="alloc-tab" data-committee="HCC">HCC</button>
-          <button class="alloc-tab" data-committee="Lok Sabha">Lok Sabha</button>
-          <button class="alloc-tab" data-committee="Armageddon">Armageddon</button>
-          <button class="alloc-tab" data-committee="OIC">OIC</button>
-          <button class="alloc-tab" data-committee="UN Women">UN Women</button>
-          <button class="alloc-tab" data-committee="COPUOS">COPUOS</button>
-          <button class="alloc-tab" data-committee="US Senate">US Senate</button>
-          <button class="alloc-tab" data-committee="UNODC">UNODC</button>
-          <button class="alloc-tab" data-committee="ECOFIN">ECOFIN</button>
-          <button class="alloc-tab" data-committee="SC-UNC">SC-UNC</button>
-          <button class="alloc-tab" data-committee="FIFA">FIFA</button>
-          <button class="alloc-tab" data-committee="WHO">WHO</button>
-          <button class="alloc-tab" data-committee="SOCHUM">SOCHUM</button>
-          <button class="alloc-tab" data-committee="IP">Intl Press</button>
+          <button class="alloc-tab active" data-category="all">All <span class="alloc-tab-count" id="tabCount-all">20</span></button>
+          <button class="alloc-tab" data-category="un-body">UN Bodies <span class="alloc-tab-count" id="tabCount-un-body"></span></button>
+          <button class="alloc-tab" data-category="crisis">Crisis <span class="alloc-tab-count" id="tabCount-crisis"></span></button>
+          <button class="alloc-tab" data-category="special">Special <span class="alloc-tab-count" id="tabCount-special"></span></button>
+          <button class="alloc-tab" data-category="press">Press <span class="alloc-tab-count" id="tabCount-press"></span></button>
         </div>
       </div>
 
@@ -986,7 +969,38 @@
       const tbody    = document.getElementById('matrixBody');
       const emptyEl  = document.getElementById('matrixEmpty');
       const countEl  = document.getElementById('matrixCount');
-      let activeCom  = 'all';
+      let activeCategory = 'all';
+
+      // Committee → category map
+      const catMap = {
+        'DISEC': 'un-body', 'UNSC': 'un-body', 'UNHRC': 'un-body',
+        'UN Women': 'un-body', 'COPUOS': 'un-body', 'UNODC': 'un-body',
+        'ECOFIN': 'un-body', 'WHO': 'un-body', 'SOCHUM': 'un-body',
+        'JCC-1': 'crisis', 'JCC-2': 'crisis', 'HCC': 'crisis', 'Armageddon': 'crisis',
+        'Lok Sabha': 'special', 'OIC': 'special', 'US Senate': 'special',
+        'SC-UNC': 'special', 'FIFA': 'special',
+        'IP': 'press',
+      };
+
+      function getCategory(committeeText) {
+        const name = committeeText.trim();
+        return catMap[name] || 'special';
+      }
+
+      function updateCounts(rows) {
+        const counts = { all: 0, 'un-body': 0, crisis: 0, special: 0, press: 0 };
+        rows.forEach(row => {
+          const cells = row.querySelectorAll('td');
+          if (cells.length < 5) return;
+          const cat = getCategory(cells[3].textContent);
+          counts.all++;
+          if (counts[cat] !== undefined) counts[cat]++;
+        });
+        Object.entries(counts).forEach(([key, val]) => {
+          const el = document.getElementById('tabCount-' + key);
+          if (el) el.textContent = val;
+        });
+      }
 
       function filterMatrix() {
         const q    = searchEl.value.toLowerCase().trim();
@@ -996,14 +1010,14 @@
         rows.forEach(row => {
           const cells = row.querySelectorAll('td');
           if (cells.length < 5) return;
-          const name      = cells[1].textContent.toLowerCase();
-          const school    = cells[2].textContent.toLowerCase();
-          const committee = cells[3].textContent;
-          const country   = cells[4].textContent.toLowerCase();
-          const matchSearch    = !q || name.includes(q) || school.includes(q) || country.includes(q);
-          const matchCommittee = activeCom === 'all' || committee.includes(activeCom);
-          row.style.display = (matchSearch && matchCommittee) ? '' : 'none';
-          if (matchSearch && matchCommittee) visible++;
+          const name    = cells[1].textContent.toLowerCase();
+          const school  = cells[2].textContent.toLowerCase();
+          const country = cells[4].textContent.toLowerCase();
+          const cat     = getCategory(cells[3].textContent);
+          const matchSearch = !q || name.includes(q) || school.includes(q) || country.includes(q);
+          const matchCat    = activeCategory === 'all' || cat === activeCategory;
+          row.style.display = (matchSearch && matchCat) ? '' : 'none';
+          if (matchSearch && matchCat) visible++;
         });
 
         emptyEl.style.display = (rows.length > 0 && visible === 0) ? 'block' : 'none';
@@ -1017,14 +1031,16 @@
           if (!tab) return;
           tabsEl.querySelectorAll('.alloc-tab').forEach(t => t.classList.remove('active'));
           tab.classList.add('active');
-          activeCom = tab.dataset.committee;
-          // scroll active tab into view
-          tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          activeCategory = tab.dataset.category;
           filterMatrix();
         });
       }
 
       if (searchEl) searchEl.addEventListener('input', filterMatrix);
+
+      // Init counts
+      const allRows = [...tbody.querySelectorAll('tr:not(.alloc-skeleton)')];
+      updateCounts(allRows);
     })();
 
     const navMark = navbar.querySelector('.nav-mark');
