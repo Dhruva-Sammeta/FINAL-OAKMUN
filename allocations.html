@@ -141,8 +141,8 @@
     /* ── HERO ── */
     .alloc-hero {
       max-width: 1300px; margin: 0 auto; width: 100%;
-      padding: 96px 64px 80px;
-      min-height: 78vh;
+      padding: 12px 64px 40px;
+      min-height: calc(100vh - 100px);
       display: flex; flex-direction: column; justify-content: center;
       position: relative;
     }
@@ -150,7 +150,7 @@
     /* top meta bar */
     .alloc-meta-bar {
       display: flex; align-items: center; gap: 12px;
-      margin-bottom: 52px;
+      margin-bottom: 22px;
     }
     .alloc-meta-tag {
       font-size: .52rem; font-weight: 800; letter-spacing: .22em; text-transform: uppercase;
@@ -168,25 +168,25 @@
 
     /* title */
     .alloc-title {
-      font-size: clamp(4rem, 8.5vw, 8rem);
+      font-size: clamp(3.2rem, 7vw, 6.5rem);
       font-weight: 900; letter-spacing: -.05em; line-height: .88;
-      margin-bottom: 28px;
+      margin-bottom: 20px;
     }
     .alloc-t1 { display: block; color: var(--white); }
     .alloc-t2 { display: block; color: var(--teal); }
 
     /* description */
     .alloc-desc {
-      font-size: .9rem; font-weight: 500;
+      font-size: .88rem; font-weight: 500;
       color: rgba(250,245,237,.38);
-      line-height: 1.8; max-width: 520px;
-      margin-bottom: 40px;
+      line-height: 1.75; max-width: 520px;
+      margin-bottom: 26px;
     }
 
     /* badge row */
     .alloc-badge-row {
       display: flex; align-items: center; gap: 10px;
-      flex-wrap: wrap; margin-bottom: 64px;
+      flex-wrap: wrap; margin-bottom: 36px;
     }
     .alloc-status-pill {
       display: inline-flex; align-items: center; gap: 8px;
@@ -218,7 +218,7 @@
     .alloc-stats-bar {
       display: flex; align-items: center; gap: 0;
       border-top: 1px solid rgba(48,205,215,.08);
-      padding-top: 28px; width: fit-content;
+      padding-top: 20px; width: fit-content;
     }
     .alloc-stat-item {
       display: flex; align-items: baseline; gap: 10px;
