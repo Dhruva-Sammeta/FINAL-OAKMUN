@@ -3976,6 +3976,80 @@
   })();
   </script>
 
+  <!-- ── DEV CONTROLS: committee logo positioning ── -->
+  <div id="devPanel" style="
+    position:fixed; bottom:20px; right:20px; z-index:9999;
+    background:rgba(3,12,26,.95); backdrop-filter:blur(16px);
+    border:1px solid rgba(48,205,215,.25); border-radius:16px;
+    padding:18px 20px; width:260px; font-family:'Montserrat';
+    box-shadow:0 8px 40px rgba(0,0,0,.5);
+  ">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <span style="font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#30CDD7;">Logo Dev Controls</span>
+      <button onclick="document.getElementById('devPanel').style.display='none'" style="background:none;border:none;color:rgba(250,245,237,.35);cursor:pointer;font-size:14px;line-height:1;padding:0;">✕</button>
+    </div>
+
+    <label style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,245,237,.5);display:block;margin-bottom:5px;">
+      Zoom — <span id="zoomVal">40</span>px
+    </label>
+    <input id="zoomSlider" type="range" min="16" max="60" value="40" style="width:100%;accent-color:#30CDD7;margin-bottom:14px;" />
+
+    <label style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,245,237,.5);display:block;margin-bottom:5px;">
+      X offset — <span id="xVal">0</span>px
+    </label>
+    <input id="xSlider" type="range" min="-24" max="24" value="0" style="width:100%;accent-color:#30CDD7;margin-bottom:14px;" />
+
+    <label style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,245,237,.5);display:block;margin-bottom:5px;">
+      Y offset — <span id="yVal">0</span>px
+    </label>
+    <input id="ySlider" type="range" min="-24" max="24" value="0" style="width:100%;accent-color:#30CDD7;margin-bottom:14px;" />
+
+    <button id="copyCss" style="
+      width:100%;padding:9px;border:none;border-radius:8px;
+      background:linear-gradient(135deg,#30CDD7,#1E96A5);
+      color:#003057;font-family:'Montserrat';font-size:.62rem;
+      font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+    ">Copy CSS</button>
+    <div id="copyMsg" style="font-size:.55rem;color:#30CDD7;text-align:center;margin-top:6px;opacity:0;transition:opacity .3s;"></div>
+  </div>
+  <script>
+  (function() {
+    const logos  = document.querySelectorAll('.ctrl-chain-logo');
+    const zoom   = document.getElementById('zoomSlider');
+    const xSlide = document.getElementById('xSlider');
+    const ySlide = document.getElementById('ySlider');
+    const zoomLbl = document.getElementById('zoomVal');
+    const xLbl    = document.getElementById('xVal');
+    const yLbl    = document.getElementById('yVal');
+
+    function apply() {
+      const size = +zoom.value, x = +xSlide.value, y = +ySlide.value;
+      zoomLbl.textContent = size;
+      xLbl.textContent    = x;
+      yLbl.textContent    = y;
+      logos.forEach(img => {
+        img.style.width     = size + 'px';
+        img.style.height    = size + 'px';
+        img.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    }
+
+    zoom.addEventListener('input', apply);
+    xSlide.addEventListener('input', apply);
+    ySlide.addEventListener('input', apply);
+
+    document.getElementById('copyCss').addEventListener('click', () => {
+      const size = zoom.value, x = xSlide.value, y = ySlide.value;
+      const css = `.ctrl-chain-logo {\n  width: ${size}px;\n  height: ${size}px;\n  transform: translate(${x}px, ${y}px);\n}`;
+      navigator.clipboard.writeText(css).then(() => {
+        const msg = document.getElementById('copyMsg');
+        msg.textContent = 'Copied to clipboard!';
+        msg.style.opacity = '1';
+        setTimeout(() => { msg.style.opacity = '0'; }, 2000);
+      });
+    });
+  })();
+  </script>
 
 </body>
 </html>
