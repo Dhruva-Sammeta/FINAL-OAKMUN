@@ -3838,16 +3838,28 @@
     const caption  = document.getElementById('themeCaption');
     const bgWord   = section.querySelector('.theme-bg-word');
 
-    // initial hidden state
-    const hide = (el, dy, blur) => {
+    const isMobile      = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 768;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // If reduced motion (also triggered by iOS Low Power Mode), reveal everything instantly
+    if (prefersReduced) {
+      intro.style.opacity = '0';
+      [eyebrow, botLabel, caption, ...words].forEach(el => {
+        el.style.opacity = '1'; el.style.transform = ''; el.style.filter = '';
+      });
+      divider.style.opacity = '1'; divider.style.transform = 'scaleX(1)';
+      return;
+    }
+
+    // initial hidden state — no blur on mobile (blur is the main perf killer)
+    const hide = (el, dy) => {
       el.style.opacity = '0';
       el.style.transform = `translateY(${dy}px)`;
-      el.style.filter = `blur(${blur}px)`;
     };
-    hide(eyebrow, 32, 10);
-    words.forEach(w => hide(w, 48, 14));
-    hide(botLabel, 24, 8);
-    hide(caption, 36, 10);
+    hide(eyebrow, 32);
+    words.forEach(w => hide(w, 48));
+    hide(botLabel, 24);
+    hide(caption, 36);
     divider.style.opacity = '0';
     divider.style.transform = 'scaleX(0)';
     divider.style.transformOrigin = 'center center';
@@ -3863,23 +3875,21 @@
       if (total <= 0) return;
       const p = Math.max(0, Math.min(1, -rect.top / total));
 
-      // ── INTRO: "Presenting the / Conference Theme" ──
-      // fade in  [0 → 0.10], hold, fade out  [0.30 → 0.42]
+      // ── INTRO ──
       const iIn  = ease(map(p, 0, 0.10));
       const iOut = ease(map(p, 0.30, 0.42));
       const iOp  = iIn * (1 - iOut);
-      const iBlur = lerp(12, 0, iIn) + lerp(0, 10, iOut);
       intro.style.opacity   = iOp;
       intro.style.transform = `translateY(${lerp(40, 0, iIn) + lerp(0, -30, iOut)}px)`;
-      intro.style.filter    = `blur(${iBlur}px)`;
+      if (!isMobile) intro.style.filter = `blur(${lerp(12, 0, iIn) + lerp(0, 10, iOut)}px)`;
 
-      // ── THEME CONTENT: starts after intro fades ──
+      // ── THEME CONTENT ──
 
       // eyebrow  [0.40 → 0.48]
       const ep = ease(map(p, 0.40, 0.48));
       eyebrow.style.opacity   = ep;
       eyebrow.style.transform = `translateY(${lerp(32, 0, ep)}px)`;
-      eyebrow.style.filter    = `blur(${lerp(10, 0, ep)}px)`;
+      if (!isMobile) eyebrow.style.filter = `blur(${lerp(10, 0, ep)}px)`;
 
       // title words — stagger  [0.44 → 0.68]
       words.forEach((w, i) => {
@@ -3887,7 +3897,7 @@
         const wp = ease(map(p, s, s + 0.11));
         w.style.opacity   = wp;
         w.style.transform = `translateY(${lerp(48, 0, wp)}px)`;
-        w.style.filter    = `blur(${lerp(14, 0, wp)}px)`;
+        if (!isMobile) w.style.filter = `blur(${lerp(14, 0, wp)}px)`;
       });
 
       // divider  [0.64 → 0.73]
@@ -3899,16 +3909,16 @@
       const lp = ease(map(p, 0.70, 0.79));
       botLabel.style.opacity   = lp;
       botLabel.style.transform = `translateY(${lerp(24, 0, lp)}px)`;
-      botLabel.style.filter    = `blur(${lerp(8, 0, lp)}px)`;
+      if (!isMobile) botLabel.style.filter = `blur(${lerp(8, 0, lp)}px)`;
 
       // caption  [0.75 → 0.90]
       const cp = ease(map(p, 0.75, 0.90));
       caption.style.opacity   = cp;
       caption.style.transform = `translateY(${lerp(36, 0, cp)}px)`;
-      caption.style.filter    = `blur(${lerp(10, 0, cp)}px)`;
+      if (!isMobile) caption.style.filter = `blur(${lerp(10, 0, cp)}px)`;
 
-      // bg word parallax
-      if (bgWord) {
+      // bg word parallax — skip on mobile
+      if (bgWord && !isMobile) {
         bgWord.style.transform = `translateY(calc(-50% + ${lerp(-40, 40, p)}px))`;
       }
     }
