@@ -1665,28 +1665,14 @@
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script>
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const lenis = new Lenis(prefersReducedMotion ? {
-      smoothWheel: false,
-      syncTouch: true,
-    } : {
-      lerp: isTouchDevice ? 0.16 : 0.11,
-      smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1,
-      syncTouch: true,
-      syncTouchLerp: 0.18,
-      normalizeWheel: true,
-      infinite: false,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
+    if (!isTouchDevice) {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const lenis = new Lenis(prefersReducedMotion ? { smoothWheel: false } : {
+        lerp: 0.11, smoothWheel: true, wheelMultiplier: 0.95, normalizeWheel: true, infinite: false,
+      });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
       requestAnimationFrame(raf);
     }
-
-    requestAnimationFrame(raf);
   </script>
 
   <!-- ── PDF VIEWER MODAL ── -->
