@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -79,6 +79,8 @@
     .mobile-nav.open { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; pointer-events: auto; }
     .mobile-nav a { font-size: .88rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(250,245,237,.75); text-decoration: none; padding: 18px 0; border-bottom: 1px solid rgba(250,245,237,.07); transition: color .2s; }
     .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a.mobile-nav-cta { margin-top: 8px; border-radius: 12px; background: linear-gradient(135deg, #30CDD7 0%, #1E96A5 100%); color: #003057 !important; text-align: center; border-bottom: none !important; padding: 14px 0 !important; letter-spacing: .08em; }
+    .mobile-nav a.mobile-nav-cta:hover { color: #003057 !important; filter: brightness(1.06); }
     .mobile-nav a:hover { color: var(--teal); }
 
     /* ── HERO ── */
@@ -295,6 +297,7 @@
     <a href="/social-night.html">Social Night</a>
     <a href="/networking-hour.html">Networking Hour</a>
     <a href="/orphanage-initiative.html">Community Outreach</a>
+    <a href="/register.html" class="mobile-nav-cta">Register Now</a>
   </div>
 
   <nav id="navbar">
