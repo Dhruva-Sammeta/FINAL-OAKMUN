@@ -212,12 +212,14 @@
     }
     .alloc-status-pill {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(48,205,215,.07); border: 1px solid rgba(48,205,215,.22);
-      border-radius: 100px; padding: 9px 18px;
+      background: rgba(48,205,215,.06); border: 1px solid rgba(48,205,215,.28);
+      border-radius: 100px; padding: 8px 16px;
+      box-shadow: 0 0 18px rgba(48,205,215,.1), inset 0 1px 0 rgba(48,205,215,.08);
     }
     .alloc-status-dot {
-      width: 6px; height: 6px; border-radius: 50%; background: var(--teal);
-      animation: pulse-ring 1.6s ease-out infinite;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 6px rgba(48,205,215,.7);
     }
     .alloc-status-text {
       font-size: .57rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--teal);
