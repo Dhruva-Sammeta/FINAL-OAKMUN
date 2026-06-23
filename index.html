@@ -3995,15 +3995,7 @@
       0%,100% { background-position: 0% 50%; }
       50%      { background-position: 100% 50%; }
     }
-    .strip-pulse {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #003057; opacity: .7;
-      animation: stripDot .8s ease-in-out infinite alternate;
-    }
-    @keyframes stripDot {
-      from { opacity: .4; transform: scale(.8); }
-      to   { opacity: 1;  transform: scale(1.2); }
-    }
+    .strip-pulse { display: none; }
     #stripClose {
       position: absolute; right: 16px;
       background: none; border: none; color: #003057;
@@ -4055,11 +4047,7 @@
       text-transform: uppercase; color: #30CDD7;
       margin-bottom: 22px;
     }
-    .tp-badge-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: #30CDD7;
-      animation: stripDot .8s ease-in-out infinite alternate;
-    }
+    .tp-badge-dot { display: none; }
     .tp-date {
       font-size: clamp(2.8rem, 10vw, 4rem);
       font-weight: 900; letter-spacing: -.04em; line-height: 1;
