@@ -3982,18 +3982,24 @@
     /* Top strip */
     #trainingStrip {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: linear-gradient(90deg, #1E96A5 0%, #30CDD7 50%, #1E96A5 100%);
-      background-size: 200% 100%;
-      animation: stripShift 2.4s ease-in-out infinite;
+      background: linear-gradient(90deg, #1a8899 0%, #30CDD7 48%, #1a8899 100%);
       padding: 9px 20px;
       display: flex; align-items: center; justify-content: center; gap: 12px;
       font-family: 'Montserrat'; font-size: .65rem; font-weight: 800;
       letter-spacing: .14em; text-transform: uppercase; color: #003057;
-      cursor: default;
+      cursor: default; overflow: hidden;
     }
-    @keyframes stripShift {
-      0%,100% { background-position: 0% 50%; }
-      50%      { background-position: 100% 50%; }
+    #trainingStrip::after {
+      content: '';
+      position: absolute; top: 0; left: -70%;
+      width: 55%; height: 100%;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.45) 50%, transparent 100%);
+      animation: stripShimmer 2.2s cubic-bezier(.4,0,.2,1) infinite;
+      pointer-events: none;
+    }
+    @keyframes stripShimmer {
+      0%   { left: -70%; }
+      100% { left: 130%; }
     }
     .strip-pulse { display: none; }
     #stripClose {
