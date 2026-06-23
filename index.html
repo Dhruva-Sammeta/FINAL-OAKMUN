@@ -4097,8 +4097,13 @@
   <script>
     // Push nav down so strip doesn't overlap it
     document.querySelector('nav').style.top = '42px';
-    // Show popup after 1.2s
-    setTimeout(() => document.getElementById('trainingPopup').classList.add('open'), 1200);
+    // Show popup only once per session
+    if (!sessionStorage.getItem('trainingPopupSeen')) {
+      setTimeout(() => {
+        document.getElementById('trainingPopup').classList.add('open');
+        sessionStorage.setItem('trainingPopupSeen', '1');
+      }, 1200);
+    }
     // Close on backdrop click
     document.getElementById('trainingPopup').addEventListener('click', function(e) {
       if (e.target === this) this.classList.remove('open');
