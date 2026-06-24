@@ -50,7 +50,7 @@
       background: rgba(1,3,8,.97);
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-radius: 100px; border: 1px solid rgba(250,245,237,.07);
-      padding: 10px 10px 10px 28px;
+      padding: 10px 14px; justify-content: center;
       box-shadow: 0 8px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(250,245,237,.04);
       white-space: nowrap;
     }
@@ -189,7 +189,7 @@
     @media (max-width: 768px) {
       html { zoom: 1; }
       .nav-center { display: none; }
-      .nav-right .nav-cta { display: none; }
+      .nav-right .nav-cta { display: none; } .nav-right > a { display: none; }
       .menu-btn { display: flex; }
       .form-iframe-wrap iframe { height: 2800px; }
       .back-btn { font-size: .62rem; padding: 8px 13px 8px 10px; top: 14px; left: 14px; }
@@ -222,6 +222,7 @@
     <a href="/social-night.html">Social Night</a>
     <a href="/networking-hour.html">Networking Hour</a>
     <a href="/orphanage-initiative.html">Community Outreach</a>
+    <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener" style="color:#30CDD7;font-weight:800;">IP Registration</a>
     <a href="/register.html" class="mobile-nav-cta">Register Now</a>
   </div>
 
@@ -253,7 +254,7 @@
       </div>
       <div class="nav-right">
         <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-        <button class="nav-cta" onclick="window.location.href='/register.html'">Register</button>
+        <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:rgba(48,205,215,.14);border:1px solid rgba(48,205,215,.38);border-radius:100px;padding:6px 12px;font-family:Montserrat,sans-serif;font-size:.55rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#30CDD7;text-decoration:none;white-space:nowrap;">IP Registration</a><button class="nav-cta" onclick="window.location.href='/register.html'">Register</button>
       </div>
     </div>
   </nav>
@@ -307,3 +308,12 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

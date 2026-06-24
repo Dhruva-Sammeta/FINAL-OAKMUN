@@ -68,7 +68,7 @@
       background: rgba(1,3,8,.97);
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-radius: 100px; border: 1px solid rgba(250,245,237,.07);
-      padding: 10px 10px 10px 28px;
+      padding: 10px 14px; justify-content: center;
       box-shadow: 0 8px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(250,245,237,.04);
       transition: padding .6s cubic-bezier(0.4,0,0.2,1), border-radius .6s cubic-bezier(0.4,0,0.2,1);
       white-space: nowrap;
@@ -100,7 +100,7 @@
     .nav-mark:hover img { opacity: 1; filter: drop-shadow(0 0 14px rgba(48,205,215,.65)); }
     .nav-right {
       display: flex; align-items: center; gap: 6px;
-      flex-shrink: 0; overflow: hidden; max-width: 280px; opacity: 1; margin-left: 10px;
+      flex-shrink: 0; overflow: hidden; max-width: 420px; opacity: 1; margin-left: 10px;
       transition: opacity .5s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1);
     }
     .nav-cta {
@@ -130,9 +130,9 @@
       nav.hover-expanded .nav-links-group { opacity: 1 !important; max-width: 400px !important; pointer-events: auto !important; }
       nav.hover-expanded .nav-links-group.left { padding: 0 18px 0 28px !important; }
       nav.hover-expanded .nav-links-group.right { padding: 0 8px 0 18px !important; }
-      nav.hover-expanded .nav-right { opacity: 1 !important; max-width: 280px !important; margin-left: 10px !important; }
+      nav.hover-expanded .nav-right { opacity: 1 !important; max-width: 420px !important; margin-left: 10px !important; }
       nav.hover-expanded .nav-center { margin-left: 20px !important; }
-      nav.hover-expanded .nav-pill { padding: 10px 10px 10px 28px !important; border-radius: 100px !important; }
+      nav.hover-expanded .nav-pill { padding: 10px 14px !important; border-radius: 100px !important; }
       nav.hover-expanded .nav-cta { opacity: 1 !important; max-width: 200px !important; padding: 10px 18px !important; pointer-events: auto !important; }
       nav.hover-expanded .menu-btn { opacity: 0 !important; pointer-events: none !important; }
     }
@@ -1035,7 +1035,7 @@
       nav { top: 10px; }
       .nav-pill { padding: 8px 8px 8px 18px; }
       .nav-center { display: none; }
-      .nav-right .nav-cta { display: none; }
+      .nav-right .nav-cta { display: none; } .nav-right > a { display: none; }
       .nav-right { margin-left: 10px; max-width: 52px; }
       .menu-btn { opacity: 1; pointer-events: auto; }
       /* .mobile-nav flex handled */
@@ -1195,6 +1195,7 @@
     <a href="/social-night.html">Social Night</a>
     <a href="/networking-hour.html">Networking Hour</a>
     <a href="/orphanage-initiative.html">Community Outreach</a>
+    <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener" style="color:#30CDD7;font-weight:800;">IP Registration</a>
     <a href="/register.html" class="mobile-nav-cta">Register Now</a>
   </div>
 
@@ -1226,7 +1227,7 @@
       </div>
       <div class="nav-right">
         <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-        <button class="nav-cta" onclick="window.location.href='register.html'">Register Now</button>
+        <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:rgba(48,205,215,.14);border:1px solid rgba(48,205,215,.38);border-radius:100px;padding:6px 12px;font-family:Montserrat,sans-serif;font-size:.55rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#30CDD7;text-decoration:none;white-space:nowrap;">IP Registration</a><button class="nav-cta" onclick="window.location.href='register.html'">Register Now</button>
       </div>
     </div>
   </nav>
@@ -1873,7 +1874,7 @@
         <ul>
           <li><a href="/#schedule">Schedule</a>
     <a href="/allocations.html">Allocations</a></li>
-          <li><a href="/committees/ip">International Press</a></li>
+          <li><a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener">International Press</a></li>
           <li><a href="#">Allocations</a></li>
           <li><a href="/#faq">FAQs</a></li>
           <li><a href="/committees.html">Explore Committees</a></li>
@@ -1914,7 +1915,8 @@
 
     </div>
     <div class="footer-bottom">
-      <p>2026 Oakridge International School. All rights reserved.</p>
+      <p>&#169; 2026 Oakridge International School. All rights reserved.</p>
+      <p>Website designed and developed by <a href="https://www.linkedin.com/in/srijai-kodali" target="_blank" rel="noopener">Srijai Kodali</a></p>
     </div>
   </footer>
 
@@ -1933,3 +1935,15 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
