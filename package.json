@@ -2,6 +2,8 @@
   "name": "oakmun-xvi",
   "version": "1.0.0",
   "scripts": {
-    "dev": "node local-server.mjs"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   }
 }

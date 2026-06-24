@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=block" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     @media (min-width: 769px) { html { zoom: 1.1; } }
@@ -65,7 +65,7 @@
     .nav-drop--events .nav-drop-item { font-size:.62rem; padding:9px 10px 9px 14px; border-left:2px solid transparent; transition:background .2s,color .2s,border-color .2s,padding-left .2s; }
     .nav-drop--events .nav-drop-item:hover { background:rgba(255,200,0,.1); color:var(--g1)!important; border-left-color:var(--g1); padding-left:18px; }
     .nav-mark { display:flex; align-items:center; justify-content:center; flex-shrink:0; padding:0 6px; }
-    .nav-mark img { width:44px; height:44px; object-fit:contain; opacity:.9; filter:drop-shadow(0 0 8px rgba(255,200,0,.4)); transition:filter .2s,opacity .2s; }
+    .nav-mark img { width:44px; height:44px; object-fit:contain; opacity:.9; filter:drop-shadow(0 0 8px rgba(255,200,0,.4)); mix-blend-mode:lighten; transition:filter .2s,opacity .2s; }
     .nav-mark:hover img { opacity:1; filter:drop-shadow(0 0 14px rgba(255,200,0,.7)); }
     .nav-right { display:flex; align-items:center; gap:6px; flex-shrink:0; max-width:280px; overflow:hidden; margin-left:10px; transition:opacity .5s,max-width .6s; }
     .nav-cta { background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%); color:#1a0800; font-family:'Montserrat'; font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; border:none; border-radius:12px; padding:10px 18px; cursor:pointer; white-space:nowrap; overflow:hidden; max-width:200px; transition:transform .18s,box-shadow .18s,max-width .6s,padding .6s; }
@@ -336,6 +336,13 @@
       .footer-divider { display:none; }
       .footer-bottom { flex-direction:column; gap:6px; text-align:center; }
     }
+    /* ── MOBILE PERF: solid nav, no backdrop blur ── */
+    @media (max-width: 768px) {
+      .nav-pill { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(20,10,0,.99) !important; }
+      .nav-drop { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(20,10,0,.98) !important; }
+      .mobile-nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+      .pg-orb, .page-hero-orb { filter: none !important; }
+    }
   </style>
 
 </head>
@@ -524,10 +531,8 @@
       </div>
 
     </div>
-
     <div class="footer-bottom">
-      <p>© 2026 Oakridge International School. All rights reserved.</p>
-      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+      <p>2026 Oakridge International School. All rights reserved.</p>
     </div>
   </footer>
 
@@ -592,6 +597,14 @@
     const navbar = document.getElementById('navbar');
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
+    function syncNavBottom() {
+      const nav = document.getElementById('navbar');
+      if (nav) document.documentElement.style.setProperty('--nav-bottom', nav.getBoundingClientRect().bottom + 'px');
+    }
+    syncNavBottom();
+    window.addEventListener('resize', syncNavBottom);
+    window.addEventListener('orientationchange', syncNavBottom);
+
     menuBtn.addEventListener('click', e => {
       e.stopPropagation();
       const open = mobileNav.classList.toggle('open');

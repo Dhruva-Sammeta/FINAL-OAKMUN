@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=block" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 @media (min-width: 769px) { html { zoom: 1.1; } }
@@ -45,7 +45,7 @@
     }
     .nav-pill {
       display: flex; align-items: center; gap: 0;
-      background: rgba(3,12,26,.9);
+      background: rgba(1,3,8,.97);
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-radius: 100px; border: 1px solid rgba(250,245,237,.07);
       padding: 10px 10px 10px 28px;
@@ -76,7 +76,7 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; padding: 0 6px;
     }
-    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); transition: filter .2s, opacity .2s; }
+    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); mix-blend-mode: lighten; transition: filter .2s, opacity .2s; }
     .nav-mark:hover img { opacity: 1; filter: drop-shadow(0 0 14px rgba(48,205,215,.65)); }
     .nav-right {
       display: flex; align-items: center; gap: 6px;
@@ -121,13 +121,20 @@
 
     .mobile-nav {
       position: fixed;
-      top: 90px;
+      top: calc(var(--nav-bottom, 78px) + 10px);
       left: 50%;
-      transform: translateX(-50%) translateY(-20px) scale(0.95);
-      width: calc(100% - 40px);
-      max-width: 320px;
+      transform: translateX(-50%) translateY(-12px) scale(0.97);
+      width: calc(100% - 32px);
+      max-width: 360px;
+      max-height: calc(100dvh - var(--nav-bottom, 78px) - 16px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(48,205,215,.28) transparent;
       z-index: 199;
-      background: rgba(3,12,26,.97);
+      background: rgba(1,3,8,.99);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       padding: 16px 24px;
@@ -1034,17 +1041,17 @@
     }
     .pg-orb-a {
       width: 65vw; height: 60vh; top: -10vh; left: -10vw;
-      background: rgba(30,150,165,.20); filter: blur(100px);
+      background: radial-gradient(circle, rgba(30,150,165,.20) 0%, transparent 70%);
       animation: orb-a 20s ease-in-out infinite alternate;
     }
     .pg-orb-b {
       width: 55vw; height: 55vh; bottom: 0vh; right: -8vw;
-      background: rgba(0,60,110,.38); filter: blur(90px);
+      background: radial-gradient(circle, rgba(0,60,110,.38) 0%, transparent 70%);
       animation: orb-b 25s ease-in-out infinite alternate;
     }
     .pg-orb-c {
       width: 45vw; height: 45vh; top: 35vh; left: 25vw;
-      background: rgba(48,205,215,.10); filter: blur(110px);
+      background: radial-gradient(circle, rgba(48,205,215,.10) 0%, transparent 70%);
       animation: orb-c 30s ease-in-out infinite alternate;
     }
     /* Keep content above fixed orbs */
@@ -1052,10 +1059,7 @@
     section, footer { position: relative; z-index: 1; }
     /* Nav is already position:fixed — just bump z-index above orbs */
     nav { z-index: 200; }
-    @media (max-width: 768px) {
-      .pg-orb { filter: blur(60px) !important; }
-    }
-    @media (prefers-reduced-motion: reduce) {
+        @media (prefers-reduced-motion: reduce) {
       .pg-orb { animation: none !important; }
     }
 
@@ -1066,6 +1070,13 @@
     .sr-d2 { transition-delay: .2s; }
     .sr-d3 { transition-delay: .3s; }
     .sr-d4 { transition-delay: .4s; }
+    /* ── MOBILE PERF: solid nav, no backdrop blur ── */
+    @media (max-width: 768px) {
+      .nav-pill { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(1,3,8,.99) !important; }
+      .nav-drop { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(3,12,26,.98) !important; }
+      .mobile-nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+      .pg-orb, .page-hero-orb { filter: none !important; }
+    }
   </style>
 
 </head>
@@ -1234,10 +1245,8 @@
       </div>
 
     </div>
-
     <div class="footer-bottom">
-      <p>© 2026 Oakridge International School. All rights reserved.</p>
-      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+      <p>2026 Oakridge International School. All rights reserved.</p>
     </div>
   </footer>
 
@@ -1450,8 +1459,17 @@
 
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
+    function syncNavBottom() {
+      const nav = document.getElementById('navbar');
+      if (nav) document.documentElement.style.setProperty('--nav-bottom', nav.getBoundingClientRect().bottom + 'px');
+    }
+    syncNavBottom();
+    window.addEventListener('resize', syncNavBottom);
+    window.addEventListener('orientationchange', syncNavBottom);
+
     menuBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      syncNavBottom();
       const isOpen = mobileNav.classList.toggle('open');
       menuBtn.classList.toggle('open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';

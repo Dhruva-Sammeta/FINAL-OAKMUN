@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=block" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -47,7 +47,7 @@
     }
     .nav-pill {
       display: flex; align-items: center; gap: 0;
-      background: rgba(3,12,26,.9);
+      background: rgba(1,3,8,.97);
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-radius: 100px; border: 1px solid rgba(250,245,237,.07);
       padding: 10px 10px 10px 28px;
@@ -77,7 +77,7 @@
     .nav-drop {
       position: absolute; top: calc(100% + 18px); left: 50%;
       transform: translateX(-50%) translateY(-6px);
-      background: rgba(3,12,26,.97); backdrop-filter: blur(24px);
+      background: rgba(1,3,8,.99); backdrop-filter: blur(24px);
       border: 1px solid rgba(48,205,215,.18); border-radius: 16px;
       padding: 8px; min-width: 200px; z-index: 300;
       opacity: 0; pointer-events: none;
@@ -101,7 +101,7 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; padding: 0 6px;
     }
-    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); }
+    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); mix-blend-mode: lighten; }
     .nav-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: 10px; }
     .nav-cta {
       background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%);
@@ -128,7 +128,7 @@
       position: fixed; top: 76px; left: 50%;
       transform: translateX(-50%) translateY(-20px) scale(0.95);
       width: calc(100% - 40px); max-width: 320px; z-index: 199;
-      background: rgba(3,12,26,.97); backdrop-filter: blur(28px);
+      background: rgba(1,3,8,.99); backdrop-filter: blur(28px);
       padding: 16px 24px; border-radius: 20px;
       display: flex; flex-direction: column;
       opacity: 0; pointer-events: none;
@@ -193,6 +193,13 @@
       .menu-btn { display: flex; }
       .form-iframe-wrap iframe { height: 2800px; }
       .back-btn { font-size: .62rem; padding: 8px 13px 8px 10px; top: 14px; left: 14px; }
+    }
+    /* ── MOBILE PERF: solid nav, no backdrop blur ── */
+    @media (max-width: 768px) {
+      .nav-pill { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(1,3,8,.99) !important; }
+      .nav-drop { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(3,12,26,.98) !important; }
+      .mobile-nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+      .pg-orb, .page-hero-orb { filter: none !important; }
     }
   </style>
 
@@ -264,8 +271,17 @@
   <script>
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
+    function syncNavBottom() {
+      const nav = document.getElementById('navbar');
+      if (nav) document.documentElement.style.setProperty('--nav-bottom', nav.getBoundingClientRect().bottom + 'px');
+    }
+    syncNavBottom();
+    window.addEventListener('resize', syncNavBottom);
+    window.addEventListener('orientationchange', syncNavBottom);
+
     menuBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      syncNavBottom();
       const isOpen = mobileNav.classList.toggle('open');
       menuBtn.classList.toggle('open', isOpen);
     });
