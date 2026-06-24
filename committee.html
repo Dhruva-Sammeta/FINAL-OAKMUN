@@ -48,7 +48,7 @@
       background: rgba(1,3,8,.97);
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-radius: 100px; border: 1px solid rgba(250,245,237,.07);
-      padding: 10px 10px 10px 28px;
+      padding: 10px 14px; justify-content: center;
       box-shadow: 0 8px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(250,245,237,.04);
       transition: padding .6s cubic-bezier(0.4,0,0.2,1), border-radius .6s cubic-bezier(0.4,0,0.2,1);
       white-space: nowrap;
@@ -80,7 +80,7 @@
     .nav-mark:hover img { opacity: 1; filter: drop-shadow(0 0 14px rgba(48,205,215,.65)); }
     .nav-right {
       display: flex; align-items: center; gap: 6px;
-      flex-shrink: 0; overflow: hidden; max-width: 280px; opacity: 1; margin-left: 10px;
+      flex-shrink: 0; overflow: hidden; max-width: 420px; opacity: 1; margin-left: 10px;
       transition: opacity .5s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1);
     }
     .nav-cta {
@@ -108,9 +108,9 @@
       nav.hover-expanded .nav-links-group { opacity: 1 !important; max-width: 400px !important; pointer-events: auto !important; }
       nav.hover-expanded .nav-links-group.left { padding: 0 18px 0 28px !important; }
       nav.hover-expanded .nav-links-group.right { padding: 0 8px 0 18px !important; }
-      nav.hover-expanded .nav-right { opacity: 1 !important; max-width: 280px !important; margin-left: 10px !important; }
+      nav.hover-expanded .nav-right { opacity: 1 !important; max-width: 420px !important; margin-left: 10px !important; }
       nav.hover-expanded .nav-center { margin-left: 20px !important; }
-      nav.hover-expanded .nav-pill { padding: 10px 10px 10px 28px !important; border-radius: 100px !important; }
+      nav.hover-expanded .nav-pill { padding: 10px 14px !important; border-radius: 100px !important; }
       nav.hover-expanded .nav-cta { opacity: 1 !important; max-width: 200px !important; padding: 10px 18px !important; pointer-events: auto !important; }
       nav.hover-expanded .menu-btn { opacity: 0 !important; pointer-events: none !important; }
     }
@@ -473,22 +473,44 @@
     .card-agenda .card-label { color: var(--red); }
     /* Prominent style when real agenda exists */
     .card-agenda.has-agenda {
-      border-left: 3px solid rgba(48,205,215,.8);
-      background: linear-gradient(135deg, rgba(48,205,215,.07) 0%, rgba(0,30,57,.0) 70%);
-      box-shadow: 0 0 0 1px rgba(48,205,215,.12), 0 0 40px rgba(48,205,215,.04);
-      min-height: 240px;
-      grid-template-columns: 220px 1fr;
-      align-items: start;
-      padding-top: 36px;
-      padding-bottom: 36px;
+      border-left: 4px solid var(--teal);
+      background: linear-gradient(135deg, rgba(48,205,215,.09) 0%, rgba(0,30,87,.04) 60%, transparent 100%);
+      box-shadow: 0 0 0 1px rgba(48,205,215,.18), 0 0 60px rgba(48,205,215,.08), inset 0 0 40px rgba(48,205,215,.03);
+      min-height: 280px;
+      grid-template-columns: 200px 1fr;
+      align-items: center;
+      padding-top: 44px;
+      padding-bottom: 44px;
     }
     .card-agenda.has-agenda:hover {
-      border-color: rgba(48,205,215,.9);
-      background: linear-gradient(135deg, rgba(48,205,215,.1) 0%, rgba(0,30,57,.0) 70%);
+      border-color: rgba(48,205,215,1);
+      background: linear-gradient(135deg, rgba(48,205,215,.13) 0%, rgba(0,30,87,.06) 60%, transparent 100%);
+      box-shadow: 0 0 0 1px rgba(48,205,215,.28), 0 0 80px rgba(48,205,215,.12), inset 0 0 50px rgba(48,205,215,.05);
     }
-    .card-agenda.has-agenda .card-label { color: var(--teal); }
+    .card-agenda.has-agenda .card-label { color: var(--teal); letter-spacing: .2em; }
     .card-agenda.has-agenda .agenda-ghost { color: rgba(48,205,215,.05); }
-    .card-agenda.has-agenda .agenda-left-head { color: rgba(250,245,237,.55); font-size: clamp(1.4rem, 2.5vw, 2rem); }
+    .card-agenda.has-agenda .agenda-left-head {
+      color: var(--teal);
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      text-shadow: 0 0 40px rgba(48,205,215,.3);
+    }
+    .agenda-confirmed-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(48,205,215,.12);
+      border: 1px solid rgba(48,205,215,.3);
+      border-radius: 100px; padding: 5px 12px;
+      margin-bottom: 16px; align-self: flex-start;
+    }
+    .agenda-confirmed-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 6px var(--teal);
+    }
+    .agenda-confirmed-text {
+      font-size: .56rem; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--teal);
+    }
     .agenda-left-head {
       font-size: clamp(1.8rem, 3.2vw, 2.6rem);
       font-weight: 900;
@@ -540,6 +562,79 @@
 
     /* ── PREP cards ── */
     .card-prep { grid-column: span 3; }
+
+    /* ── REGISTRATION OPEN card ── */
+    .card-reg-open {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, rgba(48,205,215,.13) 0%, rgba(0,48,87,.08) 100%);
+      border: 1px solid rgba(48,205,215,.35);
+      box-shadow: 0 0 0 1px rgba(48,205,215,.1), 0 0 60px rgba(48,205,215,.1);
+      border-radius: 20px;
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      text-decoration: none;
+      transition: background .3s, box-shadow .3s, border-color .3s;
+    }
+    .card-reg-open:hover {
+      background: linear-gradient(135deg, rgba(48,205,215,.18) 0%, rgba(0,48,87,.12) 100%);
+      border-color: rgba(48,205,215,.6);
+      box-shadow: 0 0 0 1px rgba(48,205,215,.2), 0 0 80px rgba(48,205,215,.15);
+    }
+    .card-reg-open-left { display: flex; flex-direction: column; gap: 10px; }
+    .card-reg-open-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(48,205,215,.15);
+      border: 1px solid rgba(48,205,215,.35);
+      border-radius: 100px; padding: 5px 14px;
+      align-self: flex-start;
+    }
+    .card-reg-open-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 8px var(--teal);
+      animation: regPulse 1.6s ease-in-out infinite;
+    }
+    @keyframes regPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(.8)} }
+    .card-reg-open-badge-text {
+      font-size: .58rem; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--teal);
+    }
+    .card-reg-open-title {
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -.03em;
+      line-height: 1.2;
+    }
+    .card-reg-open-sub {
+      font-size: .85rem;
+      color: rgba(250,245,237,.5);
+      line-height: 1.5;
+    }
+    .card-reg-open-btn {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--teal);
+      color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      font-size: .75rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      border: none; border-radius: 100px;
+      padding: 14px 28px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, transform .2s;
+      white-space: nowrap;
+    }
+    .card-reg-open-btn:hover { background: #3de0ea; transform: translateY(-1px); }
+    @media (max-width: 600px) {
+      .card-reg-open { flex-direction: column; align-items: flex-start; padding: 28px 24px; }
+      .card-reg-open-btn { width: 100%; justify-content: center; }
+    }
     .prep-card-icon {
       width: 40px; height: 40px;
       border-radius: 10px;
@@ -862,12 +957,12 @@
       padding-top: 5px;
     }
     .agenda-t {
-      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-size: clamp(1.25rem, 2.4vw, 1.75rem);
       font-weight: 800;
       line-height: 1.4;
-      color: rgba(250,245,237,.92);
+      color: rgba(250,245,237,.95);
       transition: color .2s;
-      letter-spacing: -.01em;
+      letter-spacing: -.02em;
     }
     .agenda-list li:hover .agenda-t { color: #fff; }
 
@@ -1096,6 +1191,7 @@
     <a href="/social-night.html">Social Night</a>
     <a href="/networking-hour.html">Networking Hour</a>
     <a href="/orphanage-initiative.html">Community Outreach</a>
+    <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener" style="color:#30CDD7;font-weight:800;">IP Registration</a>
     <a href="/register.html" class="mobile-nav-cta">Register Now</a>
   </div>
 
@@ -1127,7 +1223,7 @@
       </div>
       <div class="nav-right">
         <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-        <button class="nav-cta" onclick="window.location.href='register.html'">Register Now</button>
+        <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:rgba(48,205,215,.14);border:1px solid rgba(48,205,215,.38);border-radius:100px;padding:6px 12px;font-family:Montserrat,sans-serif;font-size:.55rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#30CDD7;text-decoration:none;white-space:nowrap;">IP Registration</a><button class="nav-cta" onclick="window.location.href='register.html'">Register Now</button>
       </div>
     </div>
   </nav>
@@ -1205,7 +1301,7 @@
         <ul>
           <li><a href="/#schedule">Schedule</a>
     <a href="/allocations.html">Allocations</a></li>
-          <li><a href="/committees/ip">International Press</a></li>
+          <li><a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener">International Press</a></li>
           <li><a href="#">Allocations</a></li>
           <li><a href="/#faq">FAQs</a></li>
           <li><a href="/committees.html">Explore Committees</a></li>
@@ -1246,7 +1342,8 @@
 
     </div>
     <div class="footer-bottom">
-      <p>2026 Oakridge International School. All rights reserved.</p>
+      <p>&#169; 2026 Oakridge International School. All rights reserved.</p>
+      <p>Website designed and developed by <a href="https://www.linkedin.com/in/srijai-kodali" target="_blank" rel="noopener">Srijai Kodali</a></p>
     </div>
   </footer>
 
@@ -1353,6 +1450,33 @@
             </li>`).join('')}
         </ul>`;
       ghost.textContent = code;
+    }
+
+    // registration open cards (committee key → form URL)
+    const registerUrls = {
+      'ip': 'https://forms.office.com/r/kdyTBHKxE7',
+    };
+    if (registerUrls[key]) {
+      const bento = document.querySelector('.bento');
+      const regCard = document.createElement('a');
+      regCard.href = registerUrls[key];
+      regCard.target = '_blank';
+      regCard.rel = 'noopener';
+      regCard.className = 'card-reg-open';
+      regCard.innerHTML = `
+        <div class="card-reg-open-left">
+          <div class="card-reg-open-badge">
+            <span class="card-reg-open-dot"></span>
+            <span class="card-reg-open-badge-text">Registrations Open</span>
+          </div>
+          <div class="card-reg-open-title">Register for International Press</div>
+          <div class="card-reg-open-sub">Spots are limited — secure your press accreditation now.</div>
+        </div>
+        <span class="card-reg-open-btn">
+          Register Now
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>`;
+      bento.insertBefore(regCard, bento.firstElementChild);
     }
 
     // inject prep + eb cards directly into bento grid
@@ -1545,3 +1669,14 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
