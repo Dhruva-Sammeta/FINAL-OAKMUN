@@ -343,6 +343,7 @@
       z-index: 1;
       transform: translateZ(0);
       will-change: transform;
+      filter: blur(60px);
     }
     .hero-orb--a {
       width: 65%; height: 60%;
@@ -2391,17 +2392,17 @@
        Kill all expensive GPU ops on mobile
     ═══════════════════════════════════════ */
     @media (max-width: 768px) {
-      /* Aurora orbs: radial-gradient only — no filter blur on mobile */
-      .hero-orb { filter: none !important; }
+      /* Aurora orbs: lighter blur on mobile */
+      .hero-orb { filter: blur(24px) !important; }
 
       /* Nav: solid bg instead of backdrop-filter blur */
       .nav-pill { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(1,3,8,.99) !important; }
       .nav-drop { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(3,12,26,.98) !important; }
       .mobile-nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 
-      /* Section orbs: no filter blur */
+      /* Section orbs: lighter blur on mobile */
       .theme-orb-a, .theme-orb-b, .theme-orb-c, .theme-orb-d, .theme-orb-e,
-      .s-orb { filter: none !important; }
+      .s-orb { filter: blur(30px) !important; }
 
       /* Stop box-shadow animation on SG photo — paint on every frame */
       .sg-photo-wrap { animation: none !important; }
@@ -2420,6 +2421,7 @@
     }
 
     /* ── THEME SECTION ORBS (dark bg — balanced glow on #020c1a) ── */
+    .theme-orb-a, .theme-orb-b, .theme-orb-c, .theme-orb-d, .theme-orb-e { filter: blur(60px); }
     .theme-orb-a {
       width: 75%; height: 70%;
       top: -20%; left: -10%;
@@ -2459,6 +2461,7 @@
       z-index: 0;
       transform: translateZ(0);
       will-change: transform;
+      filter: blur(60px);
     }
     /* Stats */
     .stats-section { overflow: hidden; }
