@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=block" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -56,35 +56,28 @@
     .pg-orb-a {
       width: 72vw; height: 65vh;
       top: -18vh; left: -14vw;
-      background: rgba(30,200,215,.32);
-      filter: blur(88px);
+      background: radial-gradient(circle, rgba(30,200,215,.32) 0%, transparent 70%);
       animation: orb-a 22s ease-in-out infinite alternate;
     }
     .pg-orb-b {
       width: 62vw; height: 58vh;
       bottom: 0; right: -12vw;
-      background: rgba(0,80,150,.55);
-      filter: blur(80px);
+      background: radial-gradient(circle, rgba(0,80,150,.55) 0%, transparent 70%);
       animation: orb-b 26s ease-in-out infinite alternate;
     }
     .pg-orb-c {
       width: 52vw; height: 52vh;
       top: 35vh; left: 24vw;
-      background: rgba(48,205,215,.2);
-      filter: blur(100px);
+      background: radial-gradient(circle, rgba(48,205,215,.2) 0%, transparent 70%);
       animation: orb-c 30s ease-in-out infinite alternate;
     }
     .pg-orb-d {
       width: 44vw; height: 44vh;
       top: 65vh; left: -6vw;
-      background: rgba(10,60,130,.38);
-      filter: blur(110px);
+      background: radial-gradient(circle, rgba(10,60,130,.38) 0%, transparent 70%);
       animation: orb-a 36s ease-in-out infinite alternate-reverse;
     }
-    @media (max-width: 768px) {
-      .pg-orb { filter: blur(55px) !important; }
-    }
-    @media (prefers-reduced-motion: reduce) {
+        @media (prefers-reduced-motion: reduce) {
       .pg-orb { animation: none !important; }
     }
 
@@ -117,7 +110,7 @@
     }
     .nav-pill {
       display: flex; align-items: center; gap: 0;
-      background: rgba(3,12,26,.9);
+      background: rgba(1,3,8,.97);
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-radius: 100px; border: 1px solid rgba(250,245,237,.07);
       padding: 10px 10px 10px 28px;
@@ -148,7 +141,7 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; padding: 0 6px;
     }
-    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); transition: filter .2s, opacity .2s; }
+    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); mix-blend-mode: lighten; transition: filter .2s, opacity .2s; }
     .nav-mark:hover img { opacity: 1; filter: drop-shadow(0 0 14px rgba(48,205,215,.65)); }
     .nav-right {
       display: flex; align-items: center; gap: 6px;
@@ -209,13 +202,20 @@
 
     .mobile-nav {
       position: fixed;
-      top: 90px;
+      top: calc(var(--nav-bottom, 78px) + 10px);
       left: 50%;
-      transform: translateX(-50%) translateY(-20px) scale(0.95);
-      width: calc(100% - 40px);
-      max-width: 320px;
+      transform: translateX(-50%) translateY(-12px) scale(0.97);
+      width: calc(100% - 32px);
+      max-width: 360px;
+      max-height: calc(100dvh - var(--nav-bottom, 78px) - 16px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(48,205,215,.28) transparent;
       z-index: 199;
-      background: rgba(3,12,26,.97);
+      background: rgba(1,3,8,.99);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       padding: 16px 24px;
@@ -258,15 +258,19 @@
       align-items: flex-end;
       justify-content: space-between;
       gap: 40px;
-      border-bottom: 1px solid rgba(48,205,215,.12);
       position: relative;
     }
     .hero::after {
       content: '';
       position: absolute;
       bottom: -1px; left: 0; right: 0; height: 1px;
-      background: linear-gradient(to right, transparent, rgba(48,205,215,.4), transparent);
+      background: linear-gradient(to right, rgba(48,205,215,.02), rgba(48,205,215,.35), rgba(48,205,215,.02));
       pointer-events: none;
+      opacity: 0;
+      transform: scaleX(0);
+      animation: line-reveal 1s cubic-bezier(0.4,0,0.2,1) forwards;
+      animation-delay: 0.4s;
+      transform-origin: center;
     }
     .hero-left { display: flex; flex-direction: column; gap: 16px; }
     .hero-kicker {
@@ -774,7 +778,8 @@
     .marquee-strip::before { left: 0; background: linear-gradient(to right, #020C16, transparent); }
     .marquee-strip::after  { right: 0; background: linear-gradient(to left, #020C16, transparent); }
     .marquee-track {
-      display: flex; width: max-content;
+      display: flex;
+      will-change: transform; width: max-content;
       animation: marquee-scroll 50s linear infinite;
     }
     @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
@@ -791,20 +796,29 @@
       vertical-align: middle; margin: 0 4px;
     }
 
+    @keyframes line-reveal {
+      0% { opacity: 0; transform: scaleX(0.7); }
+      100% { opacity: 1; transform: scaleX(1); }
+    }
+
     /* ── STATS BAR ── */
     .stats-bar {
       max-width: 1200px; margin: 0 auto;
       padding: 36px 48px;
       display: grid; grid-template-columns: repeat(4, 1fr);
-      border-bottom: 1px solid rgba(48,205,215,.08);
       position: relative; z-index: 1;
     }
     .stats-bar::after {
       content: '';
       position: absolute;
       bottom: -1px; left: 48px; right: 48px; height: 1px;
-      background: linear-gradient(to right, transparent, rgba(48,205,215,.2), transparent);
+      background: linear-gradient(to right, rgba(48,205,215,.01), rgba(48,205,215,.2), rgba(48,205,215,.01));
       pointer-events: none;
+      opacity: 0;
+      transform: scaleX(0);
+      animation: line-reveal 1s cubic-bezier(0.4,0,0.2,1) forwards;
+      animation-delay: 0.5s;
+      transform-origin: center;
     }
     .stat-item {
       display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -881,6 +895,13 @@
       z-index: 0;
       pointer-events: none;
       animation: fadeIn 1.2s ease-out both;
+    }
+    /* ── MOBILE PERF: solid nav, no backdrop blur ── */
+    @media (max-width: 768px) {
+      .nav-pill { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(1,3,8,.99) !important; }
+      .nav-drop { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(3,12,26,.98) !important; }
+      .mobile-nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+      .pg-orb, .page-hero-orb { filter: none !important; }
     }
   </style>
 
@@ -1504,8 +1525,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Oakridge International School. All rights reserved.</p>
-      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+      <p>2026 Oakridge International School. All rights reserved.</p>
     </div>
   </footer>
 
@@ -1613,8 +1633,17 @@
     // ── MOBILE MENU ──
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
+    function syncNavBottom() {
+      const nav = document.getElementById('navbar');
+      if (nav) document.documentElement.style.setProperty('--nav-bottom', nav.getBoundingClientRect().bottom + 'px');
+    }
+    syncNavBottom();
+    window.addEventListener('resize', syncNavBottom);
+    window.addEventListener('orientationchange', syncNavBottom);
+
     menuBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      syncNavBottom();
       const isOpen = mobileNav.classList.toggle('open');
       menuBtn.classList.toggle('open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';

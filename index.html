@@ -7,7 +7,9 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=block" rel="stylesheet" />
+  <link rel="preload" href="logo.png" as="image" fetchpriority="high" />
+  <link rel="preload" href="xvi.svg" as="image" type="image/svg+xml" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -92,7 +94,7 @@
       display: flex;
       align-items: center;
       gap: 0;
-      background: rgba(3,12,26,.9);
+      background: rgba(1,3,8,.97);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border-radius: 100px;
@@ -244,7 +246,7 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; padding: 0 6px;
     }
-    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); transition: filter .3s, opacity .3s; }
+    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); mix-blend-mode: lighten; transition: filter .3s, opacity .3s; }
     .nav-mark:hover img { opacity: 1; filter: drop-shadow(0 0 14px rgba(48,205,215,.65)); }
     .nav-right {
       display: flex; align-items: center; gap: 6px;
@@ -337,26 +339,27 @@
     .hero-orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(70px);
       pointer-events: none;
       z-index: 1;
+      transform: translateZ(0);
+      will-change: transform;
     }
     .hero-orb--a {
       width: 65%; height: 60%;
       top: -15%; left: 17%;
-      background: rgba(30,150,165,.35);
+      background: radial-gradient(circle, rgba(30,150,165,.35) 0%, transparent 70%);
       animation: orb-a 18s ease-in-out infinite alternate;
     }
     .hero-orb--b {
       width: 55%; height: 55%;
       bottom: -15%; right: -5%;
-      background: rgba(0,60,110,.55);
+      background: radial-gradient(circle, rgba(0,60,110,.55) 0%, transparent 70%);
       animation: orb-b 22s ease-in-out infinite alternate;
     }
     .hero-orb--c {
       width: 45%; height: 50%;
       top: 25%; left: -10%;
-      background: rgba(48,205,215,.18);
+      background: radial-gradient(circle, rgba(48,205,215,.18) 0%, transparent 70%);
       animation: orb-c 26s ease-in-out infinite alternate;
     }
     @keyframes orb-a {
@@ -677,6 +680,7 @@
       .morph-card { width: 56px; height: 80px; }
 
       /* intro text */
+      #heroIntroText { padding-top: 72px; }
       .morph-big-title  { font-size: clamp(2.4rem, 13vw, 3.8rem); }
       .morph-chapter-tag { font-size: .42rem; margin-top: 8px; }
       .morph-scroll-hint { font-size: .42rem; margin-top: 14px; }
@@ -715,6 +719,7 @@
       display: flex;
       white-space: nowrap;
       animation: marquee 22s linear infinite;
+      will-change: transform;
     }
     .marquee-content {
       display: flex;
@@ -729,6 +734,9 @@
       text-transform: uppercase;
       color: var(--navy);
       padding: 0 28px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track, .marquee-track-rev { animation: none; }
     }
     .marquee-dot {
       width: 4px;
@@ -823,8 +831,7 @@
       transform: translate(-50%, -50%);
       width: 900px; height: 600px;
       border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(48,205,215,.07) 0%, transparent 65%);
-      filter: blur(60px);
+      background: radial-gradient(ellipse, rgba(48,205,215,.12) 0%, transparent 70%);
       pointer-events: none;
     }
     .theme-inner {
@@ -1873,13 +1880,20 @@
 
     .mobile-nav {
       position: fixed;
-      top: 90px;
+      top: calc(var(--nav-bottom, 78px) + 10px);
       left: 50%;
-      transform: translateX(-50%) translateY(-20px) scale(0.95);
-      width: calc(100% - 40px);
-      max-width: 320px;
+      transform: translateX(-50%) translateY(-12px) scale(0.97);
+      width: calc(100% - 32px);
+      max-width: 360px;
+      max-height: calc(100dvh - var(--nav-bottom, 78px) - 16px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(48,205,215,.28) transparent;
       z-index: 199;
-      background: rgba(3,12,26,.97);
+      background: rgba(1,3,8,.99);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       padding: 16px 24px;
@@ -1996,6 +2010,7 @@
       display: flex;
       white-space: nowrap;
       animation: marquee-rev 30s linear infinite;
+      will-change: transform;
     }
     @keyframes marquee-rev {
       from { transform: translateX(-50%); }
@@ -2359,13 +2374,11 @@
       width: 220px; height: 220px;
       top: -60px; right: -40px;
       background: radial-gradient(circle, rgba(255,200,0,.28) 0%, transparent 70%);
-      filter: blur(18px);
     }
     .sn-glow-b {
       width: 160px; height: 160px;
       bottom: -40px; left: 10px;
       background: radial-gradient(circle, rgba(232,120,10,.22) 0%, transparent 70%);
-      filter: blur(22px);
     }
 
     @media (max-width: 768px) {
@@ -2378,12 +2391,17 @@
        Kill all expensive GPU ops on mobile
     ═══════════════════════════════════════ */
     @media (max-width: 768px) {
-      /* Aurora orbs: keep blur but reduce radius slightly on mobile */
-      .hero-orb { filter: blur(50px) !important; }
+      /* Aurora orbs: radial-gradient only — no filter blur on mobile */
+      .hero-orb { filter: none !important; }
 
       /* Nav: solid bg instead of backdrop-filter blur */
-      .nav-pill { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(3,12,26,.97) !important; }
+      .nav-pill { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(1,3,8,.99) !important; }
       .nav-drop { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(3,12,26,.98) !important; }
+      .mobile-nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+
+      /* Section orbs: no filter blur */
+      .theme-orb-a, .theme-orb-b, .theme-orb-c, .theme-orb-d, .theme-orb-e,
+      .s-orb { filter: none !important; }
 
       /* Stop box-shadow animation on SG photo — paint on every frame */
       .sg-photo-wrap { animation: none !important; }
@@ -2405,41 +2423,32 @@
     .theme-orb-a {
       width: 75%; height: 70%;
       top: -20%; left: -10%;
-      background: rgba(30,150,165,.22);
-      filter: blur(100px);
+      background: radial-gradient(circle, rgba(30,150,165,.22) 0%, transparent 70%);
       animation: orb-a 20s ease-in-out infinite alternate;
     }
     .theme-orb-b {
       width: 65%; height: 65%;
       bottom: -15%; right: -8%;
-      background: rgba(48,205,215,.14);
-      filter: blur(90px);
+      background: radial-gradient(circle, rgba(48,205,215,.14) 0%, transparent 70%);
       animation: orb-b 25s ease-in-out infinite alternate;
     }
     .theme-orb-c {
       width: 55%; height: 60%;
       top: 0%; right: -5%;
-      background: rgba(188,154,110,.18);
-      filter: blur(90px);
+      background: radial-gradient(circle, rgba(188,154,110,.18) 0%, transparent 70%);
       animation: orb-c 18s ease-in-out infinite alternate;
     }
     .theme-orb-d {
       width: 55%; height: 55%;
       bottom: -5%; left: 5%;
-      background: rgba(48,205,215,.10);
-      filter: blur(110px);
+      background: radial-gradient(circle, rgba(48,205,215,.10) 0%, transparent 70%);
       animation: orb-b 30s ease-in-out infinite alternate;
     }
     .theme-orb-e {
       width: 45%; height: 50%;
       top: 30%; left: 28%;
-      background: rgba(30,150,165,.12);
-      filter: blur(80px);
+      background: radial-gradient(circle, rgba(30,150,165,.12) 0%, transparent 70%);
       animation: orb-a 22s ease-in-out infinite alternate;
-    }
-    @media (max-width: 768px) {
-      .theme-orb-a, .theme-orb-b, .theme-orb-c,
-      .theme-orb-d, .theme-orb-e { filter: blur(70px) !important; }
     }
 
     /* ── SECTION ORBS (shared) ── */
@@ -2448,36 +2457,34 @@
       border-radius: 50%;
       pointer-events: none;
       z-index: 0;
+      transform: translateZ(0);
+      will-change: transform;
     }
     /* Stats */
     .stats-section { overflow: hidden; }
     .stats-orb-a {
       width: 50%; height: 260px;
       top: -60%; left: -8%;
-      background: rgba(30,150,165,.22);
-      filter: blur(90px);
+      background: radial-gradient(circle, rgba(30,150,165,.22) 0%, transparent 70%);
       animation: orb-a 20s ease-in-out infinite alternate;
     }
     .stats-orb-b {
       width: 40%; height: 220px;
       top: -40%; right: -6%;
-      background: rgba(0,48,87,.45);
-      filter: blur(80px);
+      background: radial-gradient(circle, rgba(0,48,87,.45) 0%, transparent 70%);
       animation: orb-b 24s ease-in-out infinite alternate;
     }
     /* SG */
     .sg-orb-a {
       width: 55%; height: 55%;
       top: -20%; left: -10%;
-      background: rgba(48,205,215,.13);
-      filter: blur(100px);
+      background: radial-gradient(circle, rgba(48,205,215,.13) 0%, transparent 70%);
       animation: orb-c 22s ease-in-out infinite alternate;
     }
     .sg-orb-b {
       width: 45%; height: 50%;
       bottom: -20%; right: -8%;
-      background: rgba(0,48,87,.4);
-      filter: blur(90px);
+      background: radial-gradient(circle, rgba(0,48,87,.4) 0%, transparent 70%);
       animation: orb-a 28s ease-in-out infinite alternate;
     }
     /* Schedule */
@@ -2485,15 +2492,13 @@
     .sch-orb-a {
       width: 60%; height: 60%;
       top: 5%; left: -15%;
-      background: rgba(30,150,165,.18);
-      filter: blur(110px);
+      background: radial-gradient(circle, rgba(30,150,165,.18) 0%, transparent 70%);
       animation: orb-b 26s ease-in-out infinite alternate;
     }
     .sch-orb-b {
       width: 50%; height: 50%;
       bottom: 0%; right: -10%;
-      background: rgba(48,205,215,.1);
-      filter: blur(100px);
+      background: radial-gradient(circle, rgba(48,205,215,.1) 0%, transparent 70%);
       animation: orb-a 30s ease-in-out infinite alternate;
     }
     /* Committees */
@@ -2501,49 +2506,40 @@
     .ctrl-orb-a {
       width: 50%; height: 60%;
       top: 10%; right: -10%;
-      background: rgba(30,150,165,.15);
-      filter: blur(110px);
+      background: radial-gradient(circle, rgba(30,150,165,.15) 0%, transparent 70%);
       animation: orb-c 24s ease-in-out infinite alternate;
     }
     .ctrl-orb-b {
       width: 45%; height: 50%;
       bottom: 5%; left: -8%;
-      background: rgba(0,48,87,.35);
-      filter: blur(100px);
+      background: radial-gradient(circle, rgba(0,48,87,.35) 0%, transparent 70%);
       animation: orb-b 20s ease-in-out infinite alternate;
     }
     /* BTD */
     .btd-orb-a {
       width: 55%; height: 55%;
       top: -10%; right: -8%;
-      background: rgba(48,205,215,.12);
-      filter: blur(100px);
+      background: radial-gradient(circle, rgba(48,205,215,.12) 0%, transparent 70%);
       animation: orb-a 22s ease-in-out infinite alternate;
     }
     .btd-orb-b {
       width: 50%; height: 50%;
       bottom: -10%; left: -6%;
-      background: rgba(30,150,165,.15);
-      filter: blur(90px);
+      background: radial-gradient(circle, rgba(30,150,165,.15) 0%, transparent 70%);
       animation: orb-c 28s ease-in-out infinite alternate;
     }
     /* FAQ */
     .faq-orb-a {
       width: 60%; height: 60%;
       top: -15%; left: -10%;
-      background: rgba(48,205,215,.14);
-      filter: blur(110px);
+      background: radial-gradient(circle, rgba(48,205,215,.14) 0%, transparent 70%);
       animation: orb-b 25s ease-in-out infinite alternate;
     }
     .faq-orb-b {
       width: 50%; height: 50%;
       bottom: -15%; right: -8%;
-      background: rgba(0,60,110,.4);
-      filter: blur(100px);
+      background: radial-gradient(circle, rgba(0,60,110,.4) 0%, transparent 70%);
       animation: orb-a 20s ease-in-out infinite alternate;
-    }
-    @media (max-width: 768px) {
-      .s-orb { filter: blur(60px) !important; }
     }
     @media (prefers-reduced-motion: reduce) {
       .s-orb { animation: none !important; }
@@ -2563,6 +2559,23 @@
     }
     .s-orb.sr.sr-visible {
       transform: none;
+    }
+    /* ── MOBILE NAV: scrollable on short / odd aspect ratios ── */
+    .mobile-nav::-webkit-scrollbar { width: 4px; }
+    .mobile-nav::-webkit-scrollbar-thumb { background: rgba(48,205,215,.28); border-radius: 4px; }
+    .mobile-nav a { flex-shrink: 0; }
+    @media (max-width: 768px) {
+      .mobile-nav { padding: 12px 20px 14px; }
+      .mobile-nav a { padding: 13px 0; }
+    }
+    @media (max-width: 768px) and (max-height: 700px) {
+      .mobile-nav a { padding: 11px 0; font-size: .82rem; }
+      .mobile-nav a.mobile-nav-cta { padding: 11px 0 !important; margin-top: 6px; }
+    }
+    @media (max-height: 520px) {
+      .mobile-nav { padding: 10px 16px 12px; border-radius: 16px; }
+      .mobile-nav a { padding: 8px 0; font-size: .76rem; letter-spacing: .08em; }
+      .mobile-nav a.mobile-nav-cta { padding: 9px 0 !important; font-size: .76rem; }
     }
   </style>
 </head>
@@ -2612,7 +2625,7 @@
           <li><a href="/secretariat.html">Secretariat</a></li>
           <li><a href="/allocations.html">Allocations</a></li>
         </ul>
-        <div class="nav-mark"><img src="logo.png" alt="Oakridge MUN" /></div>
+        <div class="nav-mark"><img src="logo.png" alt="Oakridge MUN" fetchpriority="high" decoding="async" /></div>
         <ul class="nav-links-group right">
           <li><a href="#schedule">Schedule</a></li>
           <li><a href="/resources.html">Resources</a></li>
@@ -2646,7 +2659,7 @@
     </div>
 
     <!-- giant XVI watermark (behind cards, above bg) -->
-    <div class="hero-xvi-bg" id="heroXviBg"><img src="xvi.svg" alt="XVI" /></div>
+    <div class="hero-xvi-bg" id="heroXviBg"><img src="xvi.svg" alt="XVI" fetchpriority="high" decoding="async" /></div>
 
     <!-- morph canvas — cards injected by JS -->
     <div id="morphCanvas"></div>
@@ -3192,10 +3205,8 @@
       </div>
 
     </div>
-
     <div class="footer-bottom">
-      <p>© 2026 Oakridge International School. All rights reserved.</p>
-      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+      <p>2026 Oakridge International School. All rights reserved.</p>
     </div>
   </footer>
 
@@ -3700,8 +3711,17 @@
     // ── MOBILE MENU ──
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
+    function syncNavBottom() {
+      const nav = document.getElementById('navbar');
+      if (nav) document.documentElement.style.setProperty('--nav-bottom', nav.getBoundingClientRect().bottom + 'px');
+    }
+    syncNavBottom();
+    window.addEventListener('resize', syncNavBottom);
+    window.addEventListener('orientationchange', syncNavBottom);
+
     menuBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      syncNavBottom();
       const isOpen = mobileNav.classList.toggle('open');
       menuBtn.classList.toggle('open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -4022,7 +4042,7 @@
     #trainingPopup.open { opacity: 1; pointer-events: auto; }
     .tp-card {
       position: relative;
-      background: rgba(3,12,26,.97);
+      background: rgba(1,3,8,.99);
       border: 1px solid rgba(48,205,215,.35);
       border-radius: 24px;
       padding: 44px 48px 40px;
@@ -4081,7 +4101,7 @@
     <span class="strip-pulse"></span>
     Delegate Training Session &nbsp;·&nbsp; 10th July
     <span class="strip-pulse"></span>
-    <button id="stripClose" onclick="document.getElementById('trainingStrip').style.display='none'">✕</button>
+    <button id="stripClose">✕</button>
   </div>
 
   <!-- popup -->
@@ -4096,7 +4116,20 @@
   </div>
   <script>
     // Push nav down so strip doesn't overlap it
-    document.querySelector('nav').style.top = '42px';
+    const trainingStrip = document.getElementById('trainingStrip');
+    const navEl = document.querySelector('nav');
+    function applyTrainingStripLayout() {
+      if (!trainingStrip || !navEl) return;
+      const stripVisible = trainingStrip.style.display !== 'none' && trainingStrip.offsetHeight > 0;
+      navEl.style.top = stripVisible ? '42px' : '';
+      if (typeof syncNavBottom === 'function') syncNavBottom();
+    }
+    if (navEl) navEl.style.top = '42px';
+    applyTrainingStripLayout();
+    document.getElementById('stripClose')?.addEventListener('click', () => {
+      trainingStrip.style.display = 'none';
+      applyTrainingStripLayout();
+    });
     // Show popup only once per session
     if (!sessionStorage.getItem('trainingPopupSeen')) {
       setTimeout(() => {

@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=block" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -65,7 +65,7 @@
     }
     .nav-pill {
       display: flex; align-items: center; gap: 0;
-      background: rgba(3,12,26,.9);
+      background: rgba(1,3,8,.97);
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-radius: 100px; border: 1px solid rgba(250,245,237,.07);
       padding: 10px 10px 10px 28px;
@@ -96,7 +96,7 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; padding: 0 6px;
     }
-    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); transition: filter .2s, opacity .2s; }
+    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); mix-blend-mode: lighten; transition: filter .2s, opacity .2s; }
     .nav-mark:hover img { opacity: 1; filter: drop-shadow(0 0 14px rgba(48,205,215,.65)); }
     .nav-right {
       display: flex; align-items: center; gap: 6px;
@@ -159,13 +159,20 @@
 
     .mobile-nav {
       position: fixed;
-      top: 90px;
+      top: calc(var(--nav-bottom, 78px) + 10px);
       left: 50%;
-      transform: translateX(-50%) translateY(-20px) scale(0.95);
-      width: calc(100% - 40px);
-      max-width: 320px;
+      transform: translateX(-50%) translateY(-12px) scale(0.97);
+      width: calc(100% - 32px);
+      max-width: 360px;
+      max-height: calc(100dvh - var(--nav-bottom, 78px) - 16px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(48,205,215,.28) transparent;
       z-index: 199;
-      background: rgba(3,12,26,.97);
+      background: rgba(1,3,8,.99);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       padding: 16px 24px;
@@ -1112,21 +1119,20 @@
     }
     .pg-orb-a {
       width: 60vw; height: 60vh; top: -10vh; left: -8vw;
-      background: rgba(30,150,165,.22); filter: blur(100px);
+      background: radial-gradient(circle, rgba(30,150,165,.22) 0%, transparent 70%);
       animation: orb-a 20s ease-in-out infinite alternate;
     }
     .pg-orb-b {
       width: 55vw; height: 55vh; bottom: 0; right: -8vw;
-      background: rgba(0,60,110,.40); filter: blur(90px);
+      background: radial-gradient(circle, rgba(0,60,110,.40) 0%, transparent 70%);
       animation: orb-b 26s ease-in-out infinite alternate;
     }
     .pg-orb-c {
       width: 45vw; height: 45vh; top: 38vh; left: 28vw;
-      background: rgba(48,205,215,.10); filter: blur(110px);
+      background: radial-gradient(circle, rgba(48,205,215,.10) 0%, transparent 70%);
       animation: orb-c 32s ease-in-out infinite alternate;
     }
-    @media (max-width: 768px) { .pg-orb { filter: blur(60px) !important; } }
-    @media (prefers-reduced-motion: reduce) { .pg-orb { animation: none !important; } }
+        @media (prefers-reduced-motion: reduce) { .pg-orb { animation: none !important; } }
 
     /* ── SCROLL REVEAL ── */
     .sr { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(0.4,0,0.2,1), transform .7s cubic-bezier(0.4,0,0.2,1); }
@@ -1140,6 +1146,13 @@
     :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
 
 
+    /* ── MOBILE PERF: solid nav, no backdrop blur ── */
+    @media (max-width: 768px) {
+      .nav-pill { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(1,3,8,.99) !important; }
+      .nav-drop { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(3,12,26,.98) !important; }
+      .mobile-nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+      .pg-orb, .page-hero-orb { filter: none !important; }
+    }
   </style>
 
 </head>
@@ -1384,8 +1397,17 @@
     // ── MOBILE MENU ──
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
+    function syncNavBottom() {
+      const nav = document.getElementById('navbar');
+      if (nav) document.documentElement.style.setProperty('--nav-bottom', nav.getBoundingClientRect().bottom + 'px');
+    }
+    syncNavBottom();
+    window.addEventListener('resize', syncNavBottom);
+    window.addEventListener('orientationchange', syncNavBottom);
+
     menuBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      syncNavBottom();
       const isOpen = mobileNav.classList.toggle('open');
       menuBtn.classList.toggle('open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -1891,10 +1913,8 @@
       </div>
 
     </div>
-
     <div class="footer-bottom">
-      <p>© 2026 Oakridge International School. All rights reserved.</p>
-      <p>Website designed and developed by <a href="#">Srijai Kodali</a></p>
+      <p>2026 Oakridge International School. All rights reserved.</p>
     </div>
   </footer>
 
