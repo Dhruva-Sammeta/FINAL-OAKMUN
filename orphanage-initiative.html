@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-@media (min-width: 769px) { html { zoom: 1.1; } }
 
     @keyframes navSlideDown { from { opacity: 0; transform: translateX(-50%) translateY(-18px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
@@ -165,13 +164,13 @@
 
     /* ── GALLERY ── */
     .gallery-section {
-      background: #001223;
+      background: #1a0812;
       padding: 100px 64px;
       position: relative;
     }
     .gallery-section::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(48,205,215,.04) 0%, transparent 60%);
+      background: radial-gradient(ellipse at 50% 0%, rgba(220,100,140,.14) 0%, transparent 65%);
       pointer-events: none;
     }
     .gallery-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
@@ -311,7 +310,18 @@
     
   </style>
 
-</head>
+  <!-- Open Graph / Social Preview -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://oakmun.netlify.app/orphanage-initiative.html" />
+  <meta property="og:title"       content="Community Outreach — Oakridge MUN XVI" />
+  <meta property="og:description" content="Oakridge MUN's community outreach and orphanage initiative — diplomacy beyond the dais." />
+  <meta property="og:image"       content="https://oakmun.netlify.app/conference_photos/1.webp" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Community Outreach — Oakridge MUN XVI" />
+  <meta name="twitter:description" content="Oakridge MUN's community outreach and orphanage initiative — diplomacy beyond the dais." />
+  <meta name="twitter:image"       content="https://oakmun.netlify.app/conference_photos/1.webp" /></head>
 <body>
 
   <div class="mobile-nav" id="mobileNav">
@@ -348,7 +358,7 @@
         <ul class="nav-links-group right">
           <li><a href="/#schedule">Schedule</a></li>
           <li><a href="/resources.html">Resources</a></li>
-          <li class="nav-has-drop"><a href="#">Other</a>
+          <li class="nav-has-drop"><a href="#">Events</a>
             <div class="nav-drop nav-drop--events">
               <div class="nav-drop-grid">
                 <a class="nav-drop-item" href="/social-night.html">Social Night</a>
@@ -398,12 +408,24 @@
       <div class="gallery-eyebrow sr">From Last Year's OakMUN</div>
       <h2 class="gallery-title sr sr-d1">In the Committee Room.</h2>
       <p class="gallery-desc">Snapshots of the orphanage children at last year's Oakridge MUN — debating, deliberating, and making their voices heard for the first time.</p>
-      <div class="photo-grid two-col">
+      <div class="photo-grid">
         <div class="photo-slot">
           <img src="/orph_1.webp" alt="Orphanage children in committee session" loading="lazy" decoding="async" />
         </div>
         <div class="photo-slot">
           <img src="/orph_2.webp" alt="Orphanage delegates at the table" loading="lazy" decoding="async" />
+        </div>
+        <div class="photo-slot">
+          <img src="/orphanage_photos/1%20(1).jpeg" alt="Orphanage initiative photo" loading="lazy" decoding="async" />
+        </div>
+        <div class="photo-slot">
+          <img src="/orphanage_photos/1%20(2).jpeg" alt="Orphanage initiative photo" loading="lazy" decoding="async" />
+        </div>
+        <div class="photo-slot">
+          <img src="/orphanage_photos/1%20(3).jpeg" alt="Orphanage initiative photo" loading="lazy" decoding="async" />
+        </div>
+        <div class="photo-slot">
+          <img src="/orphanage_photos/1%20(4).jpeg" alt="Orphanage initiative photo" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>

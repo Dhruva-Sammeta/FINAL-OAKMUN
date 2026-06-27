@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -10,8 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    @media (min-width: 769px) { html { zoom: 1.1; } }
-
+    
     @keyframes navSlideDown { from { opacity: 0; transform: translateX(-50%) translateY(-18px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .3; transform: scale(.55); } }
@@ -106,37 +105,63 @@
     .hero-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); }
     .hero-deco { font-size: clamp(5rem, 10vw, 8.5rem); font-weight: 900; letter-spacing: -.04em; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(48,205,215,.1); user-select: none; pointer-events: none; }
 
-    /* ── COMING SOON ── */
-    .coming-section {
-      background: var(--navy);
-      padding: 100px 64px;
-      text-align: center;
+    /* ── GUIDELINES ── */
+    .guidelines-section {
+      background: var(--dark);
+      padding: 80px 64px 120px;
       position: relative;
     }
-    .coming-section::before {
-      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 600px; height: 400px; border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(48,205,215,.04) 0%, transparent 65%);
-      pointer-events: none;
+    .guidelines-inner { max-width: 820px; margin: 0 auto; }
+    .guide-block {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 0 28px;
+      padding: 48px 0;
+      border-bottom: 1px solid rgba(250,245,237,.07);
     }
-    .coming-inner { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
-    .coming-icon {
-      width: 72px; height: 72px; border-radius: 18px;
-      background: rgba(48,205,215,.08); border: 1px solid rgba(48,205,215,.16);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 32px;
-      color: var(--teal);
+    .guide-block:first-child { padding-top: 0; }
+    .guide-block:last-child { border-bottom: none; padding-bottom: 0; }
+    .guide-num {
+      font-size: 1.8rem; font-weight: 900; letter-spacing: -.04em;
+      color: rgba(48,205,215,.18); line-height: 1; padding-top: 4px;
     }
-    .coming-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; letter-spacing: -.03em; color: var(--white); margin-bottom: 20px; }
-    .coming-desc { font-size: .95rem; font-weight: 400; line-height: 1.75; color: rgba(250,245,237,.4); margin-bottom: 36px; }
-    .coming-badge {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 10px 24px; border-radius: 100px;
-      background: rgba(48,205,215,.07); border: 1px solid rgba(48,205,215,.18);
-      font-size: .6rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--teal);
+    .guide-title {
+      font-size: 1.2rem; font-weight: 800; letter-spacing: -.02em;
+      color: var(--white); margin-bottom: 14px; line-height: 1.25;
     }
-    .coming-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+    .guide-body { font-size: .88rem; font-weight: 400; line-height: 1.8; color: rgba(250,245,237,.5); }
+    .guide-body p + p { margin-top: 12px; }
+    .guide-list { list-style: none; margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .guide-list li {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: .86rem; line-height: 1.6; color: rgba(250,245,237,.5);
+    }
+    .guide-list li::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--teal); opacity: .55; flex-shrink: 0; margin-top: 8px;
+    }
+    .guide-highlight {
+      background: rgba(48,205,215,.06); border: 1px solid rgba(48,205,215,.15);
+      border-radius: 10px; padding: 14px 18px; margin-top: 16px;
+      font-size: .86rem; font-weight: 700; color: var(--teal);
+    }
+    .award-grid { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .award-row {
+      background: rgba(48,205,215,.04); border: 1px solid rgba(48,205,215,.1);
+      border-radius: 10px; padding: 18px 12px; text-align: center;
+    }
+    .award-label { font-size: .58rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(250,245,237,.35); margin-bottom: 8px; }
+    .award-pts { font-size: 2rem; font-weight: 900; letter-spacing: -.04em; color: var(--teal); line-height: 1; }
+    .award-pts-label { font-size: .6rem; font-weight: 600; color: rgba(250,245,237,.28); margin-top: 6px; }
+    .guide-contact { margin-top: 20px; font-size: .86rem; line-height: 1.9; }
+    .guide-contact a { color: var(--teal); text-decoration: none; }
+    .guide-contact a:hover { text-decoration: underline; }
+    @media (max-width: 768px) {
+      .guidelines-section { padding: 64px 24px 80px; }
+      .guide-block { grid-template-columns: 1fr; gap: 8px; padding: 36px 0; }
+      .guide-num { font-size: 1.2rem; }
+      .award-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    }
     
     .interactive-grid {
       position: absolute;
@@ -246,7 +271,18 @@
     
   </style>
 
-</head>
+  <!-- Open Graph / Social Preview -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://oakmun.netlify.app/delegation-guidelines.html" />
+  <meta property="og:title"       content="Delegation Guidelines — Oakridge MUN XVI" />
+  <meta property="og:description" content="Official delegation guidelines for Oakridge MUN XVI. Everything you need to know before arriving." />
+  <meta property="og:image"       content="https://oakmun.netlify.app/conference_photos/1.webp" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Delegation Guidelines — Oakridge MUN XVI" />
+  <meta name="twitter:description" content="Official delegation guidelines for Oakridge MUN XVI. Everything you need to know before arriving." />
+  <meta name="twitter:image"       content="https://oakmun.netlify.app/conference_photos/1.webp" /></head>
 <body>
 
   <div class="mobile-nav" id="mobileNav">
@@ -283,7 +319,7 @@
         <ul class="nav-links-group right">
           <li><a href="/#schedule">Schedule</a></li>
           <li><a href="/resources.html">Resources</a></li>
-          <li class="nav-has-drop"><a href="#">Other</a>
+          <li class="nav-has-drop"><a href="#">Events</a>
             <div class="nav-drop nav-drop--events">
               <div class="nav-drop-grid">
                 <a class="nav-drop-item" href="/social-night.html">Social Night</a>
@@ -328,20 +364,147 @@
     </div>
   </section>
 
-  <!-- CONTENT PLACEHOLDER -->
-  <section class="coming-section">
-    <div class="coming-inner">
-      <div class="coming-icon">
-        <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-          <path d="M6 4h18a2 2 0 012 2v18a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.6"/>
-          <path d="M10 10h10M10 15h10M10 20h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
+  <!-- GUIDELINES PDF BUTTON -->
+  <div style="background:var(--dark); padding: 0 64px 0; display:flex; justify-content:center;">
+    <a href="Oakridge MUN Guidelines (5).pdf" target="_blank" rel="noopener"
+       style="display:inline-flex; align-items:center; gap:10px; padding:13px 28px; border-radius:100px;
+              border:1px solid rgba(48,205,215,.25); background:rgba(48,205,215,.06);
+              font-family:'Montserrat',sans-serif; font-size:.65rem; font-weight:800;
+              letter-spacing:.14em; text-transform:uppercase; color:var(--teal);
+              text-decoration:none; transition:background .2s, border-color .2s;"
+       onmouseover="this.style.background='rgba(48,205,215,.12)';this.style.borderColor='rgba(48,205,215,.45)'"
+       onmouseout="this.style.background='rgba(48,205,215,.06)';this.style.borderColor='rgba(48,205,215,.25)'">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 10.5V12h10v-1.5M7 2v7m0 0L4.5 6.5M7 9l2.5-2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      View Full Guidelines PDF
+    </a>
+  </div>
+
+  <!-- GUIDELINES -->
+  <section class="guidelines-section">
+    <div class="guidelines-inner">
+
+      <div class="guide-block sr">
+        <div class="guide-num">01</div>
+        <div>
+          <div class="guide-title">Introduction</div>
+          <div class="guide-body">
+            <p>Oakridge MUN XVI warmly welcomes all participating delegations to the sixteenth chapter of our conference. These guidelines outline the framework within which delegations are expected to operate throughout the event.</p>
+            <p>Please note that the Best Delegation Award requires a minimum of five eligible delegations to be constituted. Delegations are encouraged to review all sections carefully before attending.</p>
+          </div>
+        </div>
       </div>
-      <h2 class="coming-title">Guidelines Coming Soon</h2>
-      <p class="coming-desc">The official Delegation Guidelines for Oakridge MUN XVI are being finalised by the Secretariat. They will be published here ahead of the conference and cover everything from delegation conduct to preparation expectations.</p>
-      <div class="coming-badge">
-        Publishing ahead of conference
+
+      <div class="guide-block sr sr-d1">
+        <div class="guide-num">02</div>
+        <div>
+          <div class="guide-title">Objective</div>
+          <div class="guide-body">
+            <p>The Delegation Award is designed to promote inter-committee coordination, teamwork, and collective diplomatic excellence among schools attending Oakridge MUN XVI.</p>
+            <div class="guide-highlight">Cash Prize — ₹15,000 awarded to the Best Delegation</div>
+          </div>
+        </div>
       </div>
+
+      <div class="guide-block sr sr-d2">
+        <div class="guide-num">03</div>
+        <div>
+          <div class="guide-title">Committee Representation</div>
+          <div class="guide-body">
+            <p>To be eligible for the Best Delegation Award, a school's delegation must be represented in a minimum of <strong style="color:var(--white)">8 out of 19 committees</strong>. Delegations that do not meet this threshold will not be considered for the award.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-block sr sr-d3">
+        <div class="guide-num">04</div>
+        <div>
+          <div class="guide-title">Payment &amp; Registration</div>
+          <div class="guide-body">
+            <ul class="guide-list">
+              <li>Each delegate must complete individual registration through the official registration form.</li>
+              <li>Payment must be made individually — delegation-level bulk payment is not accepted.</li>
+              <li>In addition to individual registrations, the Delegation Head must submit a Group Delegation Form to formally register the school as a delegation.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-block sr sr-d4">
+        <div class="guide-num">05</div>
+        <div>
+          <div class="guide-title">Delegation Size</div>
+          <div class="guide-body">
+            <p>Each delegation may have a maximum of <strong style="color:var(--white)">15 participants</strong>. Schools wishing to send more than 15 participants may register multiple delegations, each with its own Delegation Head and Group Delegation Form.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-block sr sr-d5">
+        <div class="guide-num">06</div>
+        <div>
+          <div class="guide-title">Best Delegation Award — Scoring</div>
+          <div class="guide-body">
+            <p>Points are aggregated across all committees in which the delegation participates.</p>
+            <div class="award-grid">
+              <div class="award-row">
+                <div class="award-label">Best Delegate</div>
+                <div class="award-pts">5</div>
+                <div class="award-pts-label">points per award</div>
+              </div>
+              <div class="award-row">
+                <div class="award-label">Outstanding</div>
+                <div class="award-pts">3</div>
+                <div class="award-pts-label">points per award</div>
+              </div>
+              <div class="award-row">
+                <div class="award-label">Honourable Mention</div>
+                <div class="award-pts">1</div>
+                <div class="award-pts-label">point per award</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-block sr sr-d6">
+        <div class="guide-num">07</div>
+        <div>
+          <div class="guide-title">Responsibilities of Delegation Heads</div>
+          <div class="guide-body">
+            <ul class="guide-list">
+              <li>Ensure all delegates from their school are registered individually and payments are completed on time.</li>
+              <li>Submit the Group Delegation Form with accurate information.</li>
+              <li>Brief delegates on the Code of Conduct and conference expectations prior to arrival.</li>
+              <li>Serve as the primary point of contact between the school and the Secretariat throughout the conference.</li>
+              <li>Be responsible for the conduct and discipline of all members within their delegation.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-block sr sr-d7">
+        <div class="guide-num">08</div>
+        <div>
+          <div class="guide-title">Code of Conduct</div>
+          <div class="guide-body">
+            <ul class="guide-list">
+              <li>All delegates are expected to maintain respectful and professional conduct at all times during the conference.</li>
+              <li>Delegates must adhere to the dress code and conference decorum as specified in the conference handbook.</li>
+              <li>Any form of misconduct, harassment, or unsportsmanlike behaviour may result in disqualification from awards or removal from the conference.</li>
+              <li>Delegates are expected to participate actively and in good faith in all committee sessions.</li>
+              <li>Any disputes or concerns should be directed to the Secretariat immediately and not resolved through personal confrontation.</li>
+            </ul>
+            <div class="guide-contact">
+              For queries, contact the Secretariat:<br>
+              <a href="mailto:shrey_vajpayee@oakridge.in">shrey_vajpayee@oakridge.in</a><br>
+              <span style="color:rgba(250,245,237,.4)">9752411161 (Messaging only)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
