@@ -1782,51 +1782,6 @@
     }
   </script>
 
-  <!-- DEV TOOL: photo position controls — only shown on FIFA page for Meghamsh -->
-  <script>
-  (function() {
-    if (!window.location.pathname.includes('fifa') && !new URLSearchParams(window.location.search).get('committee')?.includes('fifa')) return;
-    const panel = document.createElement('div');
-    panel.id = 'dev-photo-panel';
-    panel.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:rgba(0,10,24,0.96);border:1px solid rgba(48,205,215,0.35);border-radius:14px;padding:16px 20px;font-family:monospace;font-size:13px;color:#faf5ed;min-width:260px;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,0.5);';
-    panel.innerHTML = `
-      <div style="font-size:11px;letter-spacing:.12em;color:#30CDD7;margin-bottom:10px;text-transform:uppercase;">Dev — Photo Position</div>
-      <div style="margin-bottom:6px;font-size:12px;opacity:.7;">Target: <span style="color:#faf5ed;">Meghamsh</span></div>
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-        <span style="opacity:.6;font-size:11px;width:32px;">Y pos</span>
-        <input id="dev-y-slider" type="range" min="0" max="100" value="0" step="1" style="flex:1;accent-color:#30CDD7;">
-        <span id="dev-y-val" style="width:38px;text-align:right;color:#30CDD7;">0%</span>
-      </div>
-      <div style="background:rgba(48,205,215,0.08);border-radius:8px;padding:8px 10px;font-size:11px;color:#B4EBF5;cursor:pointer;user-select:all;" id="dev-copy-val">click to copy → object-position: center 0%</div>
-      <div id="dev-copied" style="font-size:11px;color:#30CDD7;margin-top:6px;opacity:0;transition:opacity .3s;">Copied!</div>
-    `;
-    document.body.appendChild(panel);
-
-    function findMeghamshImg() {
-      return [...document.querySelectorAll('.eb-card-photo')].find(img => img.alt === 'Meghamsh');
-    }
-
-    const slider = panel.querySelector('#dev-y-slider');
-    const valLabel = panel.querySelector('#dev-y-val');
-    const copyEl = panel.querySelector('#dev-copy-val');
-    const copiedEl = panel.querySelector('#dev-copied');
-
-    slider.addEventListener('input', () => {
-      const v = slider.value;
-      valLabel.textContent = v + '%';
-      const img = findMeghamshImg();
-      if (img) img.style.objectPosition = `center ${v}%`;
-      copyEl.textContent = `click to copy → object-position: center ${v}%`;
-    });
-
-    copyEl.addEventListener('click', () => {
-      navigator.clipboard.writeText(`object-position: center ${slider.value}%`).then(() => {
-        copiedEl.style.opacity = '1';
-        setTimeout(() => copiedEl.style.opacity = '0', 1500);
-      });
-    });
-  })();
-  </script>
 </body>
 </html>
 
