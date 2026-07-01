@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule | Oakridge MUN XVI</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @media (min-width: 769px) { html { zoom: 1.1; } }
+
+    @keyframes navSlideDown {
+      from { opacity: 0; transform: translateX(-50%) translateY(-18px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    :root {
+      --navy: #003057;
+      --teal: #30CDD7;
+      --teal-dark: #1E96A5;
+      --teal-light: #B4EBF5;
+      --red: #FF3750;
+      --white: #FAF5ED;
+      --yellow: #FFCB00;
+      --gold: #E1AA28;
+      --peach: #F0B4A0;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Montserrat';
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: clip;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ── full-page ambient layer ── */
+    .page-ambient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .page-ambient::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(48,205,215,.09) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+    .page-ambient::after {
+      content: '';
+      position: absolute;
+      top: -160px; left: -120px;
+      width: 800px; height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(48,205,215,.32) 0%, rgba(48,205,215,.12) 40%, transparent 70%);
+      filter: blur(40px);
+    }
+    .page-orb-br {
+      position: fixed;
+      bottom: -140px; right: -100px;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30,150,165,.28) 0%, rgba(30,150,165,.10) 45%, transparent 70%);
+      filter: blur(45px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav, main, footer { position: relative; z-index: 1; }
+
+    /* ── NAV — floating pill ── */
+    nav {
+      position: fixed;
+      top: 14px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      animation: navSlideDown .6s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .nav-pill {
+      display: flex; align-items: center;
+      background: rgba(1,3,8,.97);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-radius: 100px;
+      border: 1px solid rgba(250,245,237,.07);
+      padding: 10px 14px; justify-content: center;
+      box-shadow: 0 8px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(250,245,237,.04);
+      transition: padding .6s cubic-bezier(0.4,0,0.2,1), border-radius .6s cubic-bezier(0.4,0,0.2,1);
+      white-space: nowrap;
+    }
+    .nav-logo {
+      font-size: .92rem; font-weight: 800;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--white); text-decoration: none;
+      flex-shrink: 0; white-space: nowrap; overflow: visible; max-width: 220px; opacity: 1;
+      transition: opacity .5s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-center { display: flex; align-items: center; flex-shrink: 0; margin-left: 20px; transition: margin-left .6s cubic-bezier(0.4,0,0.2,1); }
+    .nav-links-group {
+      display: flex; gap: 24px; list-style: none;
+      white-space: nowrap; overflow: visible; opacity: 1;
+      transition: opacity .4s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1), padding .6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .nav-links-group.left  { padding-right: 20px; max-width: 400px; }
+    .nav-links-group.right { padding-left:  20px; max-width: 400px; }
+    .nav-links-group a {
+      font-size: .64rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(250,245,237,.48); text-decoration: none; transition: color .2s;
+    }
+    .nav-links-group a:hover, .nav-links-group a.active { color: var(--white); }
+    .nav-mark {
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; padding: 0 6px;
+    }
+    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); mix-blend-mode: lighten; transition: filter .3s, opacity .3s; }
+    .nav-mark:hover img { opacity: 1; filter: drop-shadow(0 0 14px rgba(48,205,215,.65)); }
+    .nav-right {
+      display: flex; align-items: center; gap: 6px;
+      flex-shrink: 0; overflow: visible; max-width: 420px; opacity: 1; margin-left: 14px;
+      transition: opacity .5s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .nav-cta {
+      background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%);
+      color: var(--navy);
+      font-family: 'Montserrat';
+      font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 10px 18px;
+      cursor: pointer; white-space: nowrap; overflow: visible; max-width: 200px; opacity: 1;
+      transition: transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .18s,
+                  opacity .45s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1), padding .6s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 6px 18px rgba(2,20,26,0.06);
+    }
+    .nav-cta:hover { box-shadow: 0 12px 30px rgba(2,20,26,0.08); }
+    .nav-cta:active { transform: translateY(0) scale(.997); box-shadow: 0 6px 16px rgba(2,20,26,0.06); }
+    nav.scrolled .nav-logo        { opacity: 0; max-width: 0; }
+    nav.scrolled .nav-links-group { opacity: 0; max-width: 0; padding: 0; pointer-events: none; }
+    nav.scrolled .nav-right       { opacity: 0; max-width: 0; margin-left: 0; }
+    nav.scrolled .nav-cta         { opacity: 0; max-width: 0; padding: 0; pointer-events: none; }
+    nav.scrolled .menu-btn        { opacity: 0; pointer-events: none; }
+    nav.scrolled .nav-center      { margin-left: 0; }
+    nav.scrolled .nav-pill        { padding: 8px; border-radius: 14px; }
+
+    @media (min-width: 769px) {
+      nav.hover-expanded .nav-logo { opacity: 1 !important; max-width: 220px !important; }
+      nav.hover-expanded .nav-links-group { opacity: 1 !important; max-width: 400px !important; pointer-events: auto !important; }
+      nav.hover-expanded .nav-links-group.left { padding: 0 18px 0 28px !important; }
+      nav.hover-expanded .nav-links-group.right { padding: 0 8px 0 18px !important; }
+      nav.hover-expanded .nav-right { opacity: 1 !important; max-width: 420px !important; margin-left: 10px !important; }
+      nav.hover-expanded .nav-center { margin-left: 20px !important; }
+      nav.hover-expanded .nav-pill { padding: 10px 14px !important; border-radius: 100px !important; }
+      nav.hover-expanded .nav-cta { opacity: 1 !important; max-width: 200px !important; padding: 10px 18px !important; pointer-events: auto !important; }
+      nav.hover-expanded .menu-btn { opacity: 0 !important; pointer-events: none !important; }
+    }
+
+    .mobile-nav {
+      position: fixed;
+      top: calc(var(--nav-bottom, 78px) + 10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-12px) scale(0.97);
+      width: calc(100% - 32px);
+      max-width: 360px;
+      max-height: calc(100dvh - var(--nav-bottom, 78px) - 16px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(48,205,215,.28) transparent;
+      z-index: 199;
+      background: rgba(1,3,8,.99);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      padding: 16px 24px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s cubic-bezier(0.4,0,0.2,1), transform .35s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+      border: 1px solid rgba(48,205,215,.2);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .mobile-nav.open {
+      transform: translateX(-50%) translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-nav a {
+      font-size: .88rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.75);
+      text-decoration: none;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(250,245,237,.07);
+      transition: color .2s;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--teal); }
+
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .55s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .menu-btn:hover { background: rgba(250,245,237,.08); }
+
+    .menu-btn span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform .2s cubic-bezier(0.2,0.8,0.2,1);
+      transform-origin: center;
+    }
+
+    .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    main {
+      min-height: 100vh;
+      padding: 0 0 112px;
+    }
+
+    /* ═══════════════════════════════════════
+       SCHEDULE
+    ═══════════════════════════════════════ */
+    .schedule-section {
+      background: linear-gradient(180deg, #001e3c 0%, #002548 100%);
+      min-height: 100vh;
+      display: flex;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 100vh;
+      flex-direction: column;
+      padding: 80px 56px 100px;
+      position: relative;
+      z-index: 5;
+      box-sizing: border-box;
+    }
+    .schedule-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(48,205,215,.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .schedule-header {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .schedule-kicker {
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .schedule-title {
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+    .schedule-title::after {
+      content: '';
+      display: block;
+      width: 44px; height: 3px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      border-radius: 2px;
+      margin-top: 14px;
+    }
+
+    .schedule-legend {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto 36px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.45);
+    }
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot.d-committee { background: var(--teal); }
+    .legend-dot.d-ceremony  { background: var(--gold); }
+    .legend-dot.d-social    { background: var(--teal-dark); }
+    .legend-dot.d-meal      { background: rgba(188,154,110,.7); }
+    .legend-dot.d-break     { background: rgba(250,245,237,.25); }
+
+    .day-tabs {
+      display: flex;
+      gap: 6px;
+      background: rgba(250,245,237,.04);
+      border: 1px solid rgba(250,245,237,.1);
+      border-radius: 14px;
+      padding: 5px;
+      flex-shrink: 0;
+    }
+    .day-tab {
+      font-family: 'Montserrat';
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.55);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 12px 28px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .18s,
+                  background .25s, color .25s, border-color .25s;
+    }
+    .day-tab:hover {
+      transform: translateY(-3px);
+      color: #faf5ed;
+      background: rgba(250,245,237,.06);
+      border-color: rgba(250,245,237,.1);
+      box-shadow: 0 6px 15px rgba(250,245,237,.04);
+    }
+    .day-tab.active {
+      background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%);
+      color: var(--navy);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 6px 18px rgba(48,205,215,.25);
+    }
+    .day-tab.active:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(48,205,215,.35);
+      background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%);
+      color: var(--navy);
+    }
+    .day-tab:active {
+      transform: translateY(0) scale(.98);
+    }
+    .day-tab.active:active {
+      box-shadow: 0 4px 12px rgba(48,205,215,.15);
+    }
+
+    .timeline-panels {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+    .timeline-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    .timeline-panel.active { display: flex; flex-direction: column; }
+    .timeline-panel.visible { opacity: 1; transform: translateY(0); }
+
+    .timeline {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 200px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(48,205,215,.25) 8%, rgba(48,205,215,.25) 92%, transparent);
+    }
+
+    .tl-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      align-items: center;
+      opacity: 0;
+      transform: translateX(-12px);
+      transition: opacity .4s ease, transform .4s ease;
+    }
+    .tl-item.revealed { opacity: 1; transform: translateX(0); }
+
+    .tl-time {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 3px;
+      padding-right: 36px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+    .tl-time-range {
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: rgba(250,245,237,.75);
+      white-space: nowrap;
+    }
+    .tl-dur {
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.3);
+    }
+
+    .tl-event {
+      position: relative;
+      margin-left: 40px;
+      padding: 16px 24px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid transparent;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      cursor: default;
+    }
+    .tl-event:hover { border-color: rgba(250,245,237,.12); transform: translateX(5px); }
+
+    .tl-event::before {
+      content: '';
+      position: absolute;
+      left: -45px; top: 50%;
+      transform: translateY(-50%);
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--dot-color, rgba(48,205,215,.4));
+      border: 2px solid #003057;
+      box-shadow: 0 0 0 1px var(--dot-color, rgba(48,205,215,.4)), 0 0 8px var(--dot-color, transparent);
+    }
+
+    .tl-event.type-committee { background: rgba(48,205,215,.09);  border-color: rgba(48,205,215,.14); --dot-color: var(--teal); }
+    .tl-event.type-ceremony  { background: rgba(188,154,110,.11); border-color: rgba(188,154,110,.16); --dot-color: var(--gold); }
+    .tl-event.type-break     { background: rgba(180,235,245,.07); border-color: rgba(180,235,245,.13); --dot-color: var(--teal-light); }
+    .tl-event.type-social    { background: rgba(30,150,165,.13);  border-color: rgba(30,150,165,.18); --dot-color: var(--teal-dark); }
+    .tl-event.type-meal      { background: rgba(188,154,110,.08); border-color: rgba(188,154,110,.13); --dot-color: rgba(188,154,110,.6); }
+    .tl-event.type-dispersal { background: rgba(188,154,110,.07); border-color: rgba(188,154,110,.18); --dot-color: #BC9A6E; }
+
+    .tl-event.type-committee:hover {
+      background: rgba(48,205,215,.14);
+      border-color: rgba(48,205,215,.28);
+      box-shadow: 0 4px 22px rgba(48,205,215,.1);
+      transform: translateX(7px);
+    }
+
+    .timeline-panel { position: relative; overflow: hidden; }
+    .timeline       { position: relative; z-index: 1; }
+    #day-1::before { content: '01'; }
+    #day-2::before { content: '02'; }
+    #day-3::before { content: '03'; }
+    .timeline-panel::before {
+      position: absolute;
+      right: -8px; bottom: -24px;
+      font-size: clamp(140px, 20vw, 260px);
+      font-weight: 900;
+      letter-spacing: -.06em;
+      color: rgba(48,205,215,.045);
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .tl-day-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(48,205,215,.1);
+    }
+    .tl-day-num {
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -.06em;
+      line-height: 1;
+      color: var(--teal);
+      opacity: .6;
+    }
+    .tl-day-info { display: flex; flex-direction: column; gap: 3px; }
+    .tl-day-label {
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(250,245,237,.3);
+    }
+    .tl-day-date {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--white);
+    }
+
+    .tl-event::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 16%; bottom: 16%;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--dot-color, transparent);
+      opacity: .6;
+    }
+
+    .tl-event-body {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+    }
+    .tl-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: .005em;
+      line-height: 1.2;
+    }
+    .type-break .tl-name,
+    .type-dispersal .tl-name { color: rgba(250,245,237,.85); font-weight: 600; font-size: .88rem; }
+    .type-meal .tl-name { color: rgba(250,245,237,.75); font-weight: 600; }
+
+    .tl-tag {
+      font-size: .57rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      border-radius: 5px;
+      padding: 4px 10px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      align-self: flex-start;
+      color: rgba(250,245,237,.32);
+      background: rgba(250,245,237,.05);
+    }
+    .type-committee .tl-tag { color: var(--teal);       background: rgba(48,205,215,.12); }
+    .type-ceremony  .tl-tag { color: var(--gold);       background: rgba(188,154,110,.15); }
+    .type-social    .tl-tag { color: #1E96A5;           background: rgba(30,150,165,.18); }
+    .type-meal      .tl-tag { color: var(--gold);       background: rgba(188,154,110,.1); }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer {
+      background: rgba(0,20,48,.8);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(48,205,215,.1);
+      padding: 56px 56px 0;
+      position: relative;
+      z-index: 5;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(48,205,215,.04) 0%, transparent 80%);
+      pointer-events: none;
+    }
+
+    .footer-top {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1px 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-divider { background: rgba(250,245,237,.08); width: 1px; align-self: stretch; }
+    .footer-brand { display: flex; flex-direction: column; gap: 20px; padding-right: 16px; }
+    .footer-logo { width: 64px; height: 64px; object-fit: contain; filter: brightness(0) invert(1); opacity: .85; }
+    .footer-chapter { font-size: .72rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--white); }
+    .footer-desc { font-size: .82rem; line-height: 1.75; color: rgba(250,245,237,.4); }
+
+    .footer-col h4 { font-size: .65rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul li a { font-size: .85rem; font-weight: 500; color: rgba(250,245,237,.55); text-decoration: none; transition: color .2s; }
+    .footer-col ul li a:hover { color: var(--teal); }
+
+    .footer-contact-item { margin-bottom: 18px; }
+    .footer-contact-item p { font-size: .78rem; font-weight: 700; color: var(--white); margin-bottom: 4px; letter-spacing: .04em; }
+    .footer-contact-item a { font-size: .82rem; color: var(--teal); text-decoration: none; transition: opacity .2s; }
+    .footer-contact-item a:hover { opacity: .75; }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 0;
+      border-top: 1px solid rgba(48,205,215,.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-bottom p {
+      font-size: .78rem;
+      color: rgba(250,245,237,.35);
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .schedule-section { padding: 60px 20px 80px; }
+      .schedule-header { flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 16px; }
+      .schedule-title { font-size: 2rem; }
+      .schedule-legend { gap: 14px; margin-bottom: 24px; }
+      .day-tabs { width: 100%; }
+      .day-tab { padding: 10px 8px; font-size: .6rem; flex: 1; text-align: center; }
+      
+      footer { padding: 48px 20px 0; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px 0; }
+      .footer-divider { display: none; }
+      .footer-bottom { flex-direction: column; gap: 8px; padding: 20px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-ambient"></div>
+  <div class="page-orb-br"></div>
+
+  <nav id="navbar">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/">Oakridge <span>MUN</span></a>
+      <div class="nav-center">
+        <ul class="nav-links-group left">
+          <li><a href="/committees.html">Committees</a></li>
+          <li><a href="/secretariat.html">Secretariat</a></li>
+          <li><a href="/allocations.html">Allocations</a></li>
+        </ul>
+        <div class="nav-mark"><img src="logo.png" alt="Oakridge MUN" fetchpriority="high" decoding="async" /></div>
+        <ul class="nav-links-group right">
+          <li><a href="/schedule.html" class="active">Schedule</a></li>
+          <li><a href="/resources.html">Resources</a></li>
+          <li class="nav-has-drop"><a href="#">Other</a>
+            <div class="nav-drop nav-drop--events">
+              <div class="nav-drop-grid">
+                <a class="nav-drop-item" href="/social-night.html">Social Night</a>
+                <a class="nav-drop-item" href="/networking-hour.html">Networking Hour</a>
+                <a class="nav-drop-item" href="/orphanage-initiative.html">Community Outreach</a>
+                <a class="nav-drop-item" href="/delegation-guidelines.html">Delegation Guidelines</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <button class="nav-cta" onclick="window.location.href='register.html'">Register Now</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="/committees.html">Committees</a>
+    <a href="/secretariat.html">Secretariat</a>
+    <a href="/allocations.html">Allocations</a>
+    <a href="/schedule.html">Schedule</a>
+    <a href="/resources.html">Resources</a>
+    <a href="/social-night.html">Social Night</a>
+    <a href="/networking-hour.html">Networking Hour</a>
+    <a href="/orphanage-initiative.html">Community Outreach</a>
+    <a href="/delegation-guidelines.html">Delegation Guidelines</a>
+    <a href="register.html">Register Now</a>
+  </div>
+
+  <main>
+    <!-- ═══ SCHEDULE ═══ -->
+    <section class="schedule-section" id="schedule">
+      <div class="schedule-header">
+        <div>
+          <p class="schedule-kicker">Oakridge MUN · Chapter XVI</p>
+          <h1 class="schedule-title">Conference<br>Schedule</h1>
+        </div>
+        <div class="day-tabs">
+          <button class="day-tab active" data-day="1">24 July · Day 1</button>
+          <button class="day-tab" data-day="2">25 July · Day 2</button>
+          <button class="day-tab" data-day="3">26 July · Day 3</button>
+        </div>
+      </div>
+
+      <!-- Color legend -->
+      <div class="schedule-legend">
+        <span class="legend-item"><span class="legend-dot d-committee"></span>Committee</span>
+        <span class="legend-item"><span class="legend-dot d-ceremony"></span>Ceremony</span>
+        <span class="legend-item"><span class="legend-dot d-social"></span>Social / Networking</span>
+        <span class="legend-item"><span class="legend-dot d-meal"></span>Meal</span>
+        <span class="legend-item"><span class="legend-dot d-break"></span>Break / End</span>
+      </div>
+
+      <div class="timeline-panels">
+
+        <div class="timeline-panel active" id="day-1">
+          <div class="tl-day-header">
+            <span class="tl-day-num">01</span>
+            <div class="tl-day-info">
+              <span class="tl-day-label">Day One</span>
+              <span class="tl-day-date">24 July 2026</span>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:00 – 9:00</span><span class="tl-dur">1 hr</span></div><div class="tl-event type-ceremony"><div class="tl-event-body"><span class="tl-name">Registration</span><span class="tl-tag">Arrival</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">9:00 – 10:30</span><span class="tl-dur">1.5 hrs</span></div><div class="tl-event type-ceremony"><div class="tl-event-body"><span class="tl-name">Opening Ceremony</span><span class="tl-tag">Ceremony</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:30 – 11:00</span><span class="tl-dur">30 min</span></div><div class="tl-event type-break"><div class="tl-event-body"><span class="tl-name">Break</span><span class="tl-tag">Rest</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">11:00 – 1:30</span><span class="tl-dur">2.5 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 1</span><span class="tl-tag">Committee</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">1:30 – 2:00</span><span class="tl-dur">30 min</span></div><div class="tl-event type-meal"><div class="tl-event-body"><span class="tl-name">Lunch</span><span class="tl-tag">Meal</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">2:00 – 4:30</span><span class="tl-dur">2.5 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 2</span><span class="tl-tag">Committee</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">4:30 – 5:30</span><span class="tl-dur">1 hr</span></div><div class="tl-event type-social"><div class="tl-event-body"><span class="tl-name">Networking Hour</span><span class="tl-tag">Networking</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">5:30 onwards</span><span class="tl-dur"></span></div><div class="tl-event type-dispersal"><div class="tl-event-body"><span class="tl-name">Dispersal</span><span class="tl-tag">End of Day</span></div></div></div>
+          </div>
+        </div>
+
+        <div class="timeline-panel" id="day-2">
+          <div class="tl-day-header">
+            <span class="tl-day-num">02</span>
+            <div class="tl-day-info">
+              <span class="tl-day-label">Day Two</span>
+              <span class="tl-day-date">25 July 2026</span>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:30 – 10:30</span><span class="tl-dur">2 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 3</span><span class="tl-tag">Committee</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:30 – 10:45</span><span class="tl-dur">15 min</span></div><div class="tl-event type-break"><div class="tl-event-body"><span class="tl-name">Break</span><span class="tl-tag">Rest</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:45 – 1:30</span><span class="tl-dur">2 hrs 45 min</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 4</span><span class="tl-tag">Committee</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">1:30 – 2:00</span><span class="tl-dur">30 min</span></div><div class="tl-event type-meal"><div class="tl-event-body"><span class="tl-name">Lunch</span><span class="tl-tag">Meal</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">2:00 – 5:00</span><span class="tl-dur">3 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 5</span><span class="tl-tag">Committee</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">5:00 – 6:30</span><span class="tl-dur">1.5 hrs</span></div><div class="tl-event type-social"><div class="tl-event-body"><span class="tl-name">Social Evening</span><span class="tl-tag">Social</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">6:30 – 7:30</span><span class="tl-dur">1 hr</span></div><div class="tl-event type-meal"><div class="tl-event-body"><span class="tl-name">Dinner</span><span class="tl-tag">Meal</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">7:30 onwards</span><span class="tl-dur"></span></div><div class="tl-event type-dispersal"><div class="tl-event-body"><span class="tl-name">Dispersal</span><span class="tl-tag">End of Day</span></div></div></div>
+          </div>
+        </div>
+
+        <div class="timeline-panel" id="day-3">
+          <div class="tl-day-header">
+            <span class="tl-day-num">03</span>
+            <div class="tl-day-info">
+              <span class="tl-day-label">Day Three</span>
+              <span class="tl-day-date">26 July 2026</span>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">8:30 – 10:30</span><span class="tl-dur">2 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 6</span><span class="tl-tag">Committee</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">10:30 – 1:30</span><span class="tl-dur">3 hrs</span></div><div class="tl-event type-committee"><div class="tl-event-body"><span class="tl-name">Committee Session 7</span><span class="tl-tag">Committee</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">1:30 – 2:00</span><span class="tl-dur">30 min</span></div><div class="tl-event type-meal"><div class="tl-event-body"><span class="tl-name">Lunch</span><span class="tl-tag">Meal</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">2:00 – 3:30</span><span class="tl-dur">1.5 hrs</span></div><div class="tl-event type-ceremony"><div class="tl-event-body"><span class="tl-name">Closing Ceremony</span><span class="tl-tag">Ceremony</span></div></div></div>
+            <div class="tl-item"><div class="tl-time"><span class="tl-time-range">3:30 onwards</span><span class="tl-dur"></span></div><div class="tl-event type-dispersal"><div class="tl-event-body"><span class="tl-name">Dispersal</span><span class="tl-tag">End of Day</span></div></div></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <img src="logo.png" alt="Oakridge MUN Logo" class="footer-logo" />
+          <span style="font-family: 'Montserrat', sans-serif; font-size: 1.15rem; font-weight: 800; letter-spacing: 0.12em; color: var(--white, #faf5ed); line-height: 1.2; text-transform: uppercase;">Oakridge<br><span style="color: var(--teal, #30CDD7);">MUN</span></span>
+        </div>
+        <p class="footer-chapter">Chapter XVI</p>
+        <p class="footer-desc">Oakridge Model United Nations brings together passionate delegates from across the high schools of India for three days of diplomatic excellence.</p>
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="/schedule.html">Schedule</a></li>
+          <li><a href="/secretariat.html">Secretariat</a></li>
+          <li><a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener">International Press</a></li>
+          <li><a href="#">Allocations</a></li>
+          <li><a href="/#faq">FAQs</a></li>
+          <li><a href="/committees.html">Explore Committees</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="footer-contact-item">
+          <p>General Enquiries</p>
+          <a href="mailto:mun@oakridge.in">mun@oakridge.in</a>
+        </div>
+        <div class="footer-contact-item">
+          <p>Location</p>
+          <span>Oakridge International School<br>Hyderabad, India</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Event Details</h4>
+        <div class="footer-contact-item">
+          <p>Dates</p>
+          <span style="font-style:normal;">24th July – 26th July, 2026</span>
+        </div>
+        <div class="footer-contact-item">
+          <p>Theme</p>
+          <span>Diplomacy in Transition</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>2026 Oakridge International School. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── SCROLL NAVBAR COLLAPSE ──
+    let lastScrollY = 0;
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      lastScrollY = window.scrollY;
+      if (lastScrollY > 80) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // ── NAVBAR HOVER ──
+    if (window.matchMedia('(min-width: 769px)').matches) {
+      navbar.addEventListener('mouseenter', () => navbar.classList.add('hover-expanded'));
+      navbar.addEventListener('mouseleave', () => {
+        if (lastScrollY <= 80) navbar.classList.remove('hover-expanded');
+      });
+    }
+
+    // ── SCHEDULE TABS ──
+    const tabs = document.querySelectorAll('.day-tab');
+    const panels = document.querySelectorAll('.timeline-panel');
+
+    function revealItems(panel) {
+      panel.querySelectorAll('.tl-item').forEach((item, i) => {
+        item.classList.remove('revealed');
+        setTimeout(() => item.classList.add('revealed'), i * 60);
+      });
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const dayTarget = tab.dataset.day;
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        panels.forEach(p => { p.classList.remove('active','visible'); p.style.display = 'none'; });
+        const panel = document.getElementById('day-' + dayTarget);
+        panel.style.display = 'block';
+        panel.classList.add('active');
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          panel.classList.add('visible');
+          revealItems(panel);
+        }));
+      });
+    });
+
+    const firstPanel = document.getElementById('day-1');
+    const scheduleObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          firstPanel.classList.add('visible');
+          revealItems(firstPanel);
+          scheduleObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    scheduleObs.observe(firstPanel);
+
+    // ── MOBILE MENU ──
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    function syncNavBottom() {
+      const nav = document.getElementById('navbar');
+      if (nav) document.documentElement.style.setProperty('--nav-bottom', nav.getBoundingClientRect().bottom + 'px');
+    }
+    syncNavBottom();
+    window.addEventListener('resize', syncNavBottom);
+    window.addEventListener('orientationchange', syncNavBottom);
+
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      syncNavBottom();
+      const isOpen = mobileNav.classList.toggle('open');
+      menuBtn.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (mobileNav.classList.contains('open') && !mobileNav.contains(e.target) && !menuBtn.contains(e.target)) {
+        mobileNav.classList.remove('open');
+        menuBtn.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+
+    mobileNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        menuBtn.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+</body>
+</html>
