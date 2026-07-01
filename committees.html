@@ -743,12 +743,12 @@
     }
 
     .committee-agenda {
-      margin-top: 6px;
-      font-size: .62rem;
-      font-weight: 500;
-      font-style: italic;
+      margin-top: 8px;
+      font-size: .68rem;
+      font-weight: 600;
+      font-style: normal;
       line-height: 1.5;
-      color: rgba(250,245,237,.32);
+      color: rgba(250,245,237,.78);
       text-align: center;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -756,7 +756,7 @@
       overflow: hidden;
       transition: color .35s ease;
     }
-    .committee-card:hover .committee-agenda { color: rgba(250,245,237,.5); }
+    .committee-card:hover .committee-agenda { color: var(--white); }
 
     #cursor-capsule {
       position: fixed;
@@ -1205,8 +1205,8 @@
         <a class="committee-card" href="/committees/disec" data-type="committee" data-name="DISEC Disarmament and security" style="--tile-a:#1E96A5;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/disec.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code med">DISEC</strong></div><h2 class="committee-title">Disarmament and International Security Committee</h2></a>
         <a class="committee-card" href="/committees/unsc" data-type="council" data-name="UNSC Security council" style="--tile-a:#001b3d;--tile-b:#003057;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/unsc.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Council</span><span class="committee-ring"></span><strong class="committee-code med">UNSC</strong></div><h2 class="committee-title">United Nations Security Council</h2></a>
         <a class="committee-card" href="/committees/unhrc" data-type="committee" data-name="UNHRC Human rights council" style="--tile-a:#BC9A6E;--tile-b:#e8c99a;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/unhrc.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Committee</span><span class="committee-ring"></span><strong class="committee-code med">UNHRC</strong></div><h2 class="committee-title">United Nations Human Rights Council</h2></a>
-        <a class="committee-card" href="/committees/jcc-1" data-type="crisis" data-name="JCC-1 Joint crisis cabinet" style="--tile-a:#c0162a;--tile-b:#FF3750;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/jcc-1.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code med">JCC-1</strong></div><h2 class="committee-title">Joint Crisis Cabinet — Side Alpha</h2></a>
-        <a class="committee-card" href="/committees/jcc-2" data-type="crisis" data-name="JCC-2 Joint crisis cabinet" style="--tile-a:#FF3750;--tile-b:#1E96A5;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/jcc-2.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code med">JCC-2</strong></div><h2 class="committee-title">Joint Crisis Cabinet — Side Beta</h2></a>
+        <a class="committee-card" href="/committees/jcc-1" data-type="crisis" data-name="JCC-1 Joint crisis cabinet" style="--tile-a:#c0162a;--tile-b:#FF3750;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/jcc-1.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code med">JCC-1</strong></div><h2 class="committee-title">Allied Western Command</h2></a>
+        <a class="committee-card" href="/committees/jcc-2" data-type="crisis" data-name="JCC-2 Joint crisis cabinet" style="--tile-a:#FF3750;--tile-b:#1E96A5;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/jcc-2.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code med">JCC-2</strong></div><h2 class="committee-title">Soviet War Cabinet</h2></a>
         <a class="committee-card" href="/committees/hcc" data-type="crisis" data-name="HCC Historic crisis committee" style="--tile-a:#7b4a1e;--tile-b:#BC9A6E;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/hcc.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Cabinet</span><span class="committee-ring"></span><strong class="committee-code">HCC</strong></div><h2 class="committee-title">Historic Crisis Committee</h2></a>
         <a class="committee-card" href="/committees/lok-sabha" data-type="assembly" data-name="LOK SABHA Indian parliament" style="--tile-a:#FF3750;--tile-b:#BC9A6E;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/lok_sabha.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Assembly</span><span class="committee-ring"></span><strong class="committee-code long">LOK SABHA</strong></div><h2 class="committee-title">Lok Sabha — Indian Parliament</h2></a>
         <a class="committee-card" href="/committees/armageddon" data-type="crisis" data-name="ARMAGEDDON High-stakes crisis room" style="--tile-a:#0d0d0d;--tile-b:#FF3750;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/armageddon.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Crisis</span><span class="committee-ring"></span><strong class="committee-code long">ARMAGEDDON</strong></div><h2 class="committee-title">High-Stakes Crisis Committee</h2></a>
@@ -1220,7 +1220,7 @@
         <a class="committee-card" href="/committees/fifa" data-type="special" data-name="FIFA Global football governance" style="--tile-a:#1a3a1a;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/fifa.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Federation</span><span class="committee-ring"></span><strong class="committee-code">FIFA</strong></div><h2 class="committee-title">International Football Governance</h2></a>
         <a class="committee-card" href="/committees/who" data-type="agency" data-name="WHO World health organization" style="--tile-a:#003057;--tile-b:#30CDD7;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/who.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Agency</span><span class="committee-ring"></span><strong class="committee-code">WHO</strong></div><h2 class="committee-title">World Health Organization</h2></a>
         <a class="committee-card reg-closed" href="/committees/unga-sochum" data-type="assembly" data-name="UNGA SOCHUM Social and humanitarian" style="--tile-a:#003876;--tile-b:#1E96A5;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/unga_sochum.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Assembly</span><span class="committee-ring"></span><strong class="committee-code long">SOCHUM</strong><span class="reg-closed-badge">Community Outreach delegates only</span></div><h2 class="committee-title">UN General Assembly — SOCHUM</h2></a>
-        <a class="committee-card" href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener" data-type="press" data-name="IP International press" style="--tile-a:#1c1c1c;--tile-b:#3a3a3a;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/IP.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Press</span><span class="committee-ring"></span><strong class="committee-code">IP</strong><span class="reg-open-badge"><span class="reg-open-dot"></span><span class="reg-open-text">Reg. Open</span></span></div><h2 class="committee-title">International Press Corps</h2></a>
+        <a class="committee-card" href="/committees/ip" data-type="press" data-name="IP International press" style="--tile-a:#1c1c1c;--tile-b:#3a3a3a;"><div class="committee-visual"><img class="tile-photo" src="committee_photos/IP.webp" alt="" /><div class="tile-photo-overlay"></div><span class="status">Press</span><span class="committee-ring"></span><strong class="committee-code">IP</strong><span class="reg-open-badge"><span class="reg-open-dot"></span><span class="reg-open-text">Reg. Open</span></span></div><h2 class="committee-title">International Press Corps</h2></a>
         <div class="empty-state" id="emptyState">No committees match your search.</div>
       </section>
     </div>
