@@ -408,6 +408,27 @@
       .hero-orb { animation: none; }
     }
 
+    /* ── globe wireframe ── */
+    .hero-globe {
+      position: absolute;
+      right: -5%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: min(46vw, 500px);
+      height: auto;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.055;
+      color: var(--teal);
+    }
+    .hero-globe-meridians {
+      transform-origin: 180px 180px;
+      animation: globe-spin 90s linear infinite;
+    }
+    @keyframes globe-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .hero-globe-meridians { animation: none; } }
+    @media (max-width: 768px) { .hero-globe { display: none; } }
+
     /* ── morph card canvas ── */
     #morphCanvas {
       position: absolute;
@@ -1068,7 +1089,7 @@
     ═══════════════════════════════════════ */
     .sg-section {
       background: var(--navy);
-      padding: 100px 56px 120px;
+      padding: 72px 56px 80px;
       position: relative;
       overflow: clip;
       content-visibility: auto;
@@ -1685,7 +1706,7 @@
       font-size: 15px;
       font-weight: 900;
       color: var(--white);
-      background: rgba(0, 20, 48, 0.92);
+      background: rgba(48, 205, 215, 0.18);
       flex: none;
       overflow: hidden;
     }
@@ -2735,6 +2756,24 @@
       <div class="hero-orb hero-orb--a"></div>
       <div class="hero-orb hero-orb--b"></div>
       <div class="hero-orb hero-orb--c"></div>
+      <svg class="hero-globe" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" focusable="false">
+        <defs><clipPath id="globe-clip"><circle cx="180" cy="180" r="170"/></clipPath></defs>
+        <circle cx="180" cy="180" r="170" stroke="currentColor" stroke-width="1"/>
+        <g clip-path="url(#globe-clip)" stroke="currentColor" fill="none">
+          <ellipse cx="180" cy="180" rx="170" ry="16" stroke-width="0.8"/>
+          <ellipse cx="180" cy="108" rx="148" ry="13" stroke-width="0.65"/>
+          <ellipse cx="180" cy="252" rx="148" ry="13" stroke-width="0.65"/>
+          <ellipse cx="180" cy="54"  rx="85"  ry="9"  stroke-width="0.5"/>
+          <ellipse cx="180" cy="306" rx="85"  ry="9"  stroke-width="0.5"/>
+        </g>
+        <g class="hero-globe-meridians" clip-path="url(#globe-clip)" stroke="currentColor" fill="none">
+          <ellipse cx="180" cy="180" rx="80" ry="170" stroke-width="0.8"/>
+          <ellipse cx="180" cy="180" rx="80" ry="170" transform="rotate(36 180 180)" stroke-width="0.7"/>
+          <ellipse cx="180" cy="180" rx="80" ry="170" transform="rotate(72 180 180)" stroke-width="0.7"/>
+          <ellipse cx="180" cy="180" rx="80" ry="170" transform="rotate(108 180 180)" stroke-width="0.7"/>
+          <ellipse cx="180" cy="180" rx="80" ry="170" transform="rotate(144 180 180)" stroke-width="0.7"/>
+        </g>
+      </svg>
     </div>
 
     <!-- giant XVI watermark (behind cards, above bg) -->
@@ -2750,8 +2789,8 @@
         <span class="word-wrap"><span class="word-inner">Debate,</span></span>
         <span class="word-wrap"><span class="word-inner">Innovate.</span></span>
       </h1>
-      <p class="morph-chapter-tag" id="heroChapterTag">CHAPTER XVI &nbsp;·&nbsp; 2026</p>
-      <p class="morph-scroll-hint">SCROLL TO EXPLORE</p>
+      <p class="morph-chapter-tag" id="heroChapterTag">24–26 JULY 2026 &nbsp;·&nbsp; HYDERABAD, INDIA</p>
+      <p class="morph-scroll-hint">DISCOVER THE CONFERENCE</p>
     </div>
 
     <!-- arc content (fades in once morph completes) -->
@@ -2930,17 +2969,17 @@
     <div class="s-orb stats-orb-b sr"></div>
     <div class="stats-strip">
       <div class="stats-strip-item">
-        <span class="ss-num">700<span class="ss-plus">+</span></span>
+        <span class="ss-num" data-count="700"><span class="count-val">700</span><span class="ss-plus">+</span></span>
         <span class="ss-label">Delegates</span>
       </div>
       <div class="stats-strip-div"></div>
       <div class="stats-strip-item">
-        <span class="ss-num">19</span>
+        <span class="ss-num" data-count="19"><span class="count-val">19</span></span>
         <span class="ss-label">Committees</span>
       </div>
       <div class="stats-strip-div"></div>
       <div class="stats-strip-item">
-        <span class="ss-num">3</span>
+        <span class="ss-num" data-count="3"><span class="count-val">3</span></span>
         <span class="ss-label">Days</span>
       </div>
       <div class="stats-strip-div"></div>
@@ -3918,6 +3957,30 @@
         entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('sr-visible'); srObs.unobserve(e.target); } });
       }, { threshold: 0.08 });
       srEls.forEach(el => srObs.observe(el));
+    })();
+
+    // ── stat counters ──
+    (function(){
+      const items = document.querySelectorAll('.ss-num[data-count]');
+      if (!items.length) return;
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          obs.unobserve(e.target);
+          const target = +e.target.dataset.count;
+          const el = e.target.querySelector('.count-val');
+          if (!el) return;
+          const duration = 1600;
+          const start = performance.now();
+          (function tick(now) {
+            const p = Math.min((now - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(ease * target);
+            if (p < 1) requestAnimationFrame(tick);
+          })(performance.now());
+        });
+      }, { threshold: 0.5 });
+      items.forEach(el => obs.observe(el));
     })();
   </script>
 
