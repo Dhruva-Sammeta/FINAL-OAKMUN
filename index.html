@@ -355,6 +355,27 @@
       overflow: hidden;
       background: #020810;
     }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+      opacity: 0.35;
+    }
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 48, 87, 0.72) 0%,
+        rgba(30, 150, 165, 0.45) 50%,
+        rgba(0, 20, 40, 0.78) 100%
+      );
+      mix-blend-mode: multiply;
+    }
     /* dot grid — behind everything */
     .hero-bg::before {
       content: '';
@@ -2753,27 +2774,13 @@
 
     <!-- gradient glow bg + aurora orbs -->
     <div class="hero-bg">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto">
+        <source src="/bg_video.mp4" type="video/mp4">
+      </video>
+      <div class="hero-video-overlay"></div>
       <div class="hero-orb hero-orb--a"></div>
       <div class="hero-orb hero-orb--b"></div>
       <div class="hero-orb hero-orb--c"></div>
-      <svg class="hero-globe" viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true" focusable="false">
-        <defs><clipPath id="globe-clip"><circle cx="180" cy="180" r="170"/></clipPath></defs>
-        <circle cx="180" cy="180" r="170" stroke="currentColor" stroke-width="1"/>
-        <g clip-path="url(#globe-clip)" stroke="currentColor" fill="none">
-          <ellipse cx="180" cy="180" rx="170" ry="16" stroke-width="0.8"/>
-          <ellipse cx="180" cy="108" rx="148" ry="13" stroke-width="0.65"/>
-          <ellipse cx="180" cy="252" rx="148" ry="13" stroke-width="0.65"/>
-          <ellipse cx="180" cy="54"  rx="85"  ry="9"  stroke-width="0.5"/>
-          <ellipse cx="180" cy="306" rx="85"  ry="9"  stroke-width="0.5"/>
-        </g>
-        <g class="hero-globe-meridians" clip-path="url(#globe-clip)" stroke="currentColor" fill="none">
-          <ellipse cx="180" cy="180" rx="80" ry="170" stroke-width="0.8"/>
-          <ellipse cx="180" cy="180" rx="80" ry="170" transform="rotate(36 180 180)" stroke-width="0.7"/>
-          <ellipse cx="180" cy="180" rx="80" ry="170" transform="rotate(72 180 180)" stroke-width="0.7"/>
-          <ellipse cx="180" cy="180" rx="80" ry="170" transform="rotate(108 180 180)" stroke-width="0.7"/>
-          <ellipse cx="180" cy="180" rx="80" ry="170" transform="rotate(144 180 180)" stroke-width="0.7"/>
-        </g>
-      </svg>
     </div>
 
     <!-- giant XVI watermark (behind cards, above bg) -->
