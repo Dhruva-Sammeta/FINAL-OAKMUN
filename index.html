@@ -461,6 +461,7 @@
     .morph-card {
       position: absolute;
       left: 0; top: 0;
+      will-change: transform, opacity;
       width: 90px; height: 128px;
       cursor: pointer;
       text-decoration: none;
@@ -3141,7 +3142,7 @@
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><img src="new_logos/unhrc%20(1).png" alt="UNHRC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,5px);" /></span><span class="ctrl-chain-name">UNHRC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><img src="new_logos/jcc-1%20(1).png" alt="JCC-1" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,9px);" /></span><span class="ctrl-chain-name">JCC-1</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><img src="new_logos/jcc-2%20(1).png" alt="JCC-2" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,7px);" /></span><span class="ctrl-chain-name">JCC-2</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><img src="comm_logos/hcc.png" alt="HCC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,6px);" /></span><span class="ctrl-chain-name">HCC</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><img src="comm_logos_webp/hcc.png" alt="HCC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,6px);" /></span><span class="ctrl-chain-name">HCC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><img src="new_logos/lok%20sabha%20(1).png" alt="LOK SABHA" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,10px);" /></span><span class="ctrl-chain-name">LOK SABHA</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><img src="new_logos/armageddon%20(1).png" alt="ARMAGEDDON" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,3px);" /></span><span class="ctrl-chain-name">ARMAGEDDON</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><img src="new_logos/oic%20(1).png" alt="OIC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,3px);" /></span><span class="ctrl-chain-name">OIC</span></div>
@@ -3362,41 +3363,41 @@
       const IMG_H      = IS_MOBILE ? 80 : 128;
 
       const COMMITTEES = [
-        { src: 'conference_photos/2.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/4.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/8.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/9.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/10.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/13.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/16.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/3.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/5.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/6.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/7.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/14.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/11.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/17.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/1.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/15.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
+        { src: 'comm_posts_webp/disec (2).webp',       label: 'DISEC',      href: 'committees/disec' },
+        { src: 'comm_posts_webp/sc.webp',              label: 'UNSC',       href: 'committees/unsc' },
+        { src: 'comm_posts_webp/hrs.webp',             label: 'UNHRC',      href: 'committees/unhrc' },
+        { src: 'comm_posts_webp/jcc.webp',             label: 'JCC-1',      href: 'committees/jcc-1' },
+        { src: 'comm_posts_webp/acc (1).webp',         label: 'HCC',        href: 'committees/hcc' },
+        { src: 'comm_posts_webp/lok sabha (2).webp',   label: 'LOK SABHA',  href: 'committees/lok-sabha' },
+        { src: 'comm_posts_webp/armageddon (2).webp',  label: 'ARMAGEDDON', href: 'committees/armageddon' },
+        { src: 'comm_posts_webp/un women (2).webp',    label: 'UN WOMEN',   href: 'committees/un-women' },
+        { src: 'comm_posts_webp/copuos-3.webp',        label: 'COPUOS',     href: 'committees/copuos' },
+        { src: 'comm_posts_webp/us senate (2).webp',   label: 'US SENATE',  href: 'committees/us-senate' },
+        { src: 'comm_posts_webp/undo.webp',            label: 'UNODC',      href: 'committees/unodc' },
+        { src: 'comm_posts_webp/ecofin-1.webp',        label: 'ECOFIN',     href: 'committees/ecofin' },
+        { src: 'comm_posts_webp/un charter-2.webp',    label: 'SC-UNC',     href: 'committees/un-charter' },
+        { src: 'comm_posts_webp/fifa-2.webp',          label: 'FIFA',       href: 'committees/fifa' },
+        { src: 'comm_posts_webp/who-1.webp',           label: 'WHO',        href: 'committees/who' },
+        { src: 'comm_posts_webp/ip-1.webp',            label: 'IP',         href: 'committees/ip' },
       ];
       // on mobile show conference photos only
       const MOBILE_PHOTOS = [
-        { src: 'conference_photos/2.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/4.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/8.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/9.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/10.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/13.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/16.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/3.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/5.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/6.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/7.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/14.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/11.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/17.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/1.webp',  label: 'OAKRIDGE MUN', href: 'committees.html' },
-        { src: 'conference_photos/15.webp', label: 'OAKRIDGE MUN', href: 'committees.html' },
+        { src: 'comm_posts_webp/disec (2).webp',       label: 'DISEC',      href: 'committees/disec' },
+        { src: 'comm_posts_webp/sc.webp',              label: 'UNSC',       href: 'committees/unsc' },
+        { src: 'comm_posts_webp/hrs.webp',             label: 'UNHRC',      href: 'committees/unhrc' },
+        { src: 'comm_posts_webp/jcc.webp',             label: 'JCC-1',      href: 'committees/jcc-1' },
+        { src: 'comm_posts_webp/acc (1).webp',         label: 'HCC',        href: 'committees/hcc' },
+        { src: 'comm_posts_webp/lok sabha (2).webp',   label: 'LOK SABHA',  href: 'committees/lok-sabha' },
+        { src: 'comm_posts_webp/armageddon (2).webp',  label: 'ARMAGEDDON', href: 'committees/armageddon' },
+        { src: 'comm_posts_webp/un women (2).webp',    label: 'UN WOMEN',   href: 'committees/un-women' },
+        { src: 'comm_posts_webp/copuos-3.webp',        label: 'COPUOS',     href: 'committees/copuos' },
+        { src: 'comm_posts_webp/us senate (2).webp',   label: 'US SENATE',  href: 'committees/us-senate' },
+        { src: 'comm_posts_webp/undo.webp',            label: 'UNODC',      href: 'committees/unodc' },
+        { src: 'comm_posts_webp/ecofin-1.webp',        label: 'ECOFIN',     href: 'committees/ecofin' },
+        { src: 'comm_posts_webp/un charter-2.webp',    label: 'SC-UNC',     href: 'committees/un-charter' },
+        { src: 'comm_posts_webp/fifa-2.webp',          label: 'FIFA',       href: 'committees/fifa' },
+        { src: 'comm_posts_webp/who-1.webp',           label: 'WHO',        href: 'committees/who' },
+        { src: 'comm_posts_webp/ip-1.webp',            label: 'IP',         href: 'committees/ip' },
       ];
       const DISPLAY = IS_MOBILE ? MOBILE_PHOTOS : COMMITTEES;
       const TOTAL = DISPLAY.length;

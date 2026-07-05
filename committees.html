@@ -1327,6 +1327,11 @@
     const emptyState = document.getElementById('emptyState');
     let activeFilter = 'all';
     let searchQuery = '';
+    const isMobile = () => window.innerWidth <= 768;
+
+    // Track visible state to avoid re-animating cards that didn't change
+    const cardVisible = new WeakMap();
+    cards.forEach(card => cardVisible.set(card, true));
 
     function applyFilters() {
       const toShow = [], toHide = [];
@@ -1339,60 +1344,58 @@
         (matchesFilter && matchesSearch ? toShow : toHide).push(card);
       });
 
-      // EXIT: fade + blur out cards that don't match
+      const mobile = isMobile();
+
+      // EXIT: hide non-matching cards immediately
       toHide.forEach(card => {
-        card.style.transition = 'opacity .2s ease, filter .2s ease, transform .2s ease';
+        if (cardVisible.get(card) === false) return;
+        cardVisible.set(card, false);
+        card.style.transition = 'opacity .15s ease, transform .15s ease';
         card.style.opacity = '0';
-        card.style.filter = 'blur(6px)';
         card.style.transform = 'scale(0.97)';
         card.style.pointerEvents = 'none';
-      });
-
-      // ALL staying cards also fade + blur out — every card re-enters fresh with blur
-      toShow.forEach(card => {
-        card.style.transition = 'opacity .18s ease, filter .18s ease';
-        card.style.opacity = '0';
-        card.style.filter = 'blur(8px)';
-        card.style.pointerEvents = 'none';
-      });
-
-      setTimeout(() => {
-        // Collapse hidden cards
-        toHide.forEach(card => {
+        setTimeout(() => {
           card.style.display = 'none';
-          card.style.filter = '';
-          card.style.transform = '';
           card.style.transition = '';
-          card.style.pointerEvents = '';
-        });
+          card.style.transform = '';
+        }, 150);
+      });
 
-        // ENTER: every visible card drifts up + sharpens in slowly
-        let delay = 16;
-        toShow.forEach(card => {
+      // ENTER: only animate cards that were previously hidden
+      let delay = 0;
+      toShow.forEach(card => {
+        const wasVisible = cardVisible.get(card);
+        cardVisible.set(card, true);
+        card.style.pointerEvents = '';
+
+        if (wasVisible) {
+          // Already visible — just ensure it's shown, no re-animation
           card.style.display = '';
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(20px)';
-          card.style.filter = 'blur(10px)';
+          card.style.opacity = '1';
+          card.style.transform = '';
+          return;
+        }
 
-          const d = delay;
-          setTimeout(() => {
-            card.style.transition = 'opacity .65s cubic-bezier(0.4,0,0.2,1), transform .65s cubic-bezier(0.4,0,0.2,1), filter .65s cubic-bezier(0.4,0,0.2,1)';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-            card.style.filter = 'blur(0px)';
-            card.style.pointerEvents = '';
-            setTimeout(() => {
-              card.style.transition = '';
-              card.style.filter = '';
-              card.style.transform = '';
-            }, 700);
-          }, d);
+        // Was hidden — animate it in
+        card.style.display = '';
+        card.style.opacity = '0';
+        card.style.transform = mobile ? 'translateY(8px)' : 'translateY(14px)';
+        card.style.transition = '';
 
-          delay += 45; // slow cascade stagger
-        });
+        const d = delay;
+        setTimeout(() => {
+          card.style.transition = mobile
+            ? 'opacity .22s ease, transform .22s ease'
+            : 'opacity .3s cubic-bezier(.16,1,.3,1), transform .3s cubic-bezier(.16,1,.3,1)';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+          setTimeout(() => { card.style.transition = ''; card.style.transform = ''; }, 320);
+        }, d);
 
-        emptyState.style.display = toShow.length === 0 ? 'block' : 'none';
-      }, 220);
+        delay += mobile ? 18 : 28;
+      });
+
+      emptyState.style.display = toShow.length === 0 ? 'block' : 'none';
     }
 
     document.querySelectorAll('.filter-tag').forEach(tag => {
@@ -1404,9 +1407,14 @@
       });
     });
 
+    // Debounce search so rapid typing doesn't thrash the animation
+    let searchTimer;
     document.getElementById('committeeSearch').addEventListener('input', e => {
-      searchQuery = e.target.value.toLowerCase().trim();
-      applyFilters();
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        searchQuery = e.target.value.toLowerCase().trim();
+        applyFilters();
+      }, 80);
     });
 
     // Initial scroll reveal
