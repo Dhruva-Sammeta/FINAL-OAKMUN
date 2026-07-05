@@ -1689,36 +1689,6 @@
     prepPlaceholder.remove();
     ebPlaceholder.remove();
 
-    // ── DEV: photo position panel (remove when done) ──
-    if (key === 'ecofin') {
-      const devTarget = { name: 'Arnav Shetty', defaultPos: 'center 20%' };
-      const img = Array.from(document.querySelectorAll('.eb-card-photo')).find(i => i.alt === devTarget.name);
-      if (img) {
-        const panel = document.createElement('div');
-        panel.style.cssText = 'position:fixed;bottom:16px;right:16px;z-index:9999;background:#111c;color:#fff;padding:12px 16px;border-radius:10px;font:13px monospace;display:flex;flex-direction:column;gap:8px;min-width:220px;';
-        const label = document.createElement('div');
-        label.textContent = 'Photo pos: ' + devTarget.name;
-        label.style.fontWeight = 'bold';
-        const output = document.createElement('div');
-        output.id = 'devPosOut';
-        output.textContent = img.style.objectPosition || devTarget.defaultPos;
-        const xRow = document.createElement('div');
-        xRow.innerHTML = `<label>X <input id="devX" type="range" min="0" max="100" value="50" style="width:140px"></label>`;
-        const yRow = document.createElement('div');
-        yRow.innerHTML = `<label>Y% <input id="devY" type="range" min="0" max="100" value="40" style="width:140px"></label>`;
-        panel.append(label, output, xRow, yRow);
-        document.body.appendChild(panel);
-        const update = () => {
-          const x = document.getElementById('devX').value + '%';
-          const y = document.getElementById('devY').value + '%';
-          img.style.objectPosition = x + ' ' + y;
-          output.textContent = x + ' ' + y;
-        };
-        document.getElementById('devX').addEventListener('input', update);
-        document.getElementById('devY').addEventListener('input', update);
-      }
-    }
-
     // ── CARD REVEAL (lightweight) ──
     (function() {
       const cardEls = document.querySelectorAll('.card');
