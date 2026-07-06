@@ -703,6 +703,12 @@
       border-right: 1px solid rgba(48,205,215,.12);
       position: relative;
       overflow: hidden;
+      border-radius: 12px 0 0 12px;
+      transition: max-height .9s cubic-bezier(0.4,0,0.2,1), border-radius .9s cubic-bezier(0.4,0,0.2,1);
+    }
+    .card-eb.expanded-card .eb-card-top {
+      max-height: 2000px;
+      border-radius: 12px 0 0 12px;
     }
     .eb-card-top::before {
       content: '';
@@ -799,8 +805,22 @@
     .eb-card-desc {
       font-size: .7rem; line-height: 1.65;
       color: rgba(250,245,237,.25);
+      max-height: 6.6em;
+      overflow: hidden;
+      transition: max-height .9s cubic-bezier(0.4,0,0.2,1);
+    }
+    .eb-card-desc.expanded {
+      max-height: 2000px;
+      transition: max-height .9s cubic-bezier(0.4,0,0.2,1);
     }
     .card-eb.has-member .eb-card-desc { color: rgba(250,245,237,.52); }
+    .eb-read-more {
+      background: none; border: none; padding: 0;
+      font-size: .63rem; font-weight: 700; letter-spacing: .06em;
+      color: var(--teal); cursor: pointer; margin-top: 6px;
+      text-transform: uppercase; align-self: flex-start;
+    }
+    .eb-read-more:hover { color: var(--teal-light); }
 
     footer { background: #001223; padding: 72px 56px 0; position: relative; overflow: hidden; }
     footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, rgba(48,205,215,.3), transparent); }
@@ -1682,10 +1702,24 @@
           <div class="eb-card-name">${member ? member.name : 'Announcing soon'}</div>
           <div class="eb-card-role">${role}</div>
           <div class="eb-card-desc">${member?.desc || 'This executive board member will guide debate, evaluate delegate performance, and maintain a focused committee experience.'}</div>
+          ${member?.desc ? '<button class="eb-read-more">Read more</button>' : ''}
         </div>`;
       ebWrapper.appendChild(el);
     });
     bento.insertBefore(ebWrapper, ebPlaceholder);
+
+    ebWrapper.querySelectorAll('.eb-read-more').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const desc = btn.previousElementSibling;
+        const card = btn.closest('.card-eb');
+        const expanded = desc.classList.toggle('expanded');
+        card.classList.toggle('expanded-card', expanded);
+        btn.textContent = expanded ? 'Read less' : 'Read more';
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, expanded ? 200 : 0);
+      });
+    });
 
     prepPlaceholder.remove();
     ebPlaceholder.remove();
