@@ -692,9 +692,10 @@
     .eb-row { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .card-eb { padding: 0; overflow: hidden; display: flex; flex-direction: row; align-items: stretch; }
     .eb-card-top {
-      width: clamp(260px, 40%, 400px);
+      width: clamp(220px, 32%, 320px);
       flex-shrink: 0;
       height: auto;
+      max-height: 340px;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
       background: linear-gradient(145deg,
         rgba(48,205,215,.14) 0%,
