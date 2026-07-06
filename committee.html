@@ -692,9 +692,10 @@
     .eb-row { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .card-eb { padding: 0; overflow: hidden; display: flex; flex-direction: row; align-items: stretch; }
     .eb-card-top {
-      width: clamp(260px, 40%, 400px);
+      width: clamp(220px, 32%, 320px);
       flex-shrink: 0;
       height: auto;
+      max-height: 340px;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
       background: linear-gradient(145deg,
         rgba(48,205,215,.14) 0%,
@@ -702,6 +703,12 @@
       border-right: 1px solid rgba(48,205,215,.12);
       position: relative;
       overflow: hidden;
+      border-radius: 12px 0 0 12px;
+      transition: max-height .9s cubic-bezier(0.4,0,0.2,1), border-radius .9s cubic-bezier(0.4,0,0.2,1);
+    }
+    .card-eb.expanded-card .eb-card-top {
+      max-height: 2000px;
+      border-radius: 12px 0 0 12px;
     }
     .eb-card-top::before {
       content: '';
@@ -798,8 +805,22 @@
     .eb-card-desc {
       font-size: .7rem; line-height: 1.65;
       color: rgba(250,245,237,.25);
+      max-height: 6.6em;
+      overflow: hidden;
+      transition: max-height .9s cubic-bezier(0.4,0,0.2,1);
+    }
+    .eb-card-desc.expanded {
+      max-height: 2000px;
+      transition: max-height .9s cubic-bezier(0.4,0,0.2,1);
     }
     .card-eb.has-member .eb-card-desc { color: rgba(250,245,237,.52); }
+    .eb-read-more {
+      background: none; border: none; padding: 0;
+      font-size: .63rem; font-weight: 700; letter-spacing: .06em;
+      color: var(--teal); cursor: pointer; margin-top: 6px;
+      text-transform: uppercase; align-self: flex-start;
+    }
+    .eb-read-more:hover { color: var(--teal-light); }
 
     footer { background: #001223; padding: 72px 56px 0; position: relative; overflow: hidden; }
     footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, rgba(48,205,215,.3), transparent); }
@@ -1387,6 +1408,7 @@
     </div>
     <div class="footer-bottom">
       <p>2026 Oakridge International School. All rights reserved.</p>
+      <p>Website designed and developed by <a href="https://www.instagram.com/srijai_kodali/" target="_blank" rel="noopener">Srijai Kodali</a></p>
     </div>
   </footer>
 
@@ -1577,7 +1599,7 @@
         { name: 'Pratheek Konda', photo: '/eb_photos/page1_1_X7.webp', photoPos: 'right top', desc: 'Pratheek Konda is an aspiring doctor that has created his own medical camp through a food business he supported, he is an IBDP 1 student at Oakridge International School that is taking Biology, Chemistry, and Mathematics at a higher level when he embarks on his journey to the IBDP programme. He loves Barca with his whole heart and plays football for his school, Pratheek is a die hard community volunteer that has dedicated over 100 hours at local government schools, food drives, and charity work. His voice may be deep but he\'s a kind person at heart. He would love to see each and every one of you at OakMUN 2025!' },
       ],
       'unsc': [
-        { name: 'Satrajit Sahani', photo: null, desc: 'Satrajit Sahani is an MBA grad, published poet and a sports enthusiast. His first brush with MUNs was a decade back in Delhi and he hasn\'t looked back since. He lives and breathes world politics and literature in equal measures. He has a sincere appreciation towards the finer arts and when he is not working, he can be found either writing something or traveling around the country. He lives by a simple rule, be a go-getter, if you want something go and get it, anything less is an excuse.' },
+        { name: 'Satrajit Sahani', photo: '/eb_photos/satrajit.webp', photoPos: 'center 20%', desc: 'Satrajit Sahani is an MBA grad, published poet and a sports enthusiast. His first brush with MUNs was a decade back in Delhi and he hasn\'t looked back since. He lives and breathes world politics and literature in equal measures. He has a sincere appreciation towards the finer arts and when he is not working, he can be found either writing something or traveling around the country. He lives by a simple rule, be a go-getter, if you want something go and get it, anything less is an excuse.' },
         { name: 'Vishruth Veera Reddy', photo: '/eb_photos/new_doc/p1_0_1280x855.webp', photoPos: 'center 20%', desc: 'Vishruth is an incoming college student and an Oakridge alumnus who has been passionate about Model United Nations for the past four years. With over 25 conferences under his belt, he has served as a Delegate, Executive Board member, and Secretariat member, each role strengthening his appreciation for diplomacy, public speaking, and global affairs. He looks forward to meeting you all and making this conference an unforgettable experience.' },
       ],
       'oic': [
@@ -1681,10 +1703,24 @@
           <div class="eb-card-name">${member ? member.name : 'Announcing soon'}</div>
           <div class="eb-card-role">${role}</div>
           <div class="eb-card-desc">${member?.desc || 'This executive board member will guide debate, evaluate delegate performance, and maintain a focused committee experience.'}</div>
+          ${member?.desc ? '<button class="eb-read-more">Read more</button>' : ''}
         </div>`;
       ebWrapper.appendChild(el);
     });
     bento.insertBefore(ebWrapper, ebPlaceholder);
+
+    ebWrapper.querySelectorAll('.eb-read-more').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const desc = btn.previousElementSibling;
+        const card = btn.closest('.card-eb');
+        const expanded = desc.classList.toggle('expanded');
+        card.classList.toggle('expanded-card', expanded);
+        btn.textContent = expanded ? 'Read less' : 'Read more';
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, expanded ? 200 : 0);
+      });
+    });
 
     prepPlaceholder.remove();
     ebPlaceholder.remove();
