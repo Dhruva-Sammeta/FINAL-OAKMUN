@@ -3463,14 +3463,14 @@
       window.addEventListener('scroll', () => { if (!morphComplete) window.scrollTo(0, 0); });
 
       // Intercept in-page hash nav clicks while morph is still running
-      document.querySelectorAll('a[href^="#"]').forEach(link => {
+      document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(link => {
         link.addEventListener('click', e => {
-          const targetId = link.getAttribute('href');
-          const target   = document.querySelector(targetId);
+          const href = link.getAttribute('href');
+          const targetId = href.startsWith('/#') ? href.slice(1) : href;
+          const target = document.querySelector(targetId);
           if (!target) return;
           e.preventDefault();
           if (!morphComplete) {
-            // fast-forward the animation then scroll
             virtualScroll = MAX_SCROLL;
             unlockScroll();
           }
