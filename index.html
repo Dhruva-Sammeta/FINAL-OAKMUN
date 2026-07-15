@@ -4162,11 +4162,11 @@
     #trainingStrip {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       background: linear-gradient(90deg, #1a8899 0%, #30CDD7 48%, #1a8899 100%);
-      padding: 9px 20px;
+      padding: 11px 20px;
       display: flex; align-items: center; justify-content: center; gap: 12px;
-      font-family: 'Montserrat'; font-size: .65rem; font-weight: 800;
+      font-family: 'Montserrat'; font-size: .72rem; font-weight: 800;
       letter-spacing: .14em; text-transform: uppercase; color: #003057;
-      cursor: default; overflow: hidden;
+      cursor: default; overflow: hidden; white-space: nowrap;
     }
     #trainingStrip::after {
       content: '';
@@ -4234,9 +4234,9 @@
     }
     .tp-badge-dot { display: none; }
     .tp-date {
-      font-size: clamp(2.8rem, 10vw, 4rem);
-      font-weight: 900; letter-spacing: -.04em; line-height: 1;
-      color: #FAF5ED; margin-bottom: 6px;
+      font-size: clamp(2.2rem, 8vw, 3.2rem);
+      font-weight: 900; letter-spacing: -.03em; line-height: 1;
+      color: #FAF5ED; margin-bottom: 6px; white-space: nowrap;
     }
     .tp-date span { color: #30CDD7; }
     .tp-label {
@@ -4267,7 +4267,7 @@
   <!-- strip -->
   <div id="trainingStrip" style="cursor: pointer;" onclick="document.getElementById('trainingPopup').classList.add('open')">
     <span class="strip-pulse"></span>
-    Online Delegate Training Session &nbsp;·&nbsp; 15th July
+    Online Delegate Training Session &nbsp;·&nbsp; 19 July 2026
     <span class="strip-pulse"></span>
     <button id="stripClose" onclick="event.stopPropagation();">✕</button>
   </div>
@@ -4277,7 +4277,7 @@
     <div class="tp-card">
       <div class="tp-glow"></div>
       <div class="tp-badge"><span class="tp-badge-dot"></span>Upcoming Event</div>
-      <div class="tp-date"><span>15</span>th July</div>
+      <div class="tp-date"><span>19</span> July 2026</div>
       <div class="tp-label">Online Delegate Training Session</div>
       <button class="tp-close" onclick="document.getElementById('trainingPopup').classList.remove('open')">Got it</button>
     </div>
