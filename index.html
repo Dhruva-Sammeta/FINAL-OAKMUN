@@ -689,12 +689,12 @@
     }
     .hero-notif-body { flex: 1; min-width: 0; }
     .hero-notif-label {
-      font-size: 9px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--teal); margin-bottom: 3px;
+      font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 4px;
     }
     .hero-notif--urgent .hero-notif-label { color: #ff6b6b; }
     .hero-notif-title {
-      font-size: 12px; font-weight: 700; color: rgba(250,245,237,.92);
+      font-size: 15px; font-weight: 700; color: rgba(250,245,237,.92);
       line-height: 1.3; white-space: normal;
     }
     .hero-notif-arrow {
@@ -2852,10 +2852,17 @@
 
     <!-- stacked notification cards — always visible, independent of morph sequence -->
     <div class="hero-notifs">
-      <a href="/register.html" class="hero-notif hero-notif--urgent">
+      <a href="/register.html" class="hero-notif">
         <div class="hero-notif-body">
-          <div class="hero-notif-label">Closing Soon</div>
-          <div class="hero-notif-title">Registrations Close — 19 July 2026</div>
+          <div class="hero-notif-label">Out Now</div>
+          <div class="hero-notif-title">IP Allocations — International Press</div>
+        </div>
+        <span class="hero-notif-arrow">→</span>
+      </a>
+      <a href="#" onclick="event.preventDefault();document.getElementById('trainingPopup').classList.add('open')" class="hero-notif">
+        <div class="hero-notif-body">
+          <div class="hero-notif-label">Live Event</div>
+          <div class="hero-notif-title">Online Delegate Training — 19 July 2026</div>
         </div>
         <span class="hero-notif-arrow">→</span>
       </a>
@@ -4219,7 +4226,7 @@
       background: linear-gradient(90deg, #1a8899 0%, #30CDD7 48%, #1a8899 100%);
       padding: 11px 20px;
       display: flex; align-items: center; justify-content: center; gap: 12px;
-      font-family: 'Montserrat'; font-size: .72rem; font-weight: 800;
+      font-family: 'Montserrat'; font-size: .88rem; font-weight: 800;
       letter-spacing: .14em; text-transform: uppercase; color: #003057;
       cursor: default; overflow: hidden; white-space: nowrap;
     }
@@ -4320,9 +4327,9 @@
   </style>
 
   <!-- strip -->
-  <div id="trainingStrip" style="cursor: pointer;" onclick="document.getElementById('trainingPopup').classList.add('open')">
+  <div id="trainingStrip" style="cursor: pointer;" onclick="window.location.href='/register.html'">
     <span class="strip-pulse"></span>
-    Online Delegate Training Session &nbsp;·&nbsp; 19 July 2026
+    Registrations Close &nbsp;·&nbsp; 19 July 2026
     <span class="strip-pulse"></span>
     <button id="stripClose" onclick="event.stopPropagation();">✕</button>
   </div>
@@ -4339,6 +4346,18 @@
   </div>
   <script>
     // Push nav down so strip doesn't overlap it
+    // Hide banner and training tab on/after 20 July 2026
+    const _now = new Date();
+    const _hideDate = new Date('2026-07-19T23:59:00');
+    if (_now >= _hideDate) {
+      const _strip = document.getElementById('trainingStrip');
+      if (_strip) _strip.style.display = 'none';
+      // hide the training session notification card
+      document.querySelectorAll('.hero-notif').forEach(el => {
+        if (el.textContent.includes('Training')) el.style.display = 'none';
+      });
+    }
+
     const trainingStrip = document.getElementById('trainingStrip');
     const navEl = document.querySelector('nav');
     function applyTrainingStripLayout() {
