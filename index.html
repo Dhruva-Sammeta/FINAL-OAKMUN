@@ -462,7 +462,7 @@
       position: absolute;
       left: 0; top: 0;
       will-change: transform, opacity;
-      width: 90px; height: 128px;
+      width: 78px; height: 111px;
       cursor: pointer;
       text-decoration: none;
       perspective: 1000px;
@@ -656,6 +656,59 @@
       text-shadow: 0 2px 12px rgba(0,0,0,.8);
     }
     #heroArcContent.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+    /* stacked notification cards */
+    .hero-notifs {
+      position: absolute; top: 50%; right: 36px; transform: translateY(-50%);
+      z-index: 50;
+      display: flex; flex-direction: column; gap: 10px;
+      width: 240px;
+    }
+    .hero-notif {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      background: rgba(2,10,20,.80);
+      border: 1px solid rgba(48,205,215,.18);
+      border-left: 3px solid var(--teal);
+      border-radius: 12px;
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 4px 24px rgba(0,0,0,.45);
+      text-decoration: none;
+      transition: background .18s, border-color .18s, transform .18s;
+      opacity: 0;
+      animation: notifIn .4s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    .hero-notif:nth-child(1) { animation-delay: .3s; }
+    .hero-notif:nth-child(2) { animation-delay: .45s; }
+    .hero-notif:nth-child(3) { animation-delay: .60s; }
+    .hero-notif:hover { background: rgba(48,205,215,.07); transform: translateX(-3px); }
+    .hero-notif--urgent { border-left-color: #ff6b6b; }
+    .hero-notif--urgent:hover { background: rgba(220,60,60,.08); }
+    .hero-notif-icon {
+      font-size: 18px; flex-shrink: 0; line-height: 1;
+    }
+    .hero-notif-body { flex: 1; min-width: 0; }
+    .hero-notif-label {
+      font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 4px;
+    }
+    .hero-notif--urgent .hero-notif-label { color: #ff6b6b; }
+    .hero-notif-title {
+      font-size: 15px; font-weight: 700; color: rgba(250,245,237,.92);
+      line-height: 1.3; white-space: normal;
+    }
+    .hero-notif-arrow {
+      font-size: 14px; color: var(--teal); opacity: .5; flex-shrink: 0;
+      transition: opacity .15s, transform .15s;
+    }
+    .hero-notif:hover .hero-notif-arrow { opacity: 1; transform: translateX(2px); }
+    @keyframes notifIn {
+      0%   { opacity: 0; transform: translateX(18px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    @media (max-width: 1024px) {
+      .hero-notifs { display: none; }
+    }
 
     .arc-eyebrow {
       font-size: .68rem;
@@ -1056,7 +1109,6 @@
       border: 1px solid rgba(48,205,215,.12);
       border-radius: 16px;
       position: relative;
-      overflow: clip;
       transition: transform .2s ease, box-shadow .2s ease;
     }
     /* top-left teal glow blob */
@@ -1090,6 +1142,8 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       line-height: 1;
+      padding-bottom: 0.1em;
+      padding-right: 0.08em;
     }
     .ss-plus {
       background: linear-gradient(135deg, #30CDD7 0%, #B4EBF5 55%, #30CDD7 100%);
@@ -2548,7 +2602,7 @@
       filter: blur(60px);
     }
     /* Stats */
-    .stats-section { overflow: hidden; }
+    .stats-section { overflow: visible; }
     .stats-orb-a {
       width: 50%; height: 260px;
       top: -60%; left: -8%;
@@ -2714,7 +2768,6 @@
       <div class="mobile-reg-options">
         <a href="/register.html">All Schools / Delegates</a>
         <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener">International Press (IP)</a>
-        <a href="https://forms.office.com/r/VT2DQvz4XE" target="_blank" rel="noopener">OC Application (Grade 12)</a>
       </div>
     </div>
 
@@ -2760,10 +2813,6 @@
               IP Registration
               <span class="nav-drop-reg-sub">International Press</span>
             </a>
-            <a href="https://forms.office.com/r/VT2DQvz4XE" target="_blank" rel="noopener" class="nav-drop-reg-item">
-              OC Application
-              <span class="nav-drop-reg-sub">Grade 12 · Oakridge only</span>
-            </a>
           </div>
         </div>
       </div>
@@ -2799,6 +2848,24 @@
       </h1>
       <p class="morph-chapter-tag" id="heroChapterTag">24–26 JULY 2026 &nbsp;·&nbsp; HYDERABAD, INDIA</p>
       <p class="morph-scroll-hint">DISCOVER THE CONFERENCE</p>
+    </div>
+
+    <!-- stacked notification cards — always visible, independent of morph sequence -->
+    <div class="hero-notifs">
+      <a href="/register.html" class="hero-notif">
+        <div class="hero-notif-body">
+          <div class="hero-notif-label">Out Now</div>
+          <div class="hero-notif-title">IP Allocations — International Press</div>
+        </div>
+        <span class="hero-notif-arrow">→</span>
+      </a>
+      <a href="#" onclick="event.preventDefault();document.getElementById('trainingPopup').classList.add('open')" class="hero-notif">
+        <div class="hero-notif-body">
+          <div class="hero-notif-label">Live Event</div>
+          <div class="hero-notif-title">Online Delegate Training — 19 July 2026</div>
+        </div>
+        <span class="hero-notif-arrow">→</span>
+      </a>
     </div>
 
     <!-- arc content (fades in once morph completes) -->
@@ -2889,13 +2956,11 @@
         <span class="marquee-item">HCC</span><span class="marquee-dot"></span>
         <span class="marquee-item">LOK SABHA</span><span class="marquee-dot"></span>
         <span class="marquee-item">ARMAGEDDON</span><span class="marquee-dot"></span>
-        <span class="marquee-item">OIC</span><span class="marquee-dot"></span>
         <span class="marquee-item">UN WOMEN</span><span class="marquee-dot"></span>
         <span class="marquee-item">COPUOS</span><span class="marquee-dot"></span>
         <span class="marquee-item">US SENATE</span><span class="marquee-dot"></span>
         <span class="marquee-item">UNODC</span><span class="marquee-dot"></span>
         <span class="marquee-item">ECOFIN</span><span class="marquee-dot"></span>
-        <span class="marquee-item">SC-UNC</span><span class="marquee-dot"></span>
         <span class="marquee-item">FIFA</span><span class="marquee-dot"></span>
         <span class="marquee-item">WHO</span><span class="marquee-dot"></span>
         <span class="marquee-item">IP</span><span class="marquee-dot"></span>
@@ -2910,13 +2975,11 @@
         <span class="marquee-item">HCC</span><span class="marquee-dot"></span>
         <span class="marquee-item">LOK SABHA</span><span class="marquee-dot"></span>
         <span class="marquee-item">ARMAGEDDON</span><span class="marquee-dot"></span>
-        <span class="marquee-item">OIC</span><span class="marquee-dot"></span>
         <span class="marquee-item">UN WOMEN</span><span class="marquee-dot"></span>
         <span class="marquee-item">COPUOS</span><span class="marquee-dot"></span>
         <span class="marquee-item">US SENATE</span><span class="marquee-dot"></span>
         <span class="marquee-item">UNODC</span><span class="marquee-dot"></span>
         <span class="marquee-item">ECOFIN</span><span class="marquee-dot"></span>
-        <span class="marquee-item">SC-UNC</span><span class="marquee-dot"></span>
         <span class="marquee-item">FIFA</span><span class="marquee-dot"></span>
         <span class="marquee-item">WHO</span><span class="marquee-dot"></span>
         <span class="marquee-item">IP</span><span class="marquee-dot"></span>
@@ -2929,13 +2992,11 @@
     <div class="marquee-track-rev">
       <div class="marquee-content">
         <span class="marquee-item">UNODC</span><span class="marquee-dot"></span>
-        <span class="marquee-item">SC-UNC</span><span class="marquee-dot"></span>
         <span class="marquee-item">ARMAGEDDON</span><span class="marquee-dot"></span>
         <span class="marquee-item">COPUOS</span><span class="marquee-dot"></span>
         <span class="marquee-item">LOK SABHA</span><span class="marquee-dot"></span>
         <span class="marquee-item">HCC</span><span class="marquee-dot"></span>
         <span class="marquee-item">ECOFIN</span><span class="marquee-dot"></span>
-        <span class="marquee-item">OIC</span><span class="marquee-dot"></span>
         <span class="marquee-item">US SENATE</span><span class="marquee-dot"></span>
         <span class="marquee-item">UN WOMEN</span><span class="marquee-dot"></span>
         <span class="marquee-item">FIFA</span><span class="marquee-dot"></span>
@@ -2949,13 +3010,11 @@
       </div>
       <div class="marquee-content" aria-hidden="true">
         <span class="marquee-item">UNODC</span><span class="marquee-dot"></span>
-        <span class="marquee-item">SC-UNC</span><span class="marquee-dot"></span>
         <span class="marquee-item">ARMAGEDDON</span><span class="marquee-dot"></span>
         <span class="marquee-item">COPUOS</span><span class="marquee-dot"></span>
         <span class="marquee-item">LOK SABHA</span><span class="marquee-dot"></span>
         <span class="marquee-item">HCC</span><span class="marquee-dot"></span>
         <span class="marquee-item">ECOFIN</span><span class="marquee-dot"></span>
-        <span class="marquee-item">OIC</span><span class="marquee-dot"></span>
         <span class="marquee-item">US SENATE</span><span class="marquee-dot"></span>
         <span class="marquee-item">UN WOMEN</span><span class="marquee-dot"></span>
         <span class="marquee-item">FIFA</span><span class="marquee-dot"></span>
@@ -2977,12 +3036,12 @@
     <div class="s-orb stats-orb-b sr"></div>
     <div class="stats-strip">
       <div class="stats-strip-item">
-        <span class="ss-num" data-count="700"><span class="count-val">700</span><span class="ss-plus">+</span></span>
+        <span class="ss-num" data-count="685"><span class="count-val">685</span><span class="ss-plus">+</span></span>
         <span class="ss-label">Delegates</span>
       </div>
       <div class="stats-strip-div"></div>
       <div class="stats-strip-item">
-        <span class="ss-num" data-count="18"><span class="count-val">18</span></span>
+        <span class="ss-num" data-count="16"><span class="count-val">16</span></span>
         <span class="ss-label">Committees</span>
       </div>
       <div class="stats-strip-div"></div>
@@ -3146,13 +3205,11 @@
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><img src="comm_logos_webp/hcc.png" alt="HCC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,6px);" /></span><span class="ctrl-chain-name">HCC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><img src="new_logos/lok%20sabha%20(1).png" alt="LOK SABHA" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,10px);" /></span><span class="ctrl-chain-name">LOK SABHA</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><img src="new_logos/armageddon%20(1).png" alt="ARMAGEDDON" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,3px);" /></span><span class="ctrl-chain-name">ARMAGEDDON</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><img src="new_logos/oic%20(1).png" alt="OIC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,3px);" /></span><span class="ctrl-chain-name">OIC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><img src="new_logos/un%20women%20(1).png" alt="UN WOMEN" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,3px);" /></span><span class="ctrl-chain-name">UN WOMEN</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><img src="new_logos/copuos%20(1).png" alt="COPUOS" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,8px);" /></span><span class="ctrl-chain-name">COPUOS</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><img src="new_logos/us%20senate%20(1).png" alt="US SENATE" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,6px);" /></span><span class="ctrl-chain-name">US SENATE</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><img src="new_logos/unodc%20(1).png" alt="UNODC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,7px);" /></span><span class="ctrl-chain-name">UNODC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><img src="new_logos/ecofin%20(1).png" alt="ECOFIN" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,7px);" /></span><span class="ctrl-chain-name">ECOFIN</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><img src="new_logos/un%20charter%20(1).png" alt="SC-UNC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,3px);" /></span><span class="ctrl-chain-name">SC-UNC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><img src="new_logos/fifa%20(1).png" alt="FIFA" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,7px);" /></span><span class="ctrl-chain-name">FIFA</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><img src="new_logos/who%20(1).png" alt="WHO" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,7px);" /></span><span class="ctrl-chain-name">WHO</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><img src="new_logos/ip%20(1).png" alt="IP" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,8px);" /></span><span class="ctrl-chain-name">IP</span></div>
@@ -3275,7 +3332,7 @@
   <div class="cta-banner">
     <p class="cta-banner-eyebrow">Registration Open · Chapter XVI</p>
     <h2 class="cta-banner-title">Ready to<br><em>Delegate?</em></h2>
-    <p class="cta-banner-sub">Join 700+ delegates from across India for three days of debate, diplomacy, and discovery.</p>
+    <p class="cta-banner-sub">Join 685+ delegates from across India for three days of debate, diplomacy, and discovery.</p>
     <button class="cta-banner-btn" onclick="window.location.href='register.html'">Register Now &nbsp;→</button>
   </div>
 
@@ -3361,8 +3418,12 @@
       const STIFFNESS  = 40, DAMPING = 15;
       const IS_MOBILE  = window.innerWidth < 768;
       const MAX_SCROLL = IS_MOBILE ? 1000 : 2000;
-      const IMG_W      = IS_MOBILE ? 56 : 90;
-      const IMG_H      = IS_MOBILE ? 80 : 128;
+      let IMG_W        = IS_MOBILE ? 56 : 78;
+      let IMG_H        = IS_MOBILE ? 80 : 111;
+      window.CIRCLE_MULT = 0.30;
+      window.CIRCLE_CAP  = 276;
+      const getCircleMult = () => window.CIRCLE_MULT;
+      const getCircleCap  = () => window.CIRCLE_CAP;
 
       const COMMITTEES = [
         { src: 'comm_posts_webp/disec (2).webp',       label: 'DISEC',      href: 'committees/disec' },
@@ -3377,7 +3438,6 @@
         { src: 'comm_posts_webp/us senate (2).webp',   label: 'US SENATE',  href: 'committees/us-senate' },
         { src: 'comm_posts_webp/undo.webp',            label: 'UNODC',      href: 'committees/unodc' },
         { src: 'comm_posts_webp/ecofin-1.webp',        label: 'ECOFIN',     href: 'committees/ecofin' },
-        { src: 'comm_posts_webp/un charter-2.webp',    label: 'SC-UNC',     href: 'committees/un-charter' },
         { src: 'comm_posts_webp/fifa-2.webp',          label: 'FIFA',       href: 'committees/fifa' },
         { src: 'comm_posts_webp/who-1.webp',           label: 'WHO',        href: 'committees/who' },
         { src: 'comm_posts_webp/ip-1.webp',            label: 'IP',         href: 'committees/ip' },
@@ -3396,7 +3456,6 @@
         { src: 'comm_posts_webp/us senate (2).webp',   label: 'US SENATE',  href: 'committees/us-senate' },
         { src: 'comm_posts_webp/undo.webp',            label: 'UNODC',      href: 'committees/unodc' },
         { src: 'comm_posts_webp/ecofin-1.webp',        label: 'ECOFIN',     href: 'committees/ecofin' },
-        { src: 'comm_posts_webp/un charter-2.webp',    label: 'SC-UNC',     href: 'committees/un-charter' },
         { src: 'comm_posts_webp/fifa-2.webp',          label: 'FIFA',       href: 'committees/fifa' },
         { src: 'comm_posts_webp/who-1.webp',           label: 'WHO',        href: 'committees/who' },
         { src: 'comm_posts_webp/ip-1.webp',            label: 'IP',         href: 'committees/ip' },
@@ -3618,7 +3677,7 @@
 
         // circle target
         const minDim = Math.min(cW, cH);
-        const cr   = Math.min(minDim * 0.35, 320);
+        const cr   = Math.min(minDim * getCircleMult(), getCircleCap());
         const ca   = (i / TOTAL) * 360;
         const cRad = ca * Math.PI / 180;
         const cx   = Math.cos(cRad) * cr;
@@ -3717,6 +3776,9 @@
         loopRunning = true;
         rafId = requestAnimationFrame(loop);
       }
+      window.wakeLoop = wakeLoop;
+      window._heroGetIMG = () => ({ IMG_W, IMG_H });
+      window._heroSetIMG = (w, h) => { IMG_W = w; IMG_H = h; };
 
       // pause loop when tab is hidden, resume when visible
       document.addEventListener('visibilitychange', () => {
@@ -4164,7 +4226,7 @@
       background: linear-gradient(90deg, #1a8899 0%, #30CDD7 48%, #1a8899 100%);
       padding: 11px 20px;
       display: flex; align-items: center; justify-content: center; gap: 12px;
-      font-family: 'Montserrat'; font-size: .72rem; font-weight: 800;
+      font-family: 'Montserrat'; font-size: .88rem; font-weight: 800;
       letter-spacing: .14em; text-transform: uppercase; color: #003057;
       cursor: default; overflow: hidden; white-space: nowrap;
     }
@@ -4265,9 +4327,9 @@
   </style>
 
   <!-- strip -->
-  <div id="trainingStrip" style="cursor: pointer;" onclick="document.getElementById('trainingPopup').classList.add('open')">
+  <div id="trainingStrip" style="cursor: pointer;" onclick="window.location.href='/register.html'">
     <span class="strip-pulse"></span>
-    Online Delegate Training Session &nbsp;·&nbsp; 19 July 2026
+    Registrations Close &nbsp;·&nbsp; 19 July 2026
     <span class="strip-pulse"></span>
     <button id="stripClose" onclick="event.stopPropagation();">✕</button>
   </div>
@@ -4284,6 +4346,18 @@
   </div>
   <script>
     // Push nav down so strip doesn't overlap it
+    // Hide banner and training tab on/after 20 July 2026
+    const _now = new Date();
+    const _hideDate = new Date('2026-07-19T23:59:00');
+    if (_now >= _hideDate) {
+      const _strip = document.getElementById('trainingStrip');
+      if (_strip) _strip.style.display = 'none';
+      // hide the training session notification card
+      document.querySelectorAll('.hero-notif').forEach(el => {
+        if (el.textContent.includes('Training')) el.style.display = 'none';
+      });
+    }
+
     const trainingStrip = document.getElementById('trainingStrip');
     const navEl = document.querySelector('nav');
     function applyTrainingStripLayout() {
