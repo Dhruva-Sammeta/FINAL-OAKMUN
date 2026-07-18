@@ -1569,19 +1569,42 @@
       'unga-sochum': '/background%20guides_rop/SOCHUM%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
     };
     const bgPdf = bgGuides[key];
-    const el = document.createElement('a');
-    el.className = `card card-prep`;
-    el.href = bgPdf || '#';
-    if (bgPdf) el.target = '_blank';
-    el.innerHTML = `
-      <span class="card-label">Preparation</span>
-      <div class="prep-card-icon">${prepIcons[0]}</div>
-      <div class="prep-card-name">${resources[0]}</div>
-      <div class="prep-card-tag">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v6M2 5l3 3 3-3M1 9h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        ${bgPdf ? 'Open PDF' : 'Coming soon'}
-      </div>`;
-    bento.insertBefore(el, prepPlaceholder);
+
+    if (key === 'ip') {
+      const ipGuides = [
+        { name: 'Journalism Style Guide', pdf: '/background%20guides_rop/Oakridge%20MUN%202026-%20Journalism%20Style%20Guide.pdf' },
+        { name: 'Photography Style Guide', pdf: '/background%20guides_rop/Oakridge%20MUN%202026%20-%20Photography%20Style%20Guide%20Final.pdf' },
+      ];
+      ipGuides.forEach(guide => {
+        const el = document.createElement('a');
+        el.className = 'card card-prep';
+        el.href = guide.pdf;
+        el.target = '_blank';
+        el.innerHTML = `
+          <span class="card-label">Style Guide</span>
+          <div class="prep-card-icon">${prepIcons[0]}</div>
+          <div class="prep-card-name">${guide.name}</div>
+          <div class="prep-card-tag">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v6M2 5l3 3 3-3M1 9h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Open PDF
+          </div>`;
+        bento.insertBefore(el, prepPlaceholder);
+      });
+    } else {
+      const el = document.createElement('a');
+      el.className = `card card-prep`;
+      el.href = bgPdf || '#';
+      if (bgPdf) el.target = '_blank';
+      el.innerHTML = `
+        <span class="card-label">Preparation</span>
+        <div class="prep-card-icon">${prepIcons[0]}</div>
+        <div class="prep-card-name">${resources[0]}</div>
+        <div class="prep-card-tag">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v6M2 5l3 3 3-3M1 9h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          ${bgPdf ? 'Open PDF' : 'Coming soon'}
+        </div>`;
+      bento.insertBefore(el, prepPlaceholder);
+    }
 
     const ebRoles = {
       'disec':       ['Chairperson', 'Vice-Chairperson', 'Rapporteur'],
