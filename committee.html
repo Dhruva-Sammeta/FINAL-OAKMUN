@@ -688,6 +688,105 @@
     .card-prep.red-accent .prep-card-tag { color: rgba(255,55,80,.45); }
     .card-prep.red-accent .card-label { color: var(--red); }
 
+    /* ── Guide cards (resources-style) in bento ── */
+    .bento-guide-card {
+      grid-column: span 3;
+      background: #020c14;
+      border: 1px solid rgba(48,205,215,.18);
+      border-radius: 20px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      min-height: 250px;
+      box-shadow: 0 6px 32px rgba(0,0,0,.5);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .3s, transform .25s cubic-bezier(.2,.9,.3,1), box-shadow .3s;
+    }
+    .bento-guide-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 80px;
+      background: linear-gradient(to bottom, rgba(0,5,15,.7) 0%, transparent 100%);
+      z-index: 1; pointer-events: none;
+      border-radius: 20px 20px 0 0;
+    }
+    .bento-guide-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,5,15,.95) 0%, rgba(0,5,15,.75) 28%, rgba(0,5,15,.3) 55%, transparent 100%);
+      z-index: 1; pointer-events: none;
+    }
+    .bento-guide-card:hover {
+      border-color: rgba(48,205,215,.45);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 55px rgba(0,0,0,.6), 0 0 0 1px rgba(48,205,215,.18), 0 0 60px rgba(48,205,215,.1);
+    }
+    .bento-guide-card .guide-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; border-radius: 20px;
+      z-index: 0; pointer-events: none;
+      transform-origin: center;
+      transition: transform .55s cubic-bezier(.2,.9,.3,1);
+    }
+    .bento-guide-card:hover .guide-bg { transform: scale(1.07); }
+    .bento-guide-card > *:not(.guide-bg) { position: relative; z-index: 2; }
+    .bento-guide-card .guide-type {
+      position: absolute;
+      top: 15px; left: 16px;
+      font-size: .48rem; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(250,245,237,.82);
+      background: rgba(0,10,25,.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 100px;
+      padding: 5px 12px;
+    }
+    .bento-guide-card .guide-card-body {
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .bento-guide-card .guide-name {
+      font-size: 1.25rem; font-weight: 900;
+      letter-spacing: -.03em;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .bento-guide-card .guide-topic {
+      font-size: .7rem; font-weight: 500;
+      color: rgba(250,245,237,.45);
+      line-height: 1.5;
+    }
+    .bento-guide-card .guide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+    .bento-guide-card .guide-status {
+      font-size: .52rem; font-weight: 800;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--teal);
+    }
+    .bento-guide-card .guide-dl {
+      display: flex; align-items: center; gap: 5px;
+      font-size: .55rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--teal);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .bento-guide-card .guide-dl:hover { color: var(--teal-light); }
+
     /* ── EB cards ── */
     .eb-row { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .card-eb { padding: 0; overflow: hidden; display: flex; flex-direction: row; align-items: stretch; }
@@ -1237,6 +1336,7 @@
     <a href="/committees.html">Committees</a>
     <a href="/secretariat.html">Secretariat</a>
     <a href="/#schedule">Schedule</a>
+    <a href="/resources.html">Resources</a>
     <a href="/allocations.html">Allocations</a>
     <a href="/social-night.html">Social Night</a>
     <a href="/networking-hour.html">Networking Hour</a>
@@ -1550,18 +1650,57 @@
     ];
 
     // Only show Background Guide
-    const el = document.createElement('a');
-    el.className = `card card-prep`;
-    el.href = '#';
-    el.innerHTML = `
-      <span class="card-label">Preparation</span>
-      <div class="prep-card-icon">${prepIcons[0]}</div>
-      <div class="prep-card-name">${resources[0]}</div>
-      <div class="prep-card-tag">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v6M2 5l3 3 3-3M1 9h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Coming soon
-      </div>`;
-    bento.insertBefore(el, prepPlaceholder);
+    const bgGuides = {
+      'disec':       '/background%20guides_rop/DISEC%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'unsc':        '/background%20guides_rop/UNSC%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'unhrc':       '/background%20guides_rop/UNHRC%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'jcc-1':       '/background%20guides_rop/JCC%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'jcc-2':       '/background%20guides_rop/JCC%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'hcc':         '/background%20guides_rop/HCC%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'lok-sabha':   '/background%20guides_rop/Lok%20Sabha%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'armageddon':  '/background%20guides_rop/Armageddon%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'un-women':    '/background%20guides_rop/UN%20Women%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'us-senate':   '/background%20guides_rop/US%20Senate%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'unodc':       '/background%20guides_rop/UNODC%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'ecofin':      '/background%20guides_rop/ECOFIN%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'fifa':        '/background%20guides_rop/FIFA%20Council%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'who':         '/background%20guides_rop/WHO%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+      'unga-sochum': '/background%20guides_rop/SOCHUM%20Background%20Guide%20-%20Oakridge%20MUN%202026.pdf',
+    };
+    const bgPdf = bgGuides[key];
+
+    const photoSrc = photos[key] ? `/committee_photos/${photos[key]}` : '';
+    const dlSvg = `<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+    function makeGuideCard(cardName, cardType, cardTopic, pdf) {
+      const el = document.createElement('a');
+      el.className = 'bento-guide-card';
+      el.href = pdf || '#';
+      if (pdf) el.target = '_blank';
+      el.innerHTML = `
+        ${photoSrc ? `<img class="guide-bg" src="${photoSrc}" alt="" loading="lazy">` : ''}
+        <div class="guide-type">${cardType}</div>
+        <div class="guide-card-body">
+          <div class="guide-name">${cardName}</div>
+          <div class="guide-topic">${cardTopic}</div>
+          <div class="guide-footer">
+            <span class="guide-status">${pdf ? 'Available' : 'Coming soon'}</span>
+            <a class="guide-dl" ${pdf ? `href="${pdf}" target="_blank"` : ''}>${dlSvg}${pdf ? 'Open PDF' : 'Download'}</a>
+          </div>
+        </div>`;
+      return el;
+    }
+
+    if (key === 'ip') {
+      const ipGuides = [
+        { name: 'Journalism Style Guide', type: 'Style Guide', topic: 'Reporting standards and editorial guidelines for IP delegates.', pdf: '/background%20guides_rop/Oakridge%20MUN%202026-%20Journalism%20Style%20Guide.pdf' },
+        { name: 'Photography Style Guide', type: 'Style Guide', topic: 'Visual storytelling and photography guidelines for IP delegates.', pdf: '/background%20guides_rop/Oakridge%20MUN%202026%20-%20Photography%20Style%20Guide%20Final.pdf' },
+      ];
+      ipGuides.forEach(g => bento.insertBefore(makeGuideCard(g.name, g.type, g.topic, g.pdf), prepPlaceholder));
+    } else {
+      const topic = agenda && agenda[0] ? agenda[0] : overview;
+      bento.insertBefore(makeGuideCard('Background Guide', committees[key][2], topic, bgPdf), prepPlaceholder);
+    }
 
     const ebRoles = {
       'disec':       ['Chairperson', 'Vice-Chairperson', 'Rapporteur'],
