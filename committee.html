@@ -1320,11 +1320,58 @@
     .mobile-reg-accordion.open .mobile-reg-options { display: flex; }
     .mobile-reg-options a { padding: 10px !important; font-size: .75rem !important; text-align: center; border: 1px solid rgba(48,205,215,.2) !important; border-radius: 8px; background: rgba(48,205,215,.05); margin: 0 !important; }
     .mobile-reg-options a:hover { background: rgba(48,205,215,.15); }
-    
+
+    /* ── VIEW TRANSITIONS ── */
+    @view-transition { navigation: auto; }
+
+    #heroSection { view-transition-name: committee-hero; }
+
+    ::view-transition-group(committee-hero) {
+      animation-duration: 750ms;
+      animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    }
+    ::view-transition-old(committee-hero) { animation: 400ms cubic-bezier(0.4,0,1,1) forwards vt-fade-out; }
+    ::view-transition-new(committee-hero) { animation: 400ms cubic-bezier(0.2,0,0,1) 200ms both vt-fade-in; }
+    @keyframes vt-fade-out { to { opacity: 0; } }
+    @keyframes vt-fade-in  { from { opacity: 0; } to { opacity: 1; } }
+
+    ::view-transition-old(root) { animation: 350ms cubic-bezier(0.4,0,1,1) forwards vt-root-out; }
+    ::view-transition-new(root) { animation: none; }
+    @keyframes vt-root-out { to { opacity: 0; filter: blur(8px); transform: scale(0.97); } }
+
+    #heroSection.vt-hold .sr { opacity: 0 !important; transform: translateY(26px) !important; transition: none !important; }
+
   </style>
 
 </head>
 <body>
+  <script>
+    window.__vtRan = false;
+    window.addEventListener('pagereveal', function (e) {
+      if (!e.viewTransition) return;
+      window.__vtRan = true;
+      var heroSection = document.getElementById('heroSection');
+      if (!heroSection) return;
+      heroSection.classList.add('vt-hold');
+      e.viewTransition.ready.then(function () {
+        setTimeout(function () {
+          heroSection.classList.remove('vt-hold');
+          heroSection.querySelectorAll('.sr').forEach(function (el) {
+            el.style.transition = '';
+            el.classList.add('sr-visible');
+          });
+        }, 780);
+      });
+    });
+    /* Fallback for browsers without cross-document VT (Safari, Firefox):
+       if pagereveal never fired with a viewTransition, animate the hero in. */
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.__vtRan) return;
+      var heroSection = document.getElementById('heroSection');
+      if (heroSection) heroSection.classList.add('mobile-enter');
+    });
+  </script>
+
   <!-- Page ambient orbs -->
   <div class="pg-orb pg-orb-a"></div>
   <div class="pg-orb pg-orb-b"></div>
@@ -1398,7 +1445,7 @@
         <a class="back-link sr" href="/committees.html">Back to Committees</a>
       </div>
       <div class="hero-bottom">
-        <div class="hero-rule"></div>
+        <div class="hero-rule sr"></div>
         <p class="committee-kicker sr sr-d1" id="committeeType">Committee</p>
         <h1 class="committee-title sr sr-d2" id="committeeTitle">DISEC</h1>
         <p class="committee-subtitle sr sr-d3" id="committeeSubtitle"></p>
@@ -1848,6 +1895,15 @@
     prepPlaceholder.remove();
     ebPlaceholder.remove();
 
+    // ── BACK-LINK: store key so committees.html can target the right card ──
+    (function() {
+      const backLink = document.querySelector('.back-link');
+      if (!backLink) return;
+      backLink.addEventListener('click', function() {
+        sessionStorage.setItem('zt_return_key', key);
+      });
+    })();
+
     // ── CARD REVEAL (lightweight) ──
     (function() {
       const cardEls = document.querySelectorAll('.card');
@@ -1933,7 +1989,12 @@
       const srEls = document.querySelectorAll('.sr');
       if (!srEls.length) return;
       const srObs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('sr-visible'); srObs.unobserve(e.target); } });
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          if (e.target.closest('#heroSection.vt-hold')) return;
+          e.target.classList.add('sr-visible');
+          srObs.unobserve(e.target);
+        });
       }, { threshold: 0.08 });
       srEls.forEach(el => srObs.observe(el));
     })();
