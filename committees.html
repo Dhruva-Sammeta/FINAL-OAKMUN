@@ -8,6 +8,41 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script>
+    /* Must be in <head> — pagereveal can fire before bottom <script> blocks
+       run (e.g. while the CDN Lenis tag is still loading), so registering
+       the listener here ensures it is never missed.                         */
+    window.__vtReturnRan = false;
+    window.addEventListener('pagereveal', function (e) {
+      if (!e.viewTransition) return;
+      var returnKey = sessionStorage.getItem('zt_return_key');
+      if (!returnKey) return;
+      window.__vtReturnRan = true;
+      sessionStorage.removeItem('zt_return_key');
+      var returnCard = document.querySelector('.committee-card[href$="/' + returnKey + '"]');
+      if (returnCard) {
+        var visual = returnCard.querySelector('.committee-visual');
+        if (visual) visual.style.viewTransitionName = 'committee-hero';
+      }
+      var storedY = sessionStorage.getItem('zt_scroll_y');
+      if (storedY !== null) {
+        sessionStorage.removeItem('zt_scroll_y');
+        window.scrollTo(0, parseInt(storedY, 10));
+      } else if (returnCard) {
+        returnCard.scrollIntoView({ behavior: 'instant', block: 'center' });
+      }
+    });
+    /* Fallback scroll for browsers without cross-document VT (Safari, Firefox) */
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.__vtReturnRan) return;
+      var returnKey = sessionStorage.getItem('zt_return_key');
+      if (!returnKey) return;
+      sessionStorage.removeItem('zt_return_key');
+      sessionStorage.removeItem('zt_scroll_y');
+      var returnCard = document.querySelector('.committee-card[href$="/' + returnKey + '"]');
+      if (returnCard) returnCard.scrollIntoView({ behavior: 'instant', block: 'center' });
+    });
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1003,7 +1038,23 @@
       .committee-visual { border-radius: 20px; }
       .filters-row { flex-wrap: wrap; }
     }
-  
+
+    /* ── VIEW TRANSITIONS ── */
+    @view-transition { navigation: auto; }
+
+    ::view-transition-group(committee-hero) {
+      animation-duration: 750ms;
+      animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    }
+    ::view-transition-old(committee-hero) { animation: 400ms cubic-bezier(0.4,0,1,1) forwards vt-fade-out; }
+    ::view-transition-new(committee-hero) { animation: 400ms cubic-bezier(0.2,0,0,1) 200ms both vt-fade-in; }
+    @keyframes vt-fade-out { to { opacity: 0; } }
+    @keyframes vt-fade-in  { from { opacity: 0; } to { opacity: 1; } }
+
+    ::view-transition-old(root) { animation: 350ms cubic-bezier(0.4,0,1,1) forwards vt-root-out; }
+    ::view-transition-new(root) { animation: none; }
+    @keyframes vt-root-out { to { opacity: 0; filter: blur(8px); transform: scale(0.97); } }
+
     .nav-has-drop { position: relative; list-style: none; }
     .nav-has-drop > a::after { content: ' ▾'; font-size: .5em; opacity: .55; }
     .nav-drop {
@@ -1498,6 +1549,48 @@
       function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
       requestAnimationFrame(raf);
     }
+  </script>
+
+
+  <script>
+    (function () {
+      const allCards = document.querySelectorAll('.committee-card');
+      allCards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          const visual = this.querySelector('.committee-visual');
+          if (!visual) return;
+
+          allCards.forEach(function (c) {
+            const v = c.querySelector('.committee-visual');
+            if (v) v.style.viewTransitionName = '';
+          });
+
+          visual.style.transition = 'transform 80ms cubic-bezier(0.4,0,1,1)';
+          visual.style.transform  = 'scale(0.963)';
+
+          allCards.forEach(function (c) {
+            if (c === this) return;
+            c.style.transition = 'opacity 380ms ease, filter 380ms ease, transform 380ms ease';
+            c.style.opacity    = '0.08';
+            c.style.filter     = 'blur(3px) saturate(0.4)';
+            c.style.transform  = 'scale(0.97)';
+          }.bind(this));
+
+          visual.style.viewTransitionName = 'committee-hero';
+
+          // Store scroll-Y so the return pagereveal can reposition without
+          // calling scrollIntoView (layout may not be ready at that point)
+          var rect = visual.getBoundingClientRect();
+          var targetY = Math.max(0, rect.top + window.scrollY - (window.innerHeight - rect.height) / 2);
+          sessionStorage.setItem('zt_scroll_y', Math.round(targetY));
+
+          setTimeout(function () {
+            visual.style.transition = 'transform 500ms cubic-bezier(0.34,1.56,0.64,1)';
+            visual.style.transform  = '';
+          }, 80);
+        });
+      });
+    })();
   </script>
 </body>
 </html>
