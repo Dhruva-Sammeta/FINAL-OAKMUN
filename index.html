@@ -4357,6 +4357,7 @@
     }
     #trainingFloatTab .ftab-dot { display: none; }
     #trainingFloatTab .ftab-label { rotate: 0deg; }
+    #trainingFloatTab .ftab-line { display: block; white-space: nowrap; }
     @keyframes ftabFlash {
       0%, 100% { filter: brightness(1); }
       50%       { filter: brightness(1.55); }
@@ -4379,7 +4380,7 @@
   <!-- floating right tab -->
   <div id="trainingFloatTab" onclick="document.getElementById('trainingPopup').classList.add('open')">
     <span class="ftab-dot"></span>
-    <span class="ftab-label">CLICK HERE TO JOIN DELEGATE TRAINING SESSION</span>
+    <span class="ftab-label"><span class="ftab-line">CLICK HERE TO JOIN</span><span class="ftab-line">DELEGATE TRAINING SESSION</span></span>
   </div>
 
   <!-- strip -->
