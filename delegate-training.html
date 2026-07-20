@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delegate Training | Oakridge MUN XVI</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    @media (min-width: 769px) { html { zoom: 1.1; } }
+
+    @keyframes navSlideDown { from { opacity: 0; transform: translateX(-50%) translateY(-18px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
+
+    :root {
+      --navy: #003057; --teal: #30CDD7; --teal-dark: #1E96A5;
+      --teal-light: #B4EBF5; --white: #FAF5ED; --gold: #BC9A6E;
+    }
+    html, body { font-family: 'Montserrat'; background: var(--navy); color: var(--white); overflow-x: clip; -webkit-overflow-scrolling: touch; min-height: 100%; }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 200; animation: navSlideDown .45s cubic-bezier(0.4,0,0.2,1) both; }
+    .nav-pill { display: flex; align-items: center; background: rgba(1,3,8,.97); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 100px; border: 1px solid rgba(250,245,237,.07); padding: 10px 14px; justify-content: center; box-shadow: 0 8px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(250,245,237,.04); transition: padding .6s cubic-bezier(0.4,0,0.2,1), border-radius .6s cubic-bezier(0.4,0,0.2,1); white-space: nowrap; }
+    .nav-logo { font-size: .92rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--white); text-decoration: none; flex-shrink: 0; max-width: 220px; overflow: visible; transition: opacity .5s, max-width .6s cubic-bezier(0.4,0,0.2,1); }
+    .nav-logo span { color: var(--teal); }
+    .nav-center { display: flex; align-items: center; flex-shrink: 0; margin-left: 20px; transition: margin-left .6s; }
+    .nav-links-group { display: flex; gap: 22px; list-style: none; overflow: visible; opacity: 1; transition: opacity .4s, max-width .6s cubic-bezier(0.4,0,0.2,1), padding .6s; }
+    .nav-links-group.left  { padding: 0 18px 0 28px; max-width: 400px; }
+    .nav-links-group.right { padding: 0 8px 0 18px; max-width: 400px; }
+    .nav-links-group a { font-size: .64rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(250,245,237,.48); text-decoration: none; transition: color .2s; }
+    .nav-links-group a:hover, .nav-links-group a.active { color: var(--white); }
+    .nav-has-drop { position: relative; list-style: none; }
+    .nav-has-drop > a::after { content: ' ▾'; font-size: .5em; opacity: .55; }
+    .nav-drop { position: absolute; top: calc(100% + 18px); left: 50%; transform: translateX(-50%) translateY(-6px); width: 320px; background: rgba(3,10,22,.97); backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px); border: 1px solid rgba(48,205,215,.15); border-radius: 16px; padding: 16px; opacity: 0; pointer-events: none; transition: opacity .3s .55s, transform .3s .55s; box-shadow: 0 24px 60px rgba(0,0,0,.6); z-index: 300; }
+    .nav-drop::before { content: ''; position: absolute; top: -20px; left: 0; right: 0; height: 20px; }
+    .nav-has-drop:hover .nav-drop { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); transition-delay: 0s; }
+    .nav-drop-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
+    .nav-drop-item { font-size: .58rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(250,245,237,.55) !important; text-decoration: none; padding: 7px 8px; border-radius: 6px; transition: background .15s, color .15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-drop-item:hover { background: rgba(48,205,215,.1); color: var(--teal) !important; }
+    .nav-drop--events { width: 220px; left: auto; right: 0; transform: translateY(-6px); }
+    .nav-has-drop:hover .nav-drop--events { transform: translateY(0); transition-delay: 0s; }
+    .nav-drop--events .nav-drop-grid { grid-template-columns: 1fr; }
+    .nav-drop--events .nav-drop-item { font-size: .62rem; padding: 9px 10px 9px 14px; border-left: 2px solid transparent; transition: background .2s, color .2s, border-color .2s, padding-left .2s; }
+    .nav-drop--events .nav-drop-item:hover { background: rgba(48,205,215,.1); color: var(--teal) !important; border-left-color: var(--teal); padding-left: 18px; }
+    .nav-drop--events .nav-drop-item.active { color: var(--teal) !important; border-left-color: var(--teal); }
+    .nav-mark { display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0 6px; }
+    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); mix-blend-mode: lighten; transition: filter .2s, opacity .2s; }
+    .nav-mark:hover img { opacity: 1; filter: drop-shadow(0 0 14px rgba(48,205,215,.65)); }
+    .nav-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; max-width: 280px; overflow: visible; margin-left: 10px; transition: opacity .5s, max-width .6s; }
+    .nav-cta { background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%); color: var(--navy); font-family: 'Montserrat'; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; border: none; border-radius: 12px; padding: 10px 18px; cursor: pointer; white-space: nowrap; transition: transform .18s, box-shadow .18s; }
+    .nav-cta:hover { box-shadow: 0 12px 30px rgba(2,20,26,0.08); }
+    .menu-btn { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 6px; opacity: 0; pointer-events: none; flex-shrink: 0; transition: opacity .55s; }
+    .menu-btn span { display: block; width: 100%; height: 2px; background: var(--white); border-radius: 2px; transition: transform .3s, opacity .3s; transform-origin: center; }
+    .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    nav.scrolled .nav-logo        { opacity: 0; max-width: 0; }
+    nav.scrolled .nav-links-group { opacity: 0; max-width: 0 !important; padding: 0 !important; pointer-events: none; }
+    nav.scrolled .nav-right       { opacity: 0; max-width: 0; margin-left: 0; }
+    nav.scrolled .nav-cta         { max-width: 0; padding: 0; pointer-events: none; }
+    nav.scrolled .menu-btn        { opacity: 0; pointer-events: none; }
+    nav.scrolled .nav-center      { margin-left: 0; }
+    nav.scrolled .nav-pill        { padding: 8px; border-radius: 14px; }
+    @media (min-width: 769px) {
+      nav.hover-expanded .nav-logo { opacity: 1 !important; max-width: 220px !important; }
+      nav.hover-expanded .nav-links-group { opacity: 1 !important; max-width: 400px !important; pointer-events: auto !important; }
+      nav.hover-expanded .nav-links-group.left { padding: 0 18px 0 28px !important; }
+      nav.hover-expanded .nav-links-group.right { padding: 0 8px 0 18px !important; }
+      nav.hover-expanded .nav-right { opacity: 1 !important; max-width: 420px !important; margin-left: 10px !important; }
+      nav.hover-expanded .nav-center { margin-left: 20px !important; }
+      nav.hover-expanded .nav-pill { padding: 10px 14px !important; border-radius: 100px !important; }
+      nav.hover-expanded .nav-cta { max-width: 200px !important; padding: 10px 18px !important; pointer-events: auto !important; }
+      nav.hover-expanded .menu-btn { opacity: 0 !important; pointer-events: none !important; }
+    }
+    .mobile-nav { position: fixed; top: calc(var(--nav-bottom, 78px) + 10px); left: 50%; transform: translateX(-50%) translateY(-12px) scale(.97); width: calc(100% - 32px); max-width: 360px; max-height: calc(100dvh - var(--nav-bottom, 78px) - 16px); overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; z-index: 199; background: rgba(1,3,8,.99); backdrop-filter: blur(28px); padding: 16px 24px; border-radius: 20px; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity .35s, transform .35s cubic-bezier(.175,.885,.32,1.2); border: 1px solid rgba(48,205,215,.2); box-shadow: 0 16px 40px rgba(0,0,0,.5); }
+    .mobile-nav.open { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+    .mobile-nav a { font-size: .88rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(250,245,237,.75); text-decoration: none; padding: 18px 0; border-bottom: 1px solid rgba(250,245,237,.07); transition: color .2s; }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--teal); }
+    .nav-reg-wrap { position: relative; display: inline-block; }
+    .nav-cta-chevron { display: inline-block; margin-left: 4px; font-size: .65em; vertical-align: middle; transition: transform .3s .55s; }
+    .nav-reg-wrap:hover .nav-cta-chevron { transform: rotate(180deg); transition-delay: 0s; }
+    .nav-drop--reg { width: 210px; left: auto; right: 0; transform: translateY(-6px); }
+    .nav-reg-wrap:hover .nav-drop--reg { opacity: 1; pointer-events: auto; transform: translateY(0); transition-delay: 0s; }
+    .nav-drop--reg .nav-drop-reg-item { display: block; text-decoration: none; font-family: Montserrat; font-size: .62rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: rgba(250,245,237,.6); padding: 9px 10px 9px 14px; border-left: 2px solid transparent; border-radius: 6px; transition: background .2s, color .2s, border-color .2s, padding-left .2s; }
+    .nav-drop--reg .nav-drop-reg-item:hover { background: rgba(48,205,215,.1); color: var(--teal); border-left-color: var(--teal); padding-left: 18px; }
+    .nav-drop--reg .nav-drop-reg-sub { display: block; font-size: .52rem; font-weight: 500; text-transform: none; letter-spacing: 0; opacity: .5; margin-top: 2px; }
+    .mobile-reg-accordion { display: flex; flex-direction: column; width: 100%; margin-top: 8px; }
+    .mobile-reg-accordion .mobile-nav-cta { width: 100%; background: linear-gradient(135deg, #30CDD7 0%, #1E96A5 100%); color: #003057 !important; border: none; border-radius: 12px; padding: 14px 0; font-family: 'Montserrat'; font-size: .88rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: filter .2s; }
+    .mobile-reg-accordion .mobile-nav-cta:active { filter: brightness(.9); }
+    .mobile-reg-options { display: none; flex-direction: column; gap: 8px; margin-top: 12px; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 12px; }
+    .mobile-reg-accordion.open .mobile-reg-options { display: flex; }
+    .mobile-reg-options a { padding: 10px !important; font-size: .75rem !important; text-align: center; border: 1px solid rgba(48,205,215,.2) !important; border-radius: 8px; background: rgba(48,205,215,.05); margin: 0 !important; }
+
+    /* ── PAGE ── */
+    .page-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 140px 32px 100px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(250,245,237,.38); text-decoration: none;
+      margin-bottom: 40px;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--teal); }
+    .back-link svg { width: 14px; height: 14px; }
+    .page-kicker {
+      font-size: .62rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .page-kicker::before { content: ''; display: inline-block; width: 28px; height: 2px; background: var(--teal); border-radius: 2px; }
+    .page-title {
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-weight: 900; letter-spacing: -.04em; line-height: .95;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .page-subtitle {
+      font-size: .95rem; font-weight: 400; line-height: 1.8;
+      color: rgba(250,245,237,.55); max-width: 580px; margin-bottom: 64px;
+    }
+
+    /* ── VIDEO BLOCK ── */
+    .block-label {
+      font-size: .58rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .block-label::before { content: ''; display: inline-block; width: 18px; height: 2px; background: var(--teal); border-radius: 2px; }
+    .block-title {
+      font-size: 1.4rem; font-weight: 800; letter-spacing: -.03em;
+      color: var(--white); margin-bottom: 24px;
+    }
+    .video-wrap {
+      position: relative; width: 100%; padding-bottom: 56.25%;
+      background: rgba(0,0,0,.4); border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(48,205,215,.15);
+      box-shadow: 0 24px 60px rgba(0,0,0,.5);
+      margin-bottom: 64px;
+    }
+    .video-wrap iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── PPT BLOCK ── */
+    .ppt-card {
+      display: flex; align-items: center; gap: 24px;
+      background: rgba(48,205,215,.04);
+      border: 1px solid rgba(48,205,215,.15);
+      border-radius: 16px;
+      padding: 28px 32px;
+      text-decoration: none;
+      transition: background .2s, border-color .2s, transform .2s;
+      margin-bottom: 100px;
+    }
+    .ppt-card:hover { background: rgba(48,205,215,.08); border-color: rgba(48,205,215,.35); transform: translateY(-2px); }
+    .ppt-icon {
+      width: 56px; height: 56px; flex-shrink: 0; border-radius: 12px;
+      background: rgba(48,205,215,.12); border: 1px solid rgba(48,205,215,.2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ppt-icon svg { width: 28px; height: 28px; }
+    .ppt-info { flex: 1; }
+    .ppt-name { font-size: 1rem; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+    .ppt-meta { font-size: .72rem; font-weight: 500; color: rgba(250,245,237,.45); }
+    .ppt-dl {
+      font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--teal); display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+    }
+    .ppt-dl svg { width: 14px; height: 14px; }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      text-align: center; padding: 32px;
+      font-size: .62rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(250,245,237,.2); border-top: 1px solid rgba(250,245,237,.06);
+    }
+
+    @media (max-width: 768px) {
+      .page-wrap { padding: 120px 20px 80px; }
+      .page-title { font-size: clamp(2rem, 10vw, 3rem); }
+      .ppt-card { flex-direction: column; align-items: flex-start; gap: 16px; padding: 20px; }
+      .ppt-dl { margin-top: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="mainNav">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/index.html">Oakridge <span>MUN</span></a>
+      <div class="nav-center">
+        <ul class="nav-links-group left">
+          <li><a href="/committees.html">Committees</a></li>
+          <li><a href="/secretariat.html">Secretariat</a></li>
+          <li><a href="/allocations.html">Allocations</a></li>
+        </ul>
+        <div class="nav-mark"><img src="logo.png" alt="Oakridge MUN" /></div>
+        <ul class="nav-links-group right">
+          <li><a href="/#schedule">Schedule</a></li>
+          <li><a href="/resources.html">Resources</a></li>
+          <li class="nav-has-drop"><a href="#">Other</a>
+            <div class="nav-drop nav-drop--events">
+              <div class="nav-drop-grid">
+                <a class="nav-drop-item" href="/social-night.html">Social Night</a>
+                <a class="nav-drop-item" href="/networking-hour.html">Networking Hour</a>
+                <a class="nav-drop-item" href="/orphanage-initiative.html">Community Outreach</a>
+                <a class="nav-drop-item" href="/delegation-guidelines.html">Delegation Guidelines</a>
+                <a class="nav-drop-item active" href="/delegate-training.html">Delegate Training</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <div class="nav-reg-wrap">
+          <button class="nav-cta" onclick="window.location.href='register.html'">Register Now <span class="nav-cta-chevron">▼</span></button>
+          <div class="nav-drop nav-drop--reg">
+            <a href="/register.html" class="nav-drop-reg-item">Register Now<span class="nav-drop-reg-sub">All schools · Delegates</span></a>
+            <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener" class="nav-drop-reg-item">International Press (IP)<span class="nav-drop-reg-sub">Journalism · Photography</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="/index.html">Home</a>
+    <a href="/committees.html">Committees</a>
+    <a href="/secretariat.html">Secretariat</a>
+    <a href="/allocations.html">Allocations</a>
+    <a href="/#schedule">Schedule</a>
+    <a href="/resources.html">Resources</a>
+    <a href="/social-night.html">Social Night</a>
+    <a href="/networking-hour.html">Networking Hour</a>
+    <a href="/orphanage-initiative.html">Community Outreach</a>
+    <a href="/delegation-guidelines.html">Delegation Guidelines</a>
+    <a href="/delegate-training.html" style="color:var(--teal);">Delegate Training</a>
+    <div class="mobile-reg-accordion">
+      <button class="mobile-nav-cta" onclick="this.parentElement.classList.toggle('open')">Register Now <span style="font-size:0.8em;margin-left:4px;">▼</span></button>
+      <div class="mobile-reg-options">
+        <a href="/register.html">All Schools / Delegates</a>
+        <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener">International Press (IP)</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <a class="back-link" href="/index.html">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 2L4 7l5 5"/></svg>
+      Back to Home
+    </a>
+
+    <p class="page-kicker">Oakridge MUN XVI</p>
+    <h1 class="page-title">Delegate<br>Training.</h1>
+    <p class="page-subtitle">Everything you need to walk into committee with confidence — the full training session recording and presentation slides from our pre-conference delegate training.</p>
+
+    <!-- Video -->
+    <p class="block-label">Session Recording</p>
+    <h2 class="block-title">Training Session — Full Recording</h2>
+    <div class="video-wrap">
+      <iframe src="https://nordanglia-my.sharepoint.com/personal/babita_deou_oakridge_in/_layouts/15/embed.aspx?UniqueId=d33eca7c-d704-4724-bd99-152587b7917b&embed=%7B%22ust%22%3Afalse%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" allowfullscreen title="DELEGATE TRAINING SESSION Oakridge MUN 2026 Chapter XVI"></iframe>
+    </div>
+
+    <!-- PPT -->
+    <p class="block-label">Presentation Slides</p>
+    <h2 class="block-title">Training Slides</h2>
+    <a class="ppt-card" href="/2026%20OakMUN%20Training%20PPT.pptx" download>
+      <div class="ppt-icon">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="22" height="22" rx="4" fill="rgba(48,205,215,0.15)" stroke="#30CDD7" stroke-width="1.5"/>
+          <rect x="7" y="8" width="14" height="2" rx="1" fill="#30CDD7"/>
+          <rect x="7" y="12" width="10" height="2" rx="1" fill="rgba(48,205,215,0.5)"/>
+          <rect x="7" y="16" width="12" height="2" rx="1" fill="rgba(48,205,215,0.5)"/>
+        </svg>
+      </div>
+      <div class="ppt-info">
+        <div class="ppt-name">2026 OakMUN Training PPT</div>
+        <div class="ppt-meta">PowerPoint Presentation · .pptx</div>
+      </div>
+      <div class="ppt-dl">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1v8M3.5 6l3.5 3.5L10.5 6M2 12h10"/></svg>
+        Download
+      </div>
+    </a>
+  </div>
+
+  <div class="page-footer">Oakridge MUN XVI · Hyderabad · 2026</div>
+
+  <script>
+    // Nav scroll behaviour
+    const nav = document.getElementById('mainNav');
+    const pill = nav.querySelector('.nav-pill');
+    let ticking = false;
+    function updateNav() {
+      if (window.scrollY > 40) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateNav); ticking = true; } }, { passive: true });
+    pill.addEventListener('mouseenter', () => { if (nav.classList.contains('scrolled')) nav.classList.add('hover-expanded'); });
+    pill.addEventListener('mouseleave', () => nav.classList.remove('hover-expanded'));
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    // Update --nav-bottom for mobile nav position
+    function updateNavBottom() {
+      const rect = nav.getBoundingClientRect();
+      document.documentElement.style.setProperty('--nav-bottom', (rect.bottom) + 'px');
+    }
+    updateNavBottom();
+    window.addEventListener('resize', updateNavBottom);
+  </script>
+</body>
+</html>
