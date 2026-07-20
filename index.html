@@ -1694,8 +1694,8 @@
       justify-content: center;
       align-items: flex-start;
       height: 68vh;
-      width: 46%;
-      padding-left: 70px;
+      width: 48%;
+      padding-left: 150px;
       padding-right: 44px;
     }
     .ctrl-kicker {
@@ -1707,7 +1707,7 @@
       margin-bottom: 24px;
     }
     .ctrl-title {
-      font-size: 46px;
+      font-size: 56px;
       font-weight: 800;
       line-height: 1;
       letter-spacing: -.05em;
@@ -1749,34 +1749,43 @@
       position: relative;
       height: 68vh;
       width: 54%;
-      overflow: clip;
+      overflow: hidden;
+    }
+    .ctrl-chain-stage::before,
+    .ctrl-chain-stage::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 130px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .ctrl-chain-stage::before {
+      top: 0;
+      background: linear-gradient(to bottom, var(--navy) 0%, transparent 100%);
+    }
+    .ctrl-chain-stage::after {
+      bottom: 0;
+      background: linear-gradient(to top, var(--navy) 0%, transparent 100%);
     }
     .ctrl-chain-list {
-      align-items: flex-start;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      justify-content: center;
-      overflow: hidden;
       position: relative;
+      height: 100%;
       width: 100%;
     }
     .ctrl-chain {
+      position: absolute;
+      left: 0;
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-top: -35px;
-      position: absolute;
-      top: 50%;
-      transform: translate3d(0, var(--wheel-y, 0px), 0);
-      opacity: var(--wheel-opacity, 1);
+      gap: 18px;
       will-change: transform, opacity;
     }
     .ctrl-chain-icon {
       align-items: center;
       display: flex;
       justify-content: center;
-      width: 62px; height: 62px;
+      width: 76px; height: 76px;
       border-radius: 50%;
       border: 2px solid rgba(250,245,237,.15);
       font-size: 15px;
@@ -1787,8 +1796,8 @@
       overflow: hidden;
     }
     .ctrl-chain-logo {
-      width: 48px;
-      height: 48px;
+      width: 62px;
+      height: 62px;
       object-fit: contain;
       transform: none;
     }
@@ -1799,13 +1808,10 @@
       line-height: 1;
     }
     .ctrl-chain-name {
-      max-width: 44vw;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-size: 68px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
       font-weight: 800;
-      line-height: 1.3;
-      letter-spacing: -.065em;
+      line-height: 1;
+      letter-spacing: -.04em;
       color: var(--white);
       white-space: nowrap;
     }
@@ -1909,7 +1915,7 @@
     .faq-answer {
       height: 0;
       overflow: hidden;
-      transition: height 0.45s cubic-bezier(0.16,1,0.3,1);
+      transition: height 0.55s cubic-bezier(0.16,1,0.3,1);
     }
     .faq-a-text {
       padding: 0 28px 26px;
@@ -1917,6 +1923,13 @@
       font-weight: 400;
       line-height: 1.8;
       color: rgba(250,245,237,.58);
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.4s ease 0.08s, transform 0.45s cubic-bezier(0.16,1,0.3,1) 0.05s;
+    }
+    .faq-item.open .faq-a-text {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* ═══════════════════════════════════════
@@ -2128,8 +2141,8 @@
       .ctrl-title { font-size: 2.2rem; }
       .ctrl-subtitle { max-width: 100%; font-size: .88rem; }
       .ctrl-chain-stage { width: 100%; height: 48vh; }
-      .ctrl-chain-name { font-size: clamp(2.2rem, 9vw, 3.8rem); max-width: 75vw; }
-      .ctrl-chain-icon { width: 50px; height: 50px; font-size: 12px; }
+      .ctrl-chain-name { font-size: clamp(1.3rem, 7vw, 2rem); }
+      .ctrl-chain-icon { width: 44px; height: 44px; font-size: 12px; }
     }
 
     /* ═══════════════════════════════════════
@@ -2860,7 +2873,7 @@
         </div>
         <span class="hero-notif-arrow">→</span>
       </a>
-      <a href="/register.html" class="hero-notif">
+      <a href="/allocations.html" class="hero-notif">
         <div class="hero-notif-body">
           <div class="hero-notif-label">Out Now</div>
           <div class="hero-notif-title">IP Allocations — International Press</div>
@@ -3203,7 +3216,7 @@
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><img src="new_logos/unhrc%20(1).png" alt="UNHRC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,5px);" /></span><span class="ctrl-chain-name">UNHRC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><img src="new_logos/jcc-1%20(1).png" alt="JCC-1" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,9px);" /></span><span class="ctrl-chain-name">JCC-1</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal);"><img src="new_logos/jcc-2%20(1).png" alt="JCC-2" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,7px);" /></span><span class="ctrl-chain-name">JCC-2</span></div>
-          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><img src="comm_logos_webp/hcc.png" alt="HCC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,6px);" /></span><span class="ctrl-chain-name">HCC</span></div>
+          <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><img src="comm_logos_webp/hcc.webp" alt="HCC" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,6px);" /></span><span class="ctrl-chain-name">HCC</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:#BC9A6E;"><img src="new_logos/lok%20sabha%20(1).png" alt="LOK SABHA" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,10px);" /></span><span class="ctrl-chain-name">LOK SABHA</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-dark); color:var(--white);"><img src="new_logos/armageddon%20(1).png" alt="ARMAGEDDON" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(1px,3px);" /></span><span class="ctrl-chain-name">ARMAGEDDON</span></div>
           <div class="ctrl-chain"><span class="ctrl-chain-icon" style="--chain-color:var(--teal-light);"><img src="new_logos/un%20women%20(1).png" alt="UN WOMEN" class="ctrl-chain-logo" style="width:90px;height:90px;transform:translate(0px,3px);" /></span><span class="ctrl-chain-name">UN WOMEN</span></div>
@@ -3960,34 +3973,77 @@
 
     // ── COMMITTEES WHEEL ──
     (function() {
-      const chains = document.querySelectorAll('.ctrl-chain');
-      if (!chains.length) return;
-      const count = chains.length;
-      const itemH = 90;
-      let current = 0;
-      let raf;
+      (function() {
+        const stage = document.querySelector('.ctrl-chain-stage');
+        if (!stage) return;
 
-      function layout(offset) {
-        chains.forEach((el, i) => {
-          const pos = ((i - offset % count + count) % count);
-          const center = count / 2;
-          const dist = Math.abs(pos - center);
-          const y = (pos - center) * itemH;
-          const opacity = Math.max(0, 1 - dist * 0.22);
-          el.style.setProperty('--wheel-y', y + 'px');
-          el.style.setProperty('--wheel-opacity', opacity);
-        });
-      }
+        // Use only the ORIGINAL items (strip any dupes from earlier runs)
+        const allChains = [...stage.querySelectorAll('.ctrl-chain')];
+        const chains = allChains.slice(0, 16); // cap at original 16
+        allChains.slice(16).forEach(el => el.remove());
+        if (!chains.length) return;
 
-      function animate() {
-        current += 0.012;
-        layout(current);
-        raf = requestAnimationFrame(animate);
-      }
+        const N = chains.length;
+        const ITEM_ANGLE = (2 * Math.PI) / N;  // π/8 for 16 items
+        const R = 280;          // radius in px — gives 21.84px x-step at front, matching ctrl.xyz
+        const LERP = 0.07;
+        const SCROLL_MULT = 0.9; // scroll speed — lower = slower
+        const AUTO_SPEED  = 0.003; // radians per frame (always auto-rotate)
+        const RAD_PER_PX = ITEM_ANGLE / (Math.sin(ITEM_ANGLE) * R) * SCROLL_MULT;
 
-      if (document.querySelector('.ctrl-chain-stage')) {
-        animate();
-      }
+        let targetAngle = 0;
+        let currentAngle = 0;
+        let lastScrollY = window.scrollY;
+        let lastScrollTime = 0;
+
+        window.addEventListener('scroll', () => {
+          const y = window.scrollY;
+          const rect = stage.getBoundingClientRect();
+          if (rect.bottom < -200 || rect.top > window.innerHeight + 200) {
+            lastScrollY = y;
+            return;
+          }
+          targetAngle += (y - lastScrollY) * RAD_PER_PX;
+          lastScrollY = y;
+          lastScrollTime = Date.now();
+        }, { passive: true });
+
+        function frame() {
+          // Always auto-scroll when section is in viewport
+          const rect = stage.getBoundingClientRect();
+          const inView = rect.top < window.innerHeight && rect.bottom > 0;
+          if (inView) {
+            targetAngle += AUTO_SPEED;
+          }
+          currentAngle += (targetAngle - currentAngle) * LERP;
+          const stageH = stage.offsetHeight;
+          const centerY = stageH / 2;
+
+          chains.forEach((el, i) => {
+            const phi = currentAngle + i * ITEM_ANGLE;
+            const c = Math.cos(phi);
+            const s = Math.sin(phi);
+
+            // x: 0 at front (cos=1), increases toward sides, max 2R at back
+            const x = R * (1 - c);
+            // y: sinusoidal around center — items spread above and below
+            const y = centerY - 24 + s * R; // -24 nudges so item top aligns not center
+
+            // Opacity: full when facing front (c≈1), fades as items go behind (c<0)
+            const opacity = Math.max(0, Math.min(1, (c + 0.6) / 1.6));
+
+            // Scale: slight size reduction for items further back
+            const scale = 0.72 + 0.28 * ((c + 1) / 2);
+
+            el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`;
+            el.style.opacity = opacity.toFixed(3);
+          });
+
+          rafId = requestAnimationFrame(frame);
+        }
+
+        frame();
+      })();
     })();
 
     let navScrolled = false;
