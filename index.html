@@ -282,6 +282,21 @@
       display: block; font-size: .52rem; font-weight: 500;
       text-transform: none; letter-spacing: 0; opacity: .5; margin-top: 2px;
     }
+    .nav-cta-secondary {
+      background: transparent;
+      color: rgba(250,245,237,.75);
+      font-family: 'Montserrat';
+      font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      border: 1px solid rgba(48,205,215,.35);
+      border-radius: 12px;
+      padding: 10px 16px;
+      cursor: pointer; white-space: nowrap;
+      transition: background .2s, color .2s, border-color .2s;
+      flex-shrink: 0;
+    }
+    .nav-cta-secondary:hover { background: rgba(48,205,215,.1); color: var(--teal); border-color: var(--teal); }
+    nav.scrolled .nav-cta-secondary { opacity: 0; pointer-events: none; max-width: 0; padding: 0; border: none; overflow: hidden; }
+    @media (max-width: 768px) { .nav-cta-secondary { display: none; } }
     .nav-cta {
       background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%);
       color: var(--navy);
@@ -320,6 +335,7 @@
       nav.hover-expanded .nav-center { margin-left: 20px !important; }
       nav.hover-expanded .nav-pill { padding: 10px 14px !important; border-radius: 100px !important; }
       nav.hover-expanded .nav-cta { opacity: 1 !important; max-width: 200px !important; padding: 10px 18px !important; pointer-events: auto !important; }
+      nav.hover-expanded .nav-cta-secondary { opacity: 1 !important; max-width: 200px !important; padding: 10px 16px !important; pointer-events: auto !important; border: 1px solid rgba(48,205,215,.35) !important; overflow: visible !important; }
       nav.hover-expanded .menu-btn { opacity: 0 !important; pointer-events: none !important; }
     }
 
@@ -2776,6 +2792,7 @@
     <a href="/social-night.html">Social Night</a>
     <a href="/networking-hour.html">Networking Hour</a>
     <a href="/orphanage-initiative.html">Community Outreach</a>
+    <a href="/delegate-training.html">Delegate Training</a>
     
     <div class="mobile-reg-accordion">
       <button class="mobile-nav-cta" onclick="this.parentElement.classList.toggle('open')">Register Now <span style="font-size:0.8em; margin-left:4px;">▼</span></button>
@@ -2808,6 +2825,7 @@
                 <a class="nav-drop-item" href="/networking-hour.html">Networking Hour</a>
                 <a class="nav-drop-item" href="/orphanage-initiative.html">Community Outreach</a>
                 <a class="nav-drop-item" href="/delegation-guidelines.html">Delegation Guidelines</a>
+                <a class="nav-drop-item" href="/delegate-training.html">Delegate Training</a>
               </div>
             </div>
           </li>
@@ -2815,7 +2833,7 @@
       </div>
       <div class="nav-right">
         <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
-        
+
         <div class="nav-reg-wrap">
           <button class="nav-cta" onclick="window.location.href='register.html'">Register Now <span class="nav-cta-chevron">▼</span></button>
           <div class="nav-drop nav-drop--reg">
@@ -2832,6 +2850,61 @@
       </div>
     </div>
   </nav>
+
+  <!-- Delegate Training floating button -->
+  <button id="delegateTrainingBtn" onclick="window.location.href='/delegate-training.html'" style="
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    z-index: 201;
+    background: transparent;
+    color: rgba(250,245,237,.8);
+    font-family: 'Montserrat', sans-serif;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    border: 1px solid rgba(48,205,215,.4);
+    border-radius: 12px;
+    padding: 10px 18px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: top .3s, background .2s, color .2s, border-color .2s;
+  " onmouseover="this.style.background='rgba(48,205,215,.12)';this.style.color='#30CDD7';this.style.borderColor='#30CDD7';"
+     onmouseout="this.style.background='transparent';this.style.color='rgba(250,245,237,.8)';this.style.borderColor='rgba(48,205,215,.4)';">
+    Delegate Training
+  </button>
+  <script>
+    (function() {
+      const btn = document.getElementById('delegateTrainingBtn');
+      const strip = document.getElementById('trainingStrip');
+      function positionBtn() {
+        const stripH = (strip && strip.style.display !== 'none' && strip.offsetHeight > 0) ? strip.offsetHeight : 0;
+        btn.style.top = (stripH + 14) + 'px';
+      }
+      positionBtn();
+      window.addEventListener('load', positionBtn);
+      const stripClose = document.getElementById('stripClose');
+      if (stripClose) stripClose.addEventListener('click', () => setTimeout(positionBtn, 50));
+    })();
+  </script>
+
+  <script>
+  (function(){
+    const btn = document.getElementById('delegateTrainingBtn');
+    const strip = document.getElementById('trainingStrip');
+    function positionBtn() {
+      const hasBanner = strip && strip.style.display !== 'none' && strip.offsetHeight > 0;
+      btn.style.top = (hasBanner ? 60 : 24) + 'px';
+      btn.style.right = '10px';
+      btn.style.fontSize = '8px';
+    }
+    positionBtn();
+    window.addEventListener('load', positionBtn);
+    const stripClose = document.getElementById('stripClose');
+    if (stripClose) stripClose.addEventListener('click', () => setTimeout(positionBtn, 50));
+  })();
+  </script>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="heroSection">
@@ -2877,6 +2950,13 @@
         <div class="hero-notif-body">
           <div class="hero-notif-label">Out Now</div>
           <div class="hero-notif-title">IP Allocations — International Press</div>
+        </div>
+        <span class="hero-notif-arrow">→</span>
+      </a>
+      <a href="/delegate-training.html" class="hero-notif">
+        <div class="hero-notif-body">
+          <div class="hero-notif-label">Now Available</div>
+          <div class="hero-notif-title">Delegate Training — Video &amp; Slides</div>
         </div>
         <span class="hero-notif-arrow">→</span>
       </a>
@@ -4320,7 +4400,7 @@
   </style>
 
   <div id="trainingStrip" style="cursor: pointer;" onclick="window.location.href='/register.html'">
-    Registrations Close &nbsp;·&nbsp; 19 July 2026
+    Registrations Close &nbsp;·&nbsp; 21 July 2026
     <button id="stripClose" onclick="event.stopPropagation();">✕</button>
   </div>
   <script>
