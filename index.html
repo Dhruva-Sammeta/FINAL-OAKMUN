@@ -2874,37 +2874,6 @@
      onmouseout="this.style.background='transparent';this.style.color='rgba(250,245,237,.8)';this.style.borderColor='rgba(48,205,215,.4)';">
     Delegate Training
   </button>
-  <script>
-    (function() {
-      const btn = document.getElementById('delegateTrainingBtn');
-      const strip = document.getElementById('trainingStrip');
-      function positionBtn() {
-        const stripH = (strip && strip.style.display !== 'none' && strip.offsetHeight > 0) ? strip.offsetHeight : 0;
-        btn.style.top = (stripH + 14) + 'px';
-      }
-      positionBtn();
-      window.addEventListener('load', positionBtn);
-      const stripClose = document.getElementById('stripClose');
-      if (stripClose) stripClose.addEventListener('click', () => setTimeout(positionBtn, 50));
-    })();
-  </script>
-
-  <script>
-  (function(){
-    const btn = document.getElementById('delegateTrainingBtn');
-    const strip = document.getElementById('trainingStrip');
-    function positionBtn() {
-      const hasBanner = strip && strip.style.display !== 'none' && strip.offsetHeight > 0;
-      btn.style.top = (hasBanner ? 60 : 24) + 'px';
-      btn.style.right = '10px';
-      btn.style.fontSize = '8px';
-    }
-    positionBtn();
-    window.addEventListener('load', positionBtn);
-    const stripClose = document.getElementById('stripClose');
-    if (stripClose) stripClose.addEventListener('click', () => setTimeout(positionBtn, 50));
-  })();
-  </script>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="heroSection">
@@ -4406,10 +4375,16 @@
   <script>
     const trainingStrip = document.getElementById('trainingStrip');
     const navEl = document.querySelector('nav');
+    const delegateBtn = document.getElementById('delegateTrainingBtn');
     function applyTrainingStripLayout() {
       if (!trainingStrip || !navEl) return;
       const stripVisible = trainingStrip.style.display !== 'none' && trainingStrip.offsetHeight > 0;
       navEl.style.top = stripVisible ? '42px' : '';
+      if (delegateBtn) {
+        delegateBtn.style.top = stripVisible ? '60px' : '24px';
+        delegateBtn.style.right = '10px';
+        delegateBtn.style.fontSize = '8px';
+      }
       if (typeof syncNavBottom === 'function') syncNavBottom();
     }
     if (navEl) navEl.style.top = '42px';
