@@ -15,21 +15,10 @@ function getSupabase() {
   return supabase;
 }
 
-exports.handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
-  }
-
-  let email = '';
-  try {
-    email = String(JSON.parse(event.body || '{}').email || '').trim().toLowerCase();
-  } catch {
-    // fall through, empty email handled below
-  }
-
-  if (!email) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Email is required.' }) };
-  }
+// Shared logic, independent of which platform (Vercel vs Netlify) invoked it.
+async function lookup(email) {
+  email = String(email || '').trim().toLowerCase();
+  if (!email) return { statusCode: 400, data: { error: 'Email is required.' } };
 
   try {
     const db = getSupabase();
@@ -41,18 +30,38 @@ exports.handler = async (event) => {
 
     if (error) throw new Error(error.message);
     if (!data) {
-      return {
-        statusCode: 404,
-        body: JSON.stringify({ error: 'No delegate found with that email.' }),
-      };
+      return { statusCode: 404, data: { error: 'No delegate found with that email.' } };
     }
-
-    return { statusCode: 200, body: JSON.stringify({ delegate: data }) };
+    return { statusCode: 200, data: { delegate: data } };
   } catch (err) {
     console.error('lookup-qr error:', err);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Something went wrong. Please try again.' }),
-    };
+    return { statusCode: 500, data: { error: 'Something went wrong. Please try again.' } };
   }
-};
+}
+
+// Vercel-style handler: module.exports is called directly as (req, res).
+async function vercelHandler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+  const { statusCode, data } = await lookup(req.body?.email);
+  return res.status(statusCode).json(data);
+}
+
+// Netlify-style handler: looked up via `exports.handler`.
+async function netlifyHandler(event) {
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
+  }
+  let email = '';
+  try {
+    email = JSON.parse(event.body || '{}').email;
+  } catch {
+    // handled by lookup()'s own empty-email check
+  }
+  const { statusCode, data } = await lookup(email);
+  return { statusCode, body: JSON.stringify(data) };
+}
+
+module.exports = vercelHandler;
+module.exports.handler = netlifyHandler;
