@@ -19,13 +19,17 @@ function getSupabase() {
 async function lookup(email) {
   email = String(email || '').trim().toLowerCase();
   if (!email) return { statusCode: 400, data: { error: 'Email is required.' } };
+  // ilike treats % and _ as wildcards - many real emails contain literal
+  // underscores, which without escaping can match multiple rows and make
+  // maybeSingle() throw.
+  const pattern = email.replace(/[%_\\]/g, '\\$&');
 
   try {
     const db = getSupabase();
     const { data, error } = await db
       .from('delegates')
       .select('id, name, committee, country')
-      .ilike('email', email)
+      .ilike('email', pattern)
       .maybeSingle();
 
     if (error) throw new Error(error.message);
