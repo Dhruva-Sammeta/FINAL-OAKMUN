@@ -87,43 +87,43 @@
       top: 14px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 200;
+      z-index: 400;
       animation: navSlideDown .45s cubic-bezier(0.4,0,0.2,1) both;
     }
     .nav-pill {
       display: flex;
       align-items: center;
-      gap: 0;
+      gap: 6px;
       background: rgba(1,3,8,.97);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border-radius: 100px;
       border: 1px solid rgba(250,245,237,.07);
-      padding: 10px 14px; justify-content: center;
+      padding: 8px 10px; justify-content: center;
       box-shadow: 0 8px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(250,245,237,.04);
-      transition: padding .6s cubic-bezier(0.4,0,0.2,1), border-radius .6s cubic-bezier(0.4,0,0.2,1);
+      transition: padding .3s cubic-bezier(0.4,0,0.2,1), border-radius .3s cubic-bezier(0.4,0,0.2,1);
       white-space: nowrap;
     }
     .nav-logo {
-      font-size: .92rem; font-weight: 800;
-      letter-spacing: .16em; text-transform: uppercase;
+      font-size: .86rem; font-weight: 800;
+      letter-spacing: .14em; text-transform: uppercase;
       color: var(--white); text-decoration: none;
       flex-shrink: 0; overflow: hidden;
-      max-width: 220px; opacity: 1;
-      transition: opacity .5s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1);
+      max-width: 180px; opacity: 1;
+      transition: opacity .35s cubic-bezier(0.4,0,0.2,1), max-width .35s cubic-bezier(0.4,0,0.2,1);
     }
     .nav-logo span { color: var(--white); }
     .nav-center {
-      display: flex; align-items: center; flex-shrink: 0; margin-left: 20px;
-      transition: margin-left .6s cubic-bezier(0.4,0,0.2,1);
+      display: flex; align-items: center; flex-shrink: 1; margin-left: 12px;
+      transition: margin-left .3s cubic-bezier(0.4,0,0.2,1);
     }
     .nav-links-group {
-      display: flex; gap: 22px; list-style: none;
+      display: flex; gap: 16px; list-style: none;
       overflow: visible; opacity: 1;
-      transition: opacity .4s cubic-bezier(0.4,0,0.2,1), max-width .6s cubic-bezier(0.4,0,0.2,1), padding .6s cubic-bezier(0.4,0,0.2,1);
+      transition: opacity .25s cubic-bezier(0.4,0,0.2,1), max-width .35s cubic-bezier(0.4,0,0.2,1), padding .35s cubic-bezier(0.4,0,0.2,1);
     }
-    .nav-links-group.left  { padding: 0 18px 0 28px; max-width: 400px; }
-    .nav-links-group.right { padding: 0 8px 0 18px; max-width: 400px; }
+    .nav-links-group.left  { padding: 0 12px 0 18px; max-width: 360px; }
+    .nav-links-group.right { padding: 0 6px 0 12px; max-width: 360px; }
     .nav-links-group a {
       font-size: .64rem; font-weight: 700;
       letter-spacing: .1em; text-transform: uppercase;
@@ -158,6 +158,9 @@
       box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(48,205,215,.06);
       z-index: 300;
     }
+    /* ensure right-side controls don't overflow */
+    .nav-right { display:flex; align-items:center; gap:8px; }
+    .nav-reg-wrap { display:flex; align-items:center; gap:8px; }
     /* transparent bridge fills the gap so moving mouse into dropdown doesn't lose hover */
     .nav-drop::before {
       content: '';
@@ -197,6 +200,39 @@
     }
     .nav-drop-reserved {
       color: rgba(188,154,110,.55) !important;
+    }
+    /* Liability button inside navbar */
+    .nav-liability {
+      background: transparent;
+      color: rgba(250,245,237,.9);
+      font-family: 'Montserrat', sans-serif;
+      font-size: .66rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border: 1px solid rgba(48,205,215,.28);
+      border-radius: 10px;
+      padding: 8px 12px;
+      margin-right: 10px;
+      cursor: pointer;
+      transition: background .16s, color .16s, border-color .16s;
+      white-space: nowrap;
+    }
+    .nav-liability:hover { background: rgba(48,205,215,.08); color: var(--teal); border-color: #30CDD7; }
+
+    /* Responsive: condense navbar on narrow screens */
+    @media (max-width: 980px) {
+      .nav-pill { padding: 6px 8px; }
+      .nav-links-group { gap: 10px; }
+      .nav-logo { max-width: 140px; font-size: .78rem; }
+      .nav-liability { padding: 6px 8px; font-size: .62rem; }
+      .nav-cta { padding: 8px 10px; font-size: .62rem; }
+    }
+
+    @media (max-width: 740px) {
+      nav { top: 12px; }
+      .nav-center { display:none; }
+      .nav-pill { padding: 6px 10px; }
     }
     .nav-drop-reserved:hover {
       background: rgba(188,154,110,.08);
@@ -676,7 +712,7 @@
     /* stacked notification cards */
     .hero-notifs {
       position: absolute; top: 50%; right: 36px; transform: translateY(-50%);
-      z-index: 50;
+      z-index: 201;
       display: flex; flex-direction: column; gap: 10px;
       width: 240px;
     }
@@ -2835,6 +2871,8 @@
       <div class="nav-right">
         <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
 
+        <button id="delegateTrainingBtn" class="nav-liability" onclick="window.open('/Oakridge%20MUN%202025%20Liability%20Release%20(1).pdf','_blank')">Liability Form</button>
+
         <div class="nav-reg-wrap">
           <button class="nav-cta" onclick="window.location.href='register.html'">Register Now <span class="nav-cta-chevron">▼</span></button>
           <div class="nav-drop nav-drop--reg">
@@ -2852,29 +2890,6 @@
     </div>
   </nav>
 
-  <!-- Delegate Training floating button -->
-  <button id="delegateTrainingBtn" onclick="window.open('/Oakridge%20MUN%202025%20Liability%20Release%20(1).pdf','_blank')" style="
-    position: fixed;
-    top: 60px;
-    right: 10px;
-    z-index: 201;
-    background: transparent;
-    color: rgba(250,245,237,.8);
-    font-family: 'Montserrat', sans-serif;
-    font-size: .68rem;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    border: 1px solid rgba(48,205,215,.4);
-    border-radius: 12px;
-    padding: 10px 18px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: top .3s, background .2s, color .2s, border-color .2s;
-  " onmouseover="this.style.background='rgba(48,205,215,.12)';this.style.color='#30CDD7';this.style.borderColor='#30CDD7';"
-     onmouseout="this.style.background='transparent';this.style.color='rgba(250,245,237,.8)';this.style.borderColor='rgba(48,205,215,.4)';">
-    Liability Form
-  </button>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="heroSection">
@@ -4379,9 +4394,9 @@
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, calc(-50% + 16px));
     z-index: 2000; width: min(320px, calc(100vw - 32px));
     background: linear-gradient(135deg, #0b1f38 0%, #0d2545 100%);
-    border: 1px solid rgba(188,154,110,.35); border-radius: 16px;
+    border: 1px solid rgba(255,55,80,.45); border-radius: 16px;
     padding: 18px 20px 16px;
-    box-shadow: 0 16px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(188,154,110,.08);
+    box-shadow: 0 16px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(255,55,80,.12);
     opacity: 0; pointer-events: none;
     transition: opacity .45s cubic-bezier(0.22,1,0.36,1), transform .45s cubic-bezier(0.22,1,0.36,1);
     font-family: 'Montserrat';
@@ -4391,7 +4406,7 @@
   }
   #liabilityPopup .lp-bar {
     position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, #BC9A6E, rgba(188,154,110,.2));
+    background: linear-gradient(90deg, var(--red), rgba(255,55,80,.2));
     border-radius: 20px 20px 0 0;
   }
   #liabilityPopup .lp-close {
@@ -4403,7 +4418,7 @@
   #liabilityPopup .lp-close:hover { color: rgba(250,245,237,.8); }
   #liabilityPopup .lp-label {
     font-size: .55rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
-    color: #BC9A6E; margin-bottom: 8px;
+    color: var(--red); margin-bottom: 8px;
   }
   #liabilityPopup .lp-title {
     font-size: 1.1rem; font-weight: 800; color: rgba(250,245,237,.95);
@@ -4415,7 +4430,7 @@
   #liabilityPopup .lp-actions { display: flex; gap: 10px; align-items: center; }
   #liabilityPopup .lp-btn {
     display: inline-flex; align-items: center; gap: 8px;
-    background: linear-gradient(135deg,#BC9A6E,#a07d50); color: #fff;
+    background: linear-gradient(135deg,var(--red),#cc0020); color: #fff;
     text-decoration: none; font-size: .65rem; font-weight: 800;
     letter-spacing: .1em; text-transform: uppercase;
     border: none; border-radius: 10px; padding: 11px 20px; cursor: pointer;
@@ -4460,9 +4475,8 @@
       const stripVisible = trainingStrip.style.display !== 'none' && trainingStrip.offsetHeight > 0;
       navEl.style.top = stripVisible ? '42px' : '';
       if (delegateBtn) {
-        delegateBtn.style.top = stripVisible ? '60px' : '24px';
-        delegateBtn.style.right = '10px';
-        delegateBtn.style.fontSize = '8px';
+        if (stripVisible) delegateBtn.classList.add('with-strip');
+        else delegateBtn.classList.remove('with-strip');
       }
       if (typeof syncNavBottom === 'function') syncNavBottom();
     }
