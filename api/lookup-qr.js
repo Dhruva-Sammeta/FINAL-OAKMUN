@@ -15,14 +15,20 @@ function getSupabase() {
   return supabase;
 }
 
-module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+exports.handler = async (event) => {
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  const email = String(req.body?.email || '').trim().toLowerCase();
+  let email = '';
+  try {
+    email = String(JSON.parse(event.body || '{}').email || '').trim().toLowerCase();
+  } catch {
+    // fall through, empty email handled below
+  }
+
   if (!email) {
-    return res.status(400).json({ error: 'Email is required.' });
+    return { statusCode: 400, body: JSON.stringify({ error: 'Email is required.' }) };
   }
 
   try {
@@ -35,12 +41,18 @@ module.exports = async function handler(req, res) {
 
     if (error) throw new Error(error.message);
     if (!data) {
-      return res.status(404).json({ error: 'No delegate found with that email.' });
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ error: 'No delegate found with that email.' }),
+      };
     }
 
-    return res.status(200).json({ delegate: data });
+    return { statusCode: 200, body: JSON.stringify({ delegate: data }) };
   } catch (err) {
     console.error('lookup-qr error:', err);
-    return res.status(500).json({ error: 'Something went wrong. Please try again.' });
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Something went wrong. Please try again.' }),
+    };
   }
 };
