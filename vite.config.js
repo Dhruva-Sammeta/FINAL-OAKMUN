@@ -29,6 +29,7 @@ export default defineConfig({
         delegationGuidelines: resolve(__dirname, 'delegation-guidelines.html'),
         networkingHour: resolve(__dirname, 'networking-hour.html'),
         orphanageInitiative: resolve(__dirname, 'orphanage-initiative.html'),
+        qrLookup: resolve(__dirname, 'qr-lookup.html'),
         register: resolve(__dirname, 'register.html'),
         registrationForm: resolve(__dirname, 'registration-form.html'),
         resources: resolve(__dirname, 'resources.html'),

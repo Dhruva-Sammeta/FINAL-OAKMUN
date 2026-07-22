@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {},
   "dependencies": {
+    "@supabase/supabase-js": "^2.110.8",
     "vite": "^8.1.0",
     "vite-plugin-image-optimizer": "^2.0.3"
   }

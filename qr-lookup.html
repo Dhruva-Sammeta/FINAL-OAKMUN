@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Your QR Code | Oakridge MUN XVI</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @media (min-width: 769px) { html { zoom: 1.1; } }
+
+    @keyframes navSlideDown {
+      from { opacity: 0; transform: translateX(-50%) translateY(-18px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    :root {
+      --navy:      #003057;
+      --teal:      #30CDD7;
+      --teal-dark: #1E96A5;
+      --white:     #FAF5ED;
+      --gold:      #BC9A6E;
+      --red:       #FF3750;
+    }
+
+    html, body {
+      font-family: 'Montserrat';
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: clip;
+      -webkit-overflow-scrolling: touch;
+      height: auto;
+      min-height: 100%;
+    }
+
+    /* ── NAV (shared pattern) ── */
+    nav {
+      position: fixed; top: 14px; left: 50%;
+      transform: translateX(-50%); z-index: 200;
+      animation: navSlideDown .45s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    .nav-pill {
+      display: flex; align-items: center; gap: 0;
+      background: rgba(1,3,8,.97);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-radius: 100px; border: 1px solid rgba(250,245,237,.07);
+      padding: 10px 14px; justify-content: center;
+      box-shadow: 0 8px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(250,245,237,.04);
+      white-space: nowrap;
+    }
+    .nav-logo {
+      font-size: .92rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--white); text-decoration: none;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-center { display: flex; align-items: center; flex-shrink: 0; margin-left: 20px; }
+    .nav-links-group { display: flex; gap: 22px; list-style: none; }
+    .nav-links-group.left  { padding: 0 18px 0 28px; }
+    .nav-links-group.right { padding: 0 8px 0 18px; }
+    .nav-links-group a {
+      font-size: .64rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(250,245,237,.48); text-decoration: none; transition: color .2s;
+    }
+    .nav-links-group a:hover { color: var(--white); }
+    .nav-mark { display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0 6px; }
+    .nav-mark img { width: 44px; height: 44px; object-fit: contain; opacity: .92; filter: drop-shadow(0 0 8px rgba(48,205,215,.35)); mix-blend-mode: lighten; }
+    .nav-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: 10px; }
+    .nav-cta {
+      background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%);
+      color: var(--navy); font-family: 'Montserrat';
+      font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 10px 18px;
+      cursor: pointer; white-space: nowrap; text-decoration: none; display: inline-block;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .menu-btn {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; width: 36px; height: 36px;
+      background: none; border: none; cursor: pointer; padding: 4px; border-radius: 6px;
+    }
+    .menu-btn span { display: block; width: 100%; height: 2px; background: var(--white); border-radius: 2px; transition: transform .2s, opacity .2s; }
+    .menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-nav {
+      position: fixed; top: 76px; left: 50%;
+      transform: translateX(-50%) translateY(-20px) scale(0.95);
+      width: calc(100% - 40px); max-width: 320px; z-index: 199;
+      background: rgba(1,3,8,.99); backdrop-filter: blur(28px);
+      padding: 16px 24px; border-radius: 20px;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transition: opacity .35s, transform .35s cubic-bezier(0.175,0.885,0.32,1.2);
+      border: 1px solid rgba(48,205,215,.2);
+    }
+    .mobile-nav.open { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+    .mobile-nav a {
+      font-size: .88rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(250,245,237,.75); text-decoration: none;
+      padding: 18px 0; border-bottom: 1px solid rgba(250,245,237,.07); transition: color .2s;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--teal); }
+
+    @media (max-width: 768px) {
+      html { zoom: 1; }
+      .nav-center { display: none; }
+      .nav-right .nav-cta { display: none; }
+      .menu-btn { display: flex; }
+    }
+    @media (max-width: 768px) {
+      .nav-pill { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(1,3,8,.99) !important; }
+      .mobile-nav { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+    }
+
+    /* ── PAGE ── */
+    .page {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 140px 20px 60px;
+    }
+    .card {
+      width: 100%; max-width: 460px;
+      background: rgba(250,245,237,0.03);
+      border: 1px solid rgba(250,245,237,0.1);
+      border-radius: 24px;
+      padding: 44px 36px;
+      text-align: center;
+      animation: fadeUp .5s cubic-bezier(0.4,0,0.2,1) both;
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    }
+    .eyebrow {
+      font-size: .68rem; font-weight: 800; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 12px;
+    }
+    h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; line-height: 1.25; }
+    .subtext { font-size: .85rem; color: rgba(250,245,237,.55); line-height: 1.6; margin-bottom: 28px; }
+
+    input[type="email"] {
+      width: 100%;
+      background: rgba(250,245,237,0.06);
+      border: 1px solid rgba(250,245,237,0.15);
+      border-radius: 14px;
+      padding: 15px 18px;
+      font-family: 'Montserrat';
+      font-size: .95rem;
+      color: var(--white);
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    input[type="email"]::placeholder { color: rgba(250,245,237,.35); }
+    input[type="email"]:focus { border-color: var(--teal); }
+
+    button.submit-btn {
+      width: 100%;
+      background: linear-gradient(180deg,#30CDD7 0%,#1E96A5 100%);
+      color: var(--navy);
+      font-family: 'Montserrat';
+      font-size: .85rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      border: none; border-radius: 14px; padding: 16px;
+      cursor: pointer;
+      transition: filter .2s, opacity .2s;
+    }
+    button.submit-btn:hover { filter: brightness(1.05); }
+    button.submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    .error-box {
+      background: rgba(255,55,80,0.1);
+      border: 1px solid rgba(255,55,80,0.35);
+      color: var(--red);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: .82rem; font-weight: 600;
+      margin-top: 16px;
+      display: none;
+    }
+    .error-box.visible { display: block; }
+
+    .result { display: none; }
+    .result.visible { display: block; animation: fadeUp .4s cubic-bezier(0.4,0,0.2,1) both; }
+    .result-name { font-size: 1.3rem; font-weight: 800; margin-bottom: 4px; }
+    .result-meta { font-size: .82rem; color: rgba(250,245,237,.55); margin-bottom: 24px; }
+    .qr-wrap {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 20px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .qr-wrap img { display: block; width: 220px; height: 220px; }
+    .result-hint {
+      font-size: .78rem; color: rgba(250,245,237,.5); line-height: 1.6;
+    }
+    .lookup-again {
+      margin-top: 24px;
+      background: none; border: none;
+      color: var(--teal); font-family: 'Montserrat'; font-size: .78rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="/">Home</a>
+    <a href="/committees.html">Committees</a>
+    <a href="/secretariat.html">Secretariat</a>
+    <a href="/allocations.html">Allocations</a>
+    <a href="/qr-lookup.html">Get My QR Code</a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-pill">
+      <a class="nav-logo" href="/">Oakridge <span>MUN</span></a>
+      <div class="nav-center">
+        <ul class="nav-links-group left">
+          <li><a href="/committees.html">Committees</a></li>
+          <li><a href="/secretariat.html">Secretariat</a></li>
+          <li><a href="/allocations.html">Allocations</a></li>
+        </ul>
+        <div class="nav-mark"><img src="logo.png" alt="Oakridge MUN" /></div>
+        <ul class="nav-links-group right">
+          <li><a href="/qr-lookup.html">Get My QR Code</a></li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        <a class="nav-cta" href="/register.html">Register Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page">
+    <div class="card">
+      <div id="formState">
+        <p class="eyebrow">Delegate Check-in</p>
+        <h1>Get Your QR Code</h1>
+        <p class="subtext">Enter the email you registered with to pull up your registration QR code. Screenshot it or keep this page open — you'll show it at the check-in desk.</p>
+
+        <form id="lookupForm">
+          <input type="email" id="emailInput" placeholder="you@example.com" required autocomplete="email" />
+          <button type="submit" class="submit-btn" id="submitBtn">Find My QR Code</button>
+        </form>
+
+        <div class="error-box" id="errorBox"></div>
+      </div>
+
+      <div class="result" id="resultBox">
+        <div class="result-name" id="resultName"></div>
+        <div class="result-meta" id="resultMeta"></div>
+        <div class="qr-wrap">
+          <img id="resultQr" alt="Your check-in QR code" width="220" height="220" />
+        </div>
+        <p class="result-hint">Show this QR code at the registration desk to check in. No need to print it — a screenshot works fine.</p>
+        <button class="lookup-again" id="lookupAgainBtn">Look up a different email</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = mobileNav.classList.toggle('open');
+      menuBtn.classList.toggle('open', isOpen);
+    });
+    document.addEventListener('click', (e) => {
+      if (mobileNav.classList.contains('open') && !mobileNav.contains(e.target) && !menuBtn.contains(e.target)) {
+        mobileNav.classList.remove('open');
+        menuBtn.classList.remove('open');
+      }
+    });
+
+    const CHECKIN_ORIGIN = 'https://oakmun-registrations-nine.vercel.app';
+
+    const form = document.getElementById('lookupForm');
+    const emailInput = document.getElementById('emailInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const errorBox = document.getElementById('errorBox');
+    const formState = document.getElementById('formState');
+    const resultBox = document.getElementById('resultBox');
+    const resultName = document.getElementById('resultName');
+    const resultMeta = document.getElementById('resultMeta');
+    const resultQr = document.getElementById('resultQr');
+    const lookupAgainBtn = document.getElementById('lookupAgainBtn');
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.classList.add('visible');
+    }
+    function clearError() {
+      errorBox.textContent = '';
+      errorBox.classList.remove('visible');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Searching...';
+
+      try {
+        const res = await fetch('/api/lookup-qr', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: emailInput.value.trim() }),
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.error || 'Something went wrong. Please try again.');
+          return;
+        }
+
+        const d = data.delegate;
+        resultName.textContent = d.name;
+        resultMeta.textContent = [d.committee, d.country].filter(Boolean).join(' · ');
+        resultQr.src = `${CHECKIN_ORIGIN}/api/delegates/${d.id}/qr`;
+
+        formState.style.display = 'none';
+        resultBox.classList.add('visible');
+      } catch (err) {
+        showError('Something went wrong. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Find My QR Code';
+      }
+    });
+
+    lookupAgainBtn.addEventListener('click', () => {
+      resultBox.classList.remove('visible');
+      formState.style.display = 'block';
+      emailInput.value = '';
+      emailInput.focus();
+    });
+  </script>
+</body>
+</html>
