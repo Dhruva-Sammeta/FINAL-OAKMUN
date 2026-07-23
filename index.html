@@ -2827,20 +2827,13 @@
     <a href="/allocations.html">Allocations</a>
     <a href="/#schedule" id="mobileScheduleLink">Schedule</a>
     <a href="/resources.html">Resources</a>
-    <a href="/qr-lookup.html">Get My QR Code</a>
     <a href="#faq">FAQ</a>
     <a href="/social-night.html">Social Night</a>
     <a href="/networking-hour.html">Networking Hour</a>
     <a href="/orphanage-initiative.html">Community Outreach</a>
     <a href="/delegate-training.html">Delegate Training</a>
     
-    <div class="mobile-reg-accordion">
-      <button class="mobile-nav-cta" onclick="this.parentElement.classList.toggle('open')">Register Now <span style="font-size:0.8em; margin-left:4px;">▼</span></button>
-      <div class="mobile-reg-options">
-        <a href="/register.html">All Schools / Delegates</a>
-        <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener">International Press (IP)</a>
-      </div>
-    </div>
+    <a href="/qr-lookup.html" class="mobile-nav-cta" style="text-decoration:none;">Get Your QR Code</a>
 
   </div>
 
@@ -2858,7 +2851,6 @@
         <ul class="nav-links-group right">
           <li><a href="/#schedule">Schedule</a></li>
           <li><a href="/resources.html">Resources</a></li>
-          <li><a href="/qr-lookup.html">Get My QR Code</a></li>
           <li class="nav-has-drop"><a href="#">Other</a>
             <div class="nav-drop nav-drop--events">
               <div class="nav-drop-grid">
@@ -2877,19 +2869,7 @@
 
         <button id="delegateTrainingBtn" class="nav-liability" onclick="window.open('/Oakridge%20MUN%202025%20Liability%20Release%20(1).pdf','_blank')">Liability Form</button>
 
-        <div class="nav-reg-wrap">
-          <button class="nav-cta" onclick="window.location.href='register.html'">Register Now <span class="nav-cta-chevron">▼</span></button>
-          <div class="nav-drop nav-drop--reg">
-            <a href="/register.html" class="nav-drop-reg-item">
-              Register Now
-              <span class="nav-drop-reg-sub">All schools · Delegates</span>
-            </a>
-            <a href="https://forms.office.com/r/kdyTBHKxE7" target="_blank" rel="noopener" class="nav-drop-reg-item">
-              IP Registration
-              <span class="nav-drop-reg-sub">International Press</span>
-            </a>
-          </div>
-        </div>
+        <button class="nav-cta" onclick="window.location.href='/qr-lookup.html'">Get Your QR Code</button>
       </div>
     </div>
   </nav>
@@ -2949,7 +2929,7 @@
         </div>
         <span class="hero-notif-arrow">→</span>
       </a>
-      <a href="/register.html#liability" class="hero-notif hero-notif--urgent">
+      <a href="/Oakridge%20MUN%202025%20Liability%20Release%20(1).pdf" target="_blank" rel="noopener" class="hero-notif hero-notif--urgent">
         <div class="hero-notif-body">
           <div class="hero-notif-label">Required</div>
           <div class="hero-notif-title">Liability Release Form — Download &amp; Sign</div>
@@ -2971,7 +2951,7 @@
         <span>and 26 July 2026</span>
       </div>
       <div class="hero-ctas">
-        <button class="hero-btn-primary" onclick="window.location.href='register.html'">Register Now &nbsp;→</button>
+        <button class="hero-btn-primary" onclick="window.location.href='/qr-lookup.html'">Get Your QR Code &nbsp;→</button>
         <a href="/committees.html" class="hero-btn-ghost">Explore Committees</a>
       </div>
       <div class="countdown">
@@ -3423,7 +3403,7 @@
     <p class="cta-banner-eyebrow">Registration Open · Chapter XVI</p>
     <h2 class="cta-banner-title">Ready to<br><em>Delegate?</em></h2>
     <p class="cta-banner-sub">Join 685+ delegates from across India for three days of debate, diplomacy, and discovery.</p>
-    <button class="cta-banner-btn" onclick="window.location.href='register.html'">Register Now &nbsp;→</button>
+    <button class="cta-banner-btn" onclick="window.location.href='/qr-lookup.html'">Get Your QR Code &nbsp;→</button>
   </div>
 
   <!-- ═══ FOOTER ═══ -->
@@ -4393,56 +4373,79 @@
     }
     #stripClose:hover { opacity: 1; }
 
-  /* ── Liability popup ── */
+  /* ── Liability + QR popup ── */
   #liabilityPopup {
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, calc(-50% + 16px));
-    z-index: 150; width: min(320px, calc(100vw - 32px));
-    background: linear-gradient(135deg, #0b1f38 0%, #0d2545 100%);
-    border: 1px solid rgba(255,55,80,.45); border-radius: 16px;
-    padding: 18px 20px 16px;
-    box-shadow: 0 16px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(255,55,80,.12);
+    z-index: 150; width: min(380px, calc(100vw - 32px));
+    background: linear-gradient(160deg, #0c2038 0%, #0a1a30 60%, #081627 100%);
+    border: 1px solid rgba(250,245,237,.1); border-radius: 20px;
+    padding: 22px 22px 18px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.03), inset 0 1px 0 rgba(255,255,255,.04);
     opacity: 0; pointer-events: none;
     transition: opacity .45s cubic-bezier(0.22,1,0.36,1), transform .45s cubic-bezier(0.22,1,0.36,1);
     font-family: 'Montserrat';
+    overflow: hidden;
   }
   #liabilityPopup.visible {
     opacity: 1; pointer-events: auto; transform: translate(-50%, -50%);
   }
   #liabilityPopup .lp-bar {
     position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--red), rgba(255,55,80,.2));
-    border-radius: 20px 20px 0 0;
+    background: linear-gradient(90deg, var(--red) 0%, var(--red) 48%, var(--teal) 52%, var(--teal) 100%);
   }
   #liabilityPopup .lp-close {
-    position: absolute; top: 14px; right: 16px;
-    background: none; border: none; color: rgba(250,245,237,.35);
-    font-size: 18px; line-height: 1; cursor: pointer; padding: 4px 8px;
-    transition: color .15s;
+    position: absolute; top: 14px; right: 14px; z-index: 2;
+    background: rgba(250,245,237,.06); border: none; color: rgba(250,245,237,.5);
+    width: 26px; height: 26px; border-radius: 50%;
+    font-size: 14px; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: color .15s, background .15s;
   }
-  #liabilityPopup .lp-close:hover { color: rgba(250,245,237,.8); }
+  #liabilityPopup .lp-close:hover { color: rgba(250,245,237,.9); background: rgba(250,245,237,.12); }
+  #liabilityPopup .lp-heading {
+    font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(250,245,237,.85); margin-bottom: 16px; padding-right: 24px;
+  }
+  #liabilityPopup .lp-section {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 14px 0;
+  }
+  #liabilityPopup .lp-section + .lp-section {
+    border-top: 1px solid rgba(250,245,237,.08);
+  }
+  #liabilityPopup .lp-icon {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #liabilityPopup .lp-icon--red { background: rgba(255,55,80,.14); color: var(--red); }
+  #liabilityPopup .lp-icon--teal { background: rgba(48,205,215,.14); color: var(--teal); }
+  #liabilityPopup .lp-content { flex: 1; min-width: 0; }
   #liabilityPopup .lp-label {
-    font-size: .55rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
-    color: var(--red); margin-bottom: 8px;
+    font-size: .53rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+    margin-bottom: 5px;
   }
+  #liabilityPopup .lp-section--red .lp-label { color: var(--red); }
+  #liabilityPopup .lp-section--teal .lp-label { color: var(--teal); }
   #liabilityPopup .lp-title {
-    font-size: 1.1rem; font-weight: 800; color: rgba(250,245,237,.95);
-    letter-spacing: -.02em; margin-bottom: 10px;
+    font-size: .92rem; font-weight: 800; color: rgba(250,245,237,.95);
+    letter-spacing: -.01em; margin-bottom: 6px;
   }
   #liabilityPopup .lp-body {
-    font-size: .78rem; color: rgba(250,245,237,.5); line-height: 1.7; margin-bottom: 20px;
+    font-size: .72rem; color: rgba(250,245,237,.48); line-height: 1.55; margin-bottom: 14px;
   }
-  #liabilityPopup .lp-actions { display: flex; gap: 10px; align-items: center; }
   #liabilityPopup .lp-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: linear-gradient(135deg,var(--red),#cc0020); color: #fff;
-    text-decoration: none; font-size: .65rem; font-weight: 800;
-    letter-spacing: .1em; text-transform: uppercase;
-    border: none; border-radius: 10px; padding: 11px 20px; cursor: pointer;
-    transition: filter .2s;
+    display: inline-flex; align-items: center; gap: 7px;
+    color: #fff; text-decoration: none; font-size: .62rem; font-weight: 800;
+    letter-spacing: .09em; text-transform: uppercase;
+    border: none; border-radius: 9px; padding: 10px 16px; cursor: pointer;
+    transition: filter .2s, transform .15s;
   }
-  #liabilityPopup .lp-btn:hover { filter: brightness(1.12); }
+  #liabilityPopup .lp-btn:hover { filter: brightness(1.12); transform: translateY(-1px); }
+  #liabilityPopup .lp-btn--red { background: linear-gradient(135deg,var(--red),#cc0020); }
+  #liabilityPopup .lp-btn--teal { background: linear-gradient(135deg,var(--teal),var(--teal-dark)); color: var(--navy); }
   #liabilityPopup .lp-skip {
-    font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    display: block; width: 100%; text-align: center; margin-top: 14px;
+    font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
     color: rgba(250,245,237,.3); background: none; border: none; cursor: pointer;
     transition: color .15s;
   }
@@ -4450,24 +4453,47 @@
 
   </style>
 
-  <!-- Liability Release Popup -->
+  <!-- Liability + QR Code Popup -->
   <div id="liabilityPopup">
     <div class="lp-bar"></div>
     <button class="lp-close" id="lpClose">✕</button>
-    <div class="lp-label">Required Document</div>
-    <div class="lp-title">Liability Release Form</div>
-    <div class="lp-body">All delegates must submit a signed liability release form before the conference. Download, print, sign, and bring the physical copy on Day 1.</div>
-    <div class="lp-actions">
-      <a href="/Oakridge%20MUN%202025%20Liability%20Release%20(1).pdf" target="_blank" class="lp-btn">
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Download Form
-      </a>
-      <button class="lp-skip" id="lpSkip">Dismiss</button>
+    <div class="lp-heading">Before You Head In</div>
+
+    <div class="lp-section lp-section--red">
+      <div class="lp-icon lp-icon--red">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l6 3v4c0 3.5-2.4 6.4-6 7-3.6-.6-6-3.5-6-7V4l6-3z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M8 5v3.5M8 11h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </div>
+      <div class="lp-content">
+        <div class="lp-label">Required Document</div>
+        <div class="lp-title">Liability Release Form</div>
+        <div class="lp-body">Download, print, sign, and bring the physical copy on Day 1.</div>
+        <a href="/Oakridge%20MUN%202025%20Liability%20Release%20(1).pdf" target="_blank" class="lp-btn lp-btn--red">
+          <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download Form
+        </a>
+      </div>
     </div>
+
+    <div class="lp-section lp-section--teal">
+      <div class="lp-icon lp-icon--teal">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="9.5" y="1.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.4"/><rect x="1.5" y="9.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.4"/><path d="M9.5 9.5h2v2h-2zM13 9.5h1.5v1.5H13zM9.5 13h1.5v1.5H9.5zM13 13h1.5v1.5H13z" fill="currentColor"/></svg>
+      </div>
+      <div class="lp-content">
+        <div class="lp-label">Check-in Made Easy</div>
+        <div class="lp-title">Get Your QR Code</div>
+        <div class="lp-body">Look up your delegate QR code with your registered email — show it at the check-in desk.</div>
+        <a href="/qr-lookup.html" class="lp-btn lp-btn--teal">
+          <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M7 3l3.5 3.5L7 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Get QR Code
+        </a>
+      </div>
+    </div>
+
+    <button class="lp-skip" id="lpSkip">Dismiss</button>
   </div>
 
-  <div id="trainingStrip" style="cursor: pointer;" onclick="window.location.href='/register.html'">
-    Registrations Close &nbsp;·&nbsp; 21 July 2026
+  <div id="trainingStrip" style="cursor: pointer;" onclick="window.location.href='/qr-lookup.html'">
+    Get Your QR Code &nbsp;→
     <button id="stripClose" onclick="event.stopPropagation();">✕</button>
   </div>
   <script>
