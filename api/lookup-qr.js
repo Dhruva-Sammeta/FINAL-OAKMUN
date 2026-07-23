@@ -15,6 +15,22 @@ function getSupabase() {
   return supabase;
 }
 
+// Awaited (not fire-and-forget) since serverless functions can be frozen
+// or torn down the instant the handler returns, before a background
+// promise gets to finish. A logging failure never fails the lookup itself.
+async function logLookup(db, email, found, delegateId) {
+  try {
+    const { error } = await db
+      .from('qr_lookups')
+      .insert({ email, found, delegate_id: delegateId || null });
+    if (error) console.error('qr_lookups log error:', error.message);
+    return error ? error.message : null;
+  } catch (e) {
+    console.error('qr_lookups log threw:', e);
+    return String(e && e.message);
+  }
+}
+
 // Shared logic, independent of which platform (Vercel vs Netlify) invoked it.
 async function lookup(email) {
   email = String(email || '').trim().toLowerCase();
@@ -34,12 +50,14 @@ async function lookup(email) {
 
     if (error) throw new Error(error.message);
     if (!data) {
-      return { statusCode: 404, data: { error: 'No delegate found with that email.' } };
+      const logErr = await logLookup(db, email, false);
+      return { statusCode: 404, data: { error: 'No delegate found with that email.', _debug: 'v2-logging', _logErr: logErr } };
     }
-    return { statusCode: 200, data: { delegate: data } };
+    const logErr = await logLookup(db, email, true, data.id);
+    return { statusCode: 200, data: { delegate: data, _debug: 'v2-logging', _logErr: logErr } };
   } catch (err) {
     console.error('lookup-qr error:', err);
-    return { statusCode: 500, data: { error: 'Something went wrong. Please try again.' } };
+    return { statusCode: 500, data: { error: 'Something went wrong. Please try again.', _debug: 'v2-logging', _catchErr: String(err && err.message) } };
   }
 }
 

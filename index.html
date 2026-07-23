@@ -2796,6 +2796,15 @@
     .mobile-reg-options a:hover { background: rgba(48,205,215,.15); }
     
   </style>
+  <style>
+    .sponsors-section { background: #001223; padding: 64px 24px 56px; text-align: center; }
+    .sponsors-section h4 { font-size: .8rem; font-weight: 800; letter-spacing: .24em; text-transform: uppercase; color: var(--teal); margin-bottom: 36px; }
+    .sponsor-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 28px; }
+    .sponsor-tile { background: #fff; border-radius: 18px; padding: 8px 12px; display: flex; align-items: center; justify-content: center; height: 140px; width: 260px; box-shadow: 0 12px 32px rgba(0,0,0,.3); transition: transform .2s; }
+    .sponsor-tile:hover { transform: translateY(-4px); }
+    .sponsor-tile img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    @media (max-width: 768px) { .sponsor-tile { width: 170px; height: 100px; padding: 6px 10px; } .sponsors-section { padding: 48px 20px 40px; } }
+  </style>
 </head>
 <body>
 
@@ -3407,7 +3416,20 @@
   </div>
 
   <!-- ═══ FOOTER ═══ -->
+  <section class="sponsors-section">
+    <h4>Our Sponsors</h4>
+    <div class="sponsor-row">
+      <div class="sponsor-tile"><img src="/sponsor-logos/snow-kingdom.png" alt="Snow Kingdom" loading="lazy" /></div>
+      <div class="sponsor-tile"><img src="/sponsor-logos/game-hub.png" alt="Game Hub" loading="lazy" /></div>
+      <div class="sponsor-tile"><img src="/sponsor-logos/dsr-builders.jpeg" alt="DSR Builders & Developers" loading="lazy" /></div>
+      <div class="sponsor-tile"><img src="/sponsor-logos/league-group.jpeg" alt="League Group" loading="lazy" /></div>
+      <div class="sponsor-tile"><img src="/sponsor-logos/athena-education.jpeg" alt="Athena Education" loading="lazy" /></div>
+      <div class="sponsor-tile"><img src="/sponsor-logos/rsrm.jpeg" alt="RSRM" loading="lazy" /></div>
+    </div>
+  </section>
+
   <footer>
+
     <div class="footer-top">
 
       <div class="footer-brand">
