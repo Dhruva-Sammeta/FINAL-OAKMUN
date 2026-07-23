@@ -37,12 +37,17 @@ export async function onRequestPost(context) {
     const rows = await res.json();
     const delegate = rows[0] || null;
 
-    // Log the lookup (fire-and-forget is fine here)
-    fetch(`${url}/rest/v1/qr_lookups`, {
-      method: 'POST',
-      headers: { ...headers, Prefer: 'return=minimal' },
-      body: JSON.stringify({ email, found: !!delegate, delegate_id: delegate?.id || null }),
-    }).catch(() => {});
+    // Log the lookup. Must go through waitUntil() — Cloudflare Workers can
+    // (and does) tear down the isolate the instant the response below is
+    // returned, killing any in-flight fetch that isn't registered as
+    // extended background work first.
+    context.waitUntil(
+      fetch(`${url}/rest/v1/qr_lookups`, {
+        method: 'POST',
+        headers: { ...headers, Prefer: 'return=minimal' },
+        body: JSON.stringify({ email, found: !!delegate, delegate_id: delegate?.id || null }),
+      }).catch((err) => console.error('qr_lookups log failed:', err))
+    );
 
     if (!delegate) {
       return json({ error: 'No delegate found with that email.' }, 404);
