@@ -1,10 +1,18 @@
 {
   "name": "oakmun-xvi",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "build": "vite build"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.8",
+    "three": "^0.185.1",
+    "three-globe": "^2.45.2",
     "vite": "^8.1.0",
     "vite-plugin-image-optimizer": "^2.0.3"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.3",
+    "svgo": "^4.0.2"
   }
 }
