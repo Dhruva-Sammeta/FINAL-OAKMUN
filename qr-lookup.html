@@ -206,6 +206,22 @@
       color: var(--teal); font-family: 'Montserrat'; font-size: .78rem; font-weight: 700;
       letter-spacing: .06em; text-transform: uppercase; cursor: pointer;
     }
+    .download-row {
+      display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;
+    }
+    .download-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(48,205,215,0.08);
+      border: 1px solid rgba(48,205,215,0.3);
+      color: var(--teal);
+      font-family: 'Montserrat'; font-size: .68rem; font-weight: 800;
+      letter-spacing: .06em; text-transform: uppercase;
+      border-radius: 10px; padding: 10px 14px; cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, border-color .2s;
+    }
+    .download-btn:hover { background: rgba(48,205,215,0.16); border-color: var(--teal); }
+    .download-btn:disabled { opacity: .5; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -259,12 +275,23 @@
         <div class="qr-wrap">
           <img id="resultQr" alt="Your check-in QR code" width="220" height="220" />
         </div>
+        <div class="download-row">
+          <a class="download-btn" id="downloadImgBtn" download>
+            <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download Image
+          </a>
+          <button class="download-btn" id="downloadPdfBtn" type="button">
+            <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v8M3 6l3.5 3.5L10 6M2 11h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download as PDF
+          </button>
+        </div>
         <p class="result-hint">Show this QR code at the registration desk to check in. No need to print it — a screenshot works fine.</p>
         <button class="lookup-again" id="lookupAgainBtn">Look up a different email</button>
       </div>
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     const menuBtn = document.getElementById('menuBtn');
     const mobileNav = document.getElementById('mobileNav');
@@ -292,6 +319,9 @@
     const resultMeta = document.getElementById('resultMeta');
     const resultQr = document.getElementById('resultQr');
     const lookupAgainBtn = document.getElementById('lookupAgainBtn');
+    const downloadImgBtn = document.getElementById('downloadImgBtn');
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+    let currentDelegate = null;
 
     function showError(message) {
       errorBox.textContent = message;
@@ -308,11 +338,14 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Searching...';
 
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
       try {
         const res = await fetch('/api/lookup-qr', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: emailInput.value.trim() }),
+          signal: controller.signal,
         });
         const data = await res.json();
 
@@ -322,15 +355,19 @@
         }
 
         const d = data.delegate;
+        currentDelegate = d;
         resultName.textContent = d.name;
         resultMeta.textContent = [d.committee, d.country].filter(Boolean).join(' · ');
         resultQr.src = `${CHECKIN_ORIGIN}/api/delegates/${d.id}/qr`;
+        downloadImgBtn.href = `${CHECKIN_ORIGIN}/api/delegates/${d.id}/qr?download=1`;
+        downloadImgBtn.download = `oakridge-mun-qr-${d.name.replace(/\s+/g, '-').toLowerCase()}.png`;
 
         formState.style.display = 'none';
         resultBox.classList.add('visible');
       } catch (err) {
         showError('Something went wrong. Please try again.');
       } finally {
+        clearTimeout(timeout);
         submitBtn.disabled = false;
         submitBtn.textContent = 'Find My QR Code';
       }
@@ -341,6 +378,53 @@
       formState.style.display = 'block';
       emailInput.value = '';
       emailInput.focus();
+    });
+
+    downloadPdfBtn.addEventListener('click', async () => {
+      if (!currentDelegate) return;
+      const originalHtml = downloadPdfBtn.innerHTML;
+      downloadPdfBtn.disabled = true;
+      downloadPdfBtn.textContent = 'Generating...';
+      try {
+        const res = await fetch(`${CHECKIN_ORIGIN}/api/delegates/${currentDelegate.id}/qr`);
+        const blob = await res.blob();
+        const dataUrl = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+        const pageWidth = doc.internal.pageSize.getWidth();
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(20);
+        doc.text('Oakridge MUN — Check-in QR Code', pageWidth / 2, 90, { align: 'center' });
+
+        doc.setFontSize(14);
+        doc.text(currentDelegate.name, pageWidth / 2, 120, { align: 'center' });
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(11);
+        const meta = [currentDelegate.committee, currentDelegate.country].filter(Boolean).join(' · ');
+        if (meta) doc.text(meta, pageWidth / 2, 138, { align: 'center' });
+
+        const qrSize = 260;
+        doc.addImage(dataUrl, 'PNG', (pageWidth - qrSize) / 2, 170, qrSize, qrSize);
+
+        doc.setFontSize(10);
+        doc.setTextColor(120);
+        doc.text('Show this QR code at the registration desk to check in.', pageWidth / 2, 170 + qrSize + 30, { align: 'center' });
+
+        doc.save(`oakridge-mun-qr-${currentDelegate.name.replace(/\s+/g, '-').toLowerCase()}.pdf`);
+      } catch (err) {
+        showError('Could not generate PDF. Please try downloading the image instead.');
+      } finally {
+        downloadPdfBtn.disabled = false;
+        downloadPdfBtn.innerHTML = originalHtml;
+      }
     });
   </script>
 </body>
