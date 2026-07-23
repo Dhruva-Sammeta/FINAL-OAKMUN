@@ -939,6 +939,107 @@
     }
 
     /* ═══════════════════════════════════════
+       SPONSORS — featured Athena + banner scroll
+    ═══════════════════════════════════════ */
+    @keyframes sponsor-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(calc(-100% / 3)); }
+    }
+    .sponsors-hero {
+      background: linear-gradient(180deg, #03080f 0%, #05101f 100%);
+      padding: 38px 0 46px;
+      overflow: hidden;
+      position: relative;
+    }
+    .sponsors-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto;
+      height: 90px;
+      background: linear-gradient(to bottom, rgba(39,176,189,.18), transparent);
+      pointer-events: none;
+      opacity: .5;
+    }
+    .sponsors-heading {
+      text-align: center;
+      font-family: 'Montserrat';
+      font-size: clamp(.82rem, 1.6vw, 1.1rem);
+      font-weight: 900;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 26px;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 16px rgba(0,0,0,.6);
+    }
+
+    /* featured main sponsor (Athena) */
+    .sponsors-featured {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 34px;
+      position: relative;
+      z-index: 1;
+    }
+    .sponsors-featured-card img {
+      height: 120px;
+      width: auto;
+      max-width: 360px;
+      object-fit: contain;
+      display: block;
+      opacity: 1;
+      transition: opacity .2s ease, transform .2s ease;
+      border-radius: 12px;
+      padding: 16px;
+      background: rgba(30, 150, 165, 0.2);
+    }
+    .sponsors-featured-card:hover img {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
+    /* banner scroll track */
+    .sponsors-marquee {
+      overflow: hidden;
+      width: 100%;
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
+    }
+    .sponsors-track {
+      display: flex;
+      align-items: center;
+      gap: 70px;
+      width: max-content;
+      padding: 0 28px;
+      animation: sponsor-scroll 65s linear infinite;
+      will-change: transform;
+    }
+    @media (prefers-reduced-motion: reduce) { .sponsors-track { animation: none; } }
+    .sponsor-logo img {
+      height: 100px;
+      width: auto;
+      max-width: 200px;
+      object-fit: contain;
+      display: block;
+      opacity: 1;
+      transition: opacity .2s ease, transform .2s ease;
+      border-radius: 10px;
+      padding: 12px;
+      background: rgba(48, 205, 215, 0.15);
+    }
+    .sponsor-logo:hover img {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+      .sponsors-featured-card img { height: 46px; max-width: 260px; }
+      .sponsor-logo img { height: 50px; max-width: 140px; }
+      .sponsors-track { gap: 50px; }
+      .sponsors-hero { padding: 30px 0 40px; }
+    }
+
+    /* ═══════════════════════════════════════
        THEME — scroll-driven cinematic
     ═══════════════════════════════════════ */
     .theme-section {
@@ -3073,6 +3174,7 @@
     </div>
   </div>
 
+  <!-- ═══ SPONSORS ═══ -->
   <!-- ═══ MARQUEE REVERSED (hidden) ═══ -->
   <div class="marquee-section-rev" aria-hidden="true" style="display:none;">
     <div class="marquee-track-rev">
@@ -3421,6 +3523,38 @@
     <p class="cta-banner-sub">Join 685+ delegates from across India for three days of debate, diplomacy, and discovery.</p>
     <button class="cta-banner-btn" onclick="window.location.href='register.html'">Register Now &nbsp;→</button>
   </div>
+
+  <!-- ═══ OUR SPONSORS ═══ -->
+  <section class="sponsors-hero">
+    <h2 class="sponsors-heading">Our Sponsors</h2>
+    <div class="sponsors-featured">
+      <div class="sponsors-featured-card">
+        <img src="sponsors/Athena logo.svg" alt="Athena — Principal Sponsor" />
+      </div>
+    </div>
+    <div class="sponsors-marquee">
+      <div class="sponsors-track">
+        <div class="sponsor-logo"><img src="sponsors/DSRlogo.svg" alt="DSR" /></div>
+        <div class="sponsor-logo"><img src="sponsors/Game Hub logo.svg" alt="Game Hub" /></div>
+        <div class="sponsor-logo"><img src="sponsors/League logo.svg" alt="League" /></div>
+        <div class="sponsor-logo"><img src="sponsors/Royalton hotels logo.svg" alt="Royalton Hotels" /></div>
+        <div class="sponsor-logo"><img src="sponsors/RSRM steel logo.svg" alt="RSRM Steel" /></div>
+        <div class="sponsor-logo"><img src="sponsors/Snow Kingdom logo.svg" alt="Snow Kingdom" /></div>
+        <div class="sponsor-logo"><img src="sponsors/DSRlogo.svg" alt="DSR" /></div>
+        <div class="sponsor-logo"><img src="sponsors/Game Hub logo.svg" alt="Game Hub" /></div>
+        <div class="sponsor-logo"><img src="sponsors/League logo.svg" alt="League" /></div>
+        <div class="sponsor-logo"><img src="sponsors/Royalton hotels logo.svg" alt="Royalton Hotels" /></div>
+        <div class="sponsor-logo"><img src="sponsors/RSRM steel logo.svg" alt="RSRM Steel" /></div>
+        <div class="sponsor-logo"><img src="sponsors/Snow Kingdom logo.svg" alt="Snow Kingdom" /></div>
+        <div class="sponsor-logo"><img src="sponsors/DSRlogo.svg" alt="DSR" /></div>
+        <div class="sponsor-logo"><img src="sponsors/Game Hub logo.svg" alt="Game Hub" /></div>
+        <div class="sponsor-logo"><img src="sponsors/League logo.svg" alt="League" /></div>
+        <div class="sponsor-logo"><img src="sponsors/Royalton hotels logo.svg" alt="Royalton Hotels" /></div>
+        <div class="sponsor-logo"><img src="sponsors/RSRM steel logo.svg" alt="RSRM Steel" /></div>
+        <div class="sponsor-logo"><img src="sponsors/Snow Kingdom logo.svg" alt="Snow Kingdom" /></div>
+      </div>
+    </div>
+  </section>
 
   <!-- ═══ FOOTER ═══ -->
   <footer>
