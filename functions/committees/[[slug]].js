@@ -1,6 +1,5 @@
 export async function onRequest(context) {
-  const { request, env } = context;
-  const url = new URL(request.url);
-  url.pathname = '/committee.html';
-  return env.ASSETS.fetch(new Request(url.toString(), request));
+  const url = new URL(context.request.url);
+  const slug = url.pathname.split('/').filter(Boolean).pop() || 'disec';
+  return Response.redirect(`${url.origin}/committee.html?committee=${slug}`, 302);
 }
